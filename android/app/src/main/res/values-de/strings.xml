@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ApiScan</string>
+
+    <!-- Screens -->
+    <string name="screen_apiaries">Meine Standorte</string>
+    <string name="screen_register">Konto erstellen</string>
+    <string name="screen_initialize_hive">Beute initialisieren</string>
+    <string name="screen_hive_stats">Beuten-Statistik</string>
+    <string name="screen_settings">Einstellungen</string>
+    <string name="screen_scan_qr">QR-Code scannen</string>
+    <string name="screen_batch_detail">Batch-Detail</string>
+    <string name="screen_qr_batches">QR-Batches</string>
+
+    <!-- Tabs / Navigation -->
+    <string name="tab_print">QR-Codes drucken</string>
+    <string name="tab_scan">QR-Code scannen</string>
+    <string name="tab_settings">Einstellungen</string>
+
+    <!-- Actions -->
+    <string name="action_save">Speichern</string>
+    <string name="action_cancel">Abbrechen</string>
+    <string name="action_delete">Löschen</string>
+    <string name="action_login">Anmelden</string>
+    <string name="action_register">Konto erstellen</string>
+    <string name="action_create_account">Konto erstellen</string>
+    <string name="action_logout">Abmelden</string>
+    <string name="action_new_apiary">Neuer Standort</string>
+    <string name="action_edit_apiary">Standort bearbeiten</string>
+    <string name="action_new_inspection">Neue Kontrolle</string>
+    <string name="action_edit_inspection">Kontrolle bearbeiten</string>
+    <string name="action_stats">Statistik</string>
+    <string name="action_apply">Anwenden</string>
+    <string name="action_new_batch">Neuer QR-Batch</string>
+    <string name="action_generate">Generieren</string>
+    <string name="action_download_pdf">PDF herunterladen</string>
+    <string name="action_grant_permission">Berechtigung erteilen</string>
+
+    <!-- Fields -->
+    <string name="field_email">E-Mail</string>
+    <string name="field_password">Passwort</string>
+    <string name="field_name">Name</string>
+    <string name="field_display_name">Anzeigename</string>
+    <string name="field_description">Beschreibung</string>
+    <string name="field_address">Adresse</string>
+    <string name="field_language">Sprache</string>
+    <string name="field_date">Datum (JJJJ-MM-TT)</string>
+    <string name="field_date_from">Von</string>
+    <string name="field_date_to">Bis</string>
+    <string name="field_hive_name">Beutenname</string>
+    <string name="field_hive_type">Beutentyp</string>
+    <string name="field_apiary">Standort</string>
+    <string name="field_acquisition_date">Anschaffungsdatum</string>
+    <string name="field_location">Standort</string>
+    <string name="field_notes">Notizen</string>
+    <string name="field_queen_seen">Königin gesehen</string>
+    <string name="field_queen_color">Königinnenfarbe</string>
+    <string name="field_brood_frames">Bruträhmchen</string>
+    <string name="field_honey_frames">Honigrähmchen</string>
+    <string name="field_mood">Stimmung</string>
+    <string name="field_population_strength">Volksstärke</string>
+    <string name="field_swarm_cells_seen">Schwarmzellen gesehen</string>
+    <string name="field_varroa_count">Varroazählung</string>
+    <string name="field_treatment_applied">Behandlung durchgeführt</string>
+    <string name="field_feeding_done">Fütterung erfolgt</string>
+    <string name="field_feeding_type">Fütterungsart</string>
+    <string name="field_weight_kg">Gewicht (kg)</string>
+    <string name="field_batch_count">Anzahl QR-Codes (1–100)</string>
+
+    <!-- Sections -->
+    <string name="section_date">Datum</string>
+    <string name="section_queen">Königin</string>
+    <string name="section_frames">Rähmchen</string>
+    <string name="section_colony">Volk</string>
+    <string name="section_varroa">Varroa</string>
+    <string name="section_treatment">Behandlung &amp; Fütterung</string>
+    <string name="section_weight">Gewicht</string>
+    <string name="section_notes">Notizen</string>
+    <string name="section_custom_fields">Benutzerdefinierte Felder</string>
+    <string name="section_details">Details</string>
+    <string name="section_inspections">Kontrollen</string>
+    <string name="section_account">Konto</string>
+    <string name="section_language">Sprache</string>
+
+    <!-- Labels -->
+    <string name="label_not_recorded">Nicht erfasst</string>
+    <string name="label_hives">Beuten</string>
+    <string name="label_last_inspection">Zuletzt: %1$s</string>
+    <string name="label_never_inspected">Noch nie kontrolliert</string>
+    <string name="label_custom_range">Eigener Zeitraum</string>
+    <string name="label_batch_id">Batch %1$s…</string>
+    <string name="label_batch_summary">%1$d / %2$d verknüpft · %3$s</string>
+    <string name="label_batch_count_hint">Anzahl der zu druckenden QR-Codes eingeben (1–100).</string>
+    <string name="label_created">Erstellt am %1$s</string>
+    <string name="label_linked_of">%1$d von %2$d verknüpft</string>
+    <string name="label_qr_tokens">Token</string>
+    <string name="label_token_linked">Mit Beute verknüpft</string>
+    <string name="label_token_unlinked">Noch nicht verknüpft</string>
+
+    <!-- Statistics -->
+    <string name="stat_inspection_count">Kontrollen</string>
+    <string name="stat_days_since">Tage seit letzter Kontrolle</string>
+    <string name="stat_queen_seen_rate">Königin-Sichtungsrate</string>
+    <string name="stat_swarm_cells">Schwarmzellen-Ereignisse</string>
+    <string name="stat_mood_distribution">Stimmungsverteilung</string>
+    <string name="stat_varroa_trend">Varroa-Verlauf</string>
+    <string name="stat_brood_trend">Bruträhmchen-Verlauf</string>
+    <string name="stat_honey_trend">Honigrähmchen-Verlauf</string>
+    <string name="stat_weight_trend">Gewichtsverlauf</string>
+
+    <!-- Alerts -->
+    <string name="alert_delete_apiary">Standort „%1$s" löschen? Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="alert_logout_confirm">Möchten Sie sich wirklich abmelden?</string>
+
+    <!-- Empty states -->
+    <string name="empty_apiaries_title">Noch keine Standorte.\nTippe auf +, um deinen ersten Standort hinzuzufügen.</string>
+    <string name="empty_hives_title">Noch keine Beuten an diesem Standort.\nScanne einen QR-Code, um eine hinzuzufügen.</string>
+    <string name="empty_inspections">Noch keine Kontrollen erfasst.</string>
+    <string name="empty_qr_batches">Noch keine QR-Batches.\nTippe auf +, um einen neuen Batch zu generieren.</string>
+
+    <!-- Auth -->
+    <string name="login_subtitle">Anmelden, um deine Beuten zu verwalten</string>
+    <string name="permission_camera_rationale">Kamerazugriff ist erforderlich, um QR-Codes auf deinen Beuten zu scannen.</string>
+</resources>

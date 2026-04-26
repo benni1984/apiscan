@@ -1,0 +1,139 @@
+package com.apiscan.app.data.api
+
+import okhttp3.ResponseBody
+import retrofit2.Response
+import retrofit2.http.*
+
+interface ApiService {
+
+    // Auth (no auth header needed)
+    @POST("auth/register")
+    suspend fun register(@Body body: RegisterRequest): TokenResponse
+
+    @POST("auth/login")
+    suspend fun login(@Body body: LoginRequest): TokenResponse
+
+    @POST("auth/refresh")
+    suspend fun refresh(@Body body: RefreshRequest): AccessTokenResponse
+
+    @POST("auth/logout")
+    suspend fun logout(@Body body: LogoutRequest): Response<Unit>
+
+    // Users
+    @GET("users/me")
+    suspend fun getMe(): UserOut
+
+    @PUT("users/me")
+    suspend fun updateMe(@Body body: UserUpdateRequest): UserOut
+
+    // Field Definitions
+    @GET("field-definitions")
+    suspend fun listFieldDefinitions(): List<FieldDefinitionOut>
+
+    @POST("field-definitions")
+    suspend fun createFieldDefinition(@Body body: FieldDefinitionCreate): FieldDefinitionOut
+
+    @DELETE("field-definitions/{id}")
+    suspend fun deleteFieldDefinition(@Path("id") id: String): Response<Unit>
+
+    @GET("apiaries/{apiaryId}/field-definitions")
+    suspend fun listApiaryFieldDefinitions(@Path("apiaryId") apiaryId: String): List<FieldDefinitionOut>
+
+    @POST("apiaries/{apiaryId}/field-definitions")
+    suspend fun createApiaryFieldDefinition(
+        @Path("apiaryId") apiaryId: String,
+        @Body body: FieldDefinitionCreate
+    ): FieldDefinitionOut
+
+    // Apiaries
+    @GET("apiaries")
+    suspend fun listApiaries(
+        @Query("page") page: Int = 1,
+        @Query("per_page") perPage: Int = 50
+    ): PaginatedResponse<ApiaryOut>
+
+    @GET("apiaries/{id}")
+    suspend fun getApiary(@Path("id") id: String): ApiaryOut
+
+    @POST("apiaries")
+    suspend fun createApiary(@Body body: ApiaryCreate): ApiaryOut
+
+    @PUT("apiaries/{id}")
+    suspend fun updateApiary(@Path("id") id: String, @Body body: ApiaryCreate): ApiaryOut
+
+    @DELETE("apiaries/{id}")
+    suspend fun deleteApiary(@Path("id") id: String): Response<Unit>
+
+    // QR Batches
+    @GET("qr-batches")
+    suspend fun listQrBatches(
+        @Query("page") page: Int = 1,
+        @Query("per_page") perPage: Int = 20
+    ): PaginatedResponse<QrBatchSummary>
+
+    @GET("qr-batches/{id}")
+    suspend fun getQrBatch(@Path("id") id: String): QrBatchOut
+
+    @POST("qr-batches")
+    suspend fun createQrBatch(@Body body: QrBatchCreate): QrBatchOut
+
+    // Hives
+    @GET("hives/by-qr/{token}")
+    suspend fun resolveQR(@Path("token") token: String): ResponseBody
+
+    @GET("apiaries/{apiaryId}/hives")
+    suspend fun listHives(
+        @Path("apiaryId") apiaryId: String,
+        @Query("page") page: Int = 1,
+        @Query("per_page") perPage: Int = 50
+    ): PaginatedResponse<HiveOut>
+
+    @POST("hives/initialize")
+    suspend fun initializeHive(@Body body: HiveInitializeRequest): HiveOut
+
+    @GET("hives/{id}")
+    suspend fun getHive(@Path("id") id: String): HiveOut
+
+    @PUT("hives/{id}")
+    suspend fun updateHive(@Path("id") id: String, @Body body: HiveUpdateRequest): HiveOut
+
+    @DELETE("hives/{id}")
+    suspend fun deleteHive(@Path("id") id: String): Response<Unit>
+
+    // Inspections
+    @GET("hives/{hiveId}/inspections")
+    suspend fun listInspections(
+        @Path("hiveId") hiveId: String,
+        @Query("page") page: Int = 1,
+        @Query("per_page") perPage: Int = 20
+    ): PaginatedResponse<InspectionOut>
+
+    @POST("hives/{hiveId}/inspections")
+    suspend fun createInspection(
+        @Path("hiveId") hiveId: String,
+        @Body body: InspectionCreateRequest
+    ): InspectionOut
+
+    @PUT("inspections/{id}")
+    suspend fun updateInspection(@Path("id") id: String, @Body body: InspectionCreateRequest): InspectionOut
+
+    @DELETE("inspections/{id}")
+    suspend fun deleteInspection(@Path("id") id: String): Response<Unit>
+
+    // Stats
+    @GET("hives/{id}/stats")
+    suspend fun hiveStats(
+        @Path("id") id: String,
+        @Query("preset") preset: String? = null,
+        @Query("from") from: String? = null,
+        @Query("to") to: String? = null
+    ): HiveStats
+
+    @GET("apiaries/{id}/stats")
+    suspend fun apiaryStats(
+        @Path("id") id: String,
+        @Query("preset") preset: String? = null,
+        @Query("from") from: String? = null,
+        @Query("to") to: String? = null
+    ): ApiaryStats
+}
