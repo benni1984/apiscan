@@ -1,0 +1,126 @@
+/* Auth */
+"login.subtitle" = "Enregistrez vos inspections,\nsuivez vos colonies.";
+"action.login" = "Se connecter";
+"action.register" = "Créer un compte";
+"action.createAccount" = "Créer un compte";
+"screen.register" = "Créer un compte";
+"error.unauthorized" = "Session expirée. Veuillez vous reconnecter.";
+"error.cameraNotAvailable" = "La caméra n'est pas disponible sur cet appareil.";
+
+/* Tabs */
+"tab.apiaries" = "Ruchers";
+"tab.scan" = "Scanner";
+"tab.print" = "Imprimer QR";
+"tab.settings" = "Paramètres";
+
+/* Screens */
+"screen.apiaries" = "Ruchers";
+"screen.qrCode" = "Code QR";
+"screen.qrBatches" = "Lots QR";
+"screen.batchDetail" = "Lot";
+"screen.initializeHive" = "Configurer la ruche";
+
+/* Fields */
+"field.email" = "E-mail";
+"field.password" = "Mot de passe";
+"field.name" = "Nom";
+"field.language" = "Langue";
+"field.hiveName" = "Nom de la ruche";
+"field.hiveType" = "Type de ruche";
+"field.apiary" = "Rucher";
+"field.date" = "Date";
+"field.description" = "Description";
+"field.address" = "Adresse";
+"field.location" = "Position";
+"field.notes" = "Notes";
+"field.acquisitionDate" = "Date d'acquisition";
+"field.queenSeen" = "Reine vue";
+"field.queenColor" = "Couleur de la reine";
+"field.broodFrames" = "Cadres de couvain";
+"field.honeyFrames" = "Cadres de miel";
+"field.mood" = "Humeur de la colonie";
+"field.populationStrength" = "Force de la population";
+"field.varroaCount" = "Comptage varroa";
+"field.swarmCellsSeen" = "Cellules d'essaimage";
+"field.treatmentApplied" = "Traitement appliqué";
+"field.feedingDone" = "Nourrissage effectué";
+"field.feedingType" = "Type de nourrissage";
+"field.weightKg" = "Poids (kg)";
+"field.count" = "Nombre de codes";
+
+/* Sections */
+"section.profile" = "Profil";
+"section.language" = "Langue";
+"section.details" = "Détails";
+"section.location" = "Localisation";
+"section.notes" = "Notes";
+"section.hives" = "Ruches";
+"section.inspections" = "Inspections";
+"section.customFields" = "Champs personnalisés";
+"section.newHive" = "Nouvelle ruche";
+"section.date" = "Date";
+"section.queen" = "Reine";
+"section.frames" = "Cadres";
+"section.colony" = "Colonie";
+"section.varroa" = "Varroa";
+"section.treatment" = "Traitement & Nourrissage";
+"section.weight" = "Poids";
+
+/* Labels */
+"label.hives" = "ruches";
+"label.neverInspected" = "Jamais inspectée";
+"label.queenSeen" = "Reine vue";
+"label.yes" = "Oui";
+"label.no" = "Non";
+"label.notRecorded" = "Non renseigné";
+"label.unknown" = "Inconnu";
+"label.add" = "Ajouter";
+"label.linked" = "liés";
+"label.locationAutoFilled" = "La position sera capturée automatiquement";
+
+/* Actions */
+"action.save" = "Enregistrer";
+"action.cancel" = "Annuler";
+"action.done" = "Terminé";
+"action.scanQR" = "Scanner le code QR";
+"action.useMyLocation" = "Utiliser ma position";
+"action.editApiary" = "Modifier le rucher";
+"action.newApiary" = "Nouveau rucher";
+"action.newInspection" = "Nouvelle inspection";
+"action.editInspection" = "Modifier l'inspection";
+"action.saveProfile" = "Enregistrer le profil";
+"action.logout" = "Se déconnecter";
+"action.newBatch" = "Nouveau lot";
+"action.generate" = "Générer";
+"action.downloadPDF" = "Imprimer PDF";
+
+/* Empty states */
+"empty.apiaries.title" = "Aucun rucher";
+"empty.apiaries.description" = "Ajoutez votre premier rucher pour commencer.";
+"empty.hives.title" = "Aucune ruche";
+"empty.hives.description" = "Scannez un code QR pour ajouter votre première ruche.";
+"empty.inspections" = "Aucune inspection pour l'instant.";
+"empty.batches.title" = "Aucun lot QR";
+"empty.batches.description" = "Générez un lot de codes QR à imprimer et coller sur vos ruches.";
+
+/* Alerts */
+"alert.error" = "Erreur";
+"alert.logoutConfirm" = "Êtes-vous sûr de vouloir vous déconnecter ?";
+"alert.batchCountHint" = "Saisissez le nombre de codes QR à générer (1–50).";
+
+/* Stats */
+"stat.inspections" = "Inspections";
+"stat.daysSinceLast" = "Jours depuis la dernière";
+"stat.queenSeenRate" = "Reine vue";
+"stat.swarmAlerts" = "Alertes essaimage";
+"stat.moodDistribution" = "Humeur de la colonie";
+"stat.varroaTrend" = "Comptage varroa";
+"stat.broodFrames" = "Cadres de couvain";
+"stat.honeyFrames" = "Cadres de miel";
+"stat.weight" = "Poids (kg)";
+"stat.customRange" = "Période personnalisée";
+"stat.from" = "Du";
+"stat.to" = "Au";
+
+/* Scan */
+"scan.instruction" = "Scannez le code QR sur votre ruche pour ouvrir sa fiche ou la configurer pour la première fois.";

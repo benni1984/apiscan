@@ -1,0 +1,126 @@
+/* Auth */
+"login.subtitle" = "Log your hive inspections,\ntrack your colonies.";
+"action.login" = "Log In";
+"action.register" = "Create an account";
+"action.createAccount" = "Create Account";
+"screen.register" = "Create Account";
+"error.unauthorized" = "Session expired. Please log in again.";
+"error.cameraNotAvailable" = "Camera is not available on this device.";
+
+/* Tabs */
+"tab.apiaries" = "Apiaries";
+"tab.scan" = "Scan";
+"tab.print" = "Print QR";
+"tab.settings" = "Settings";
+
+/* Screens */
+"screen.apiaries" = "Apiaries";
+"screen.qrCode" = "QR Code";
+"screen.qrBatches" = "QR Batches";
+"screen.batchDetail" = "Batch";
+"screen.initializeHive" = "Set Up Hive";
+
+/* Fields */
+"field.email" = "Email";
+"field.password" = "Password";
+"field.name" = "Name";
+"field.language" = "Language";
+"field.hiveName" = "Hive name";
+"field.hiveType" = "Hive type";
+"field.apiary" = "Apiary";
+"field.date" = "Date";
+"field.description" = "Description";
+"field.address" = "Address";
+"field.location" = "Location";
+"field.notes" = "Notes";
+"field.acquisitionDate" = "Acquisition date";
+"field.queenSeen" = "Queen seen";
+"field.queenColor" = "Queen color";
+"field.broodFrames" = "Brood frames";
+"field.honeyFrames" = "Honey frames";
+"field.mood" = "Colony mood";
+"field.populationStrength" = "Population strength";
+"field.varroaCount" = "Varroa count";
+"field.swarmCellsSeen" = "Swarm cells seen";
+"field.treatmentApplied" = "Treatment applied";
+"field.feedingDone" = "Feeding done";
+"field.feedingType" = "Feeding type";
+"field.weightKg" = "Weight (kg)";
+"field.count" = "Number of codes";
+
+/* Sections */
+"section.profile" = "Profile";
+"section.language" = "Language";
+"section.details" = "Details";
+"section.location" = "Location";
+"section.notes" = "Notes";
+"section.hives" = "Hives";
+"section.inspections" = "Inspections";
+"section.customFields" = "Custom fields";
+"section.newHive" = "New Hive";
+"section.date" = "Date";
+"section.queen" = "Queen";
+"section.frames" = "Frames";
+"section.colony" = "Colony";
+"section.varroa" = "Varroa";
+"section.treatment" = "Treatment & Feeding";
+"section.weight" = "Weight";
+
+/* Labels */
+"label.hives" = "hives";
+"label.neverInspected" = "Never inspected";
+"label.queenSeen" = "Queen seen";
+"label.yes" = "Yes";
+"label.no" = "No";
+"label.notRecorded" = "Not recorded";
+"label.unknown" = "Unknown";
+"label.add" = "Add";
+"label.linked" = "linked";
+"label.locationAutoFilled" = "Location will be captured automatically";
+
+/* Actions */
+"action.save" = "Save";
+"action.cancel" = "Cancel";
+"action.done" = "Done";
+"action.scanQR" = "Scan QR Code";
+"action.useMyLocation" = "Use my location";
+"action.editApiary" = "Edit Apiary";
+"action.newApiary" = "New Apiary";
+"action.newInspection" = "New Inspection";
+"action.editInspection" = "Edit Inspection";
+"action.saveProfile" = "Save Profile";
+"action.logout" = "Log Out";
+"action.newBatch" = "New Batch";
+"action.generate" = "Generate";
+"action.downloadPDF" = "Print PDF";
+
+/* Empty states */
+"empty.apiaries.title" = "No Apiaries";
+"empty.apiaries.description" = "Add your first apiary to get started.";
+"empty.hives.title" = "No Hives";
+"empty.hives.description" = "Scan a QR code to add your first hive.";
+"empty.inspections" = "No inspections yet.";
+"empty.batches.title" = "No QR Batches";
+"empty.batches.description" = "Generate a batch of QR codes to print and stick on your hives.";
+
+/* Alerts */
+"alert.error" = "Error";
+"alert.logoutConfirm" = "Are you sure you want to log out?";
+"alert.batchCountHint" = "Enter the number of QR codes to generate (1–50).";
+
+/* Stats */
+"stat.inspections" = "Inspections";
+"stat.daysSinceLast" = "Days since last";
+"stat.queenSeenRate" = "Queen seen";
+"stat.swarmAlerts" = "Swarm alerts";
+"stat.moodDistribution" = "Colony Mood";
+"stat.varroaTrend" = "Varroa Count";
+"stat.broodFrames" = "Brood Frames";
+"stat.honeyFrames" = "Honey Frames";
+"stat.weight" = "Weight (kg)";
+"stat.customRange" = "Custom date range";
+"stat.from" = "From";
+"stat.to" = "To";
+
+/* Scan */
+"scan.instruction" = "Scan the QR code on your hive to open its record or set it up for the first time.";

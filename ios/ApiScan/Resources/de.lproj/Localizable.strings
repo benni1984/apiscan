@@ -1,0 +1,126 @@
+/* Auth */
+"login.subtitle" = "Stockbegehungen protokollieren,\nVölker im Blick behalten.";
+"action.login" = "Anmelden";
+"action.register" = "Konto erstellen";
+"action.createAccount" = "Konto erstellen";
+"screen.register" = "Konto erstellen";
+"error.unauthorized" = "Sitzung abgelaufen. Bitte erneut anmelden.";
+"error.cameraNotAvailable" = "Kamera ist auf diesem Gerät nicht verfügbar.";
+
+/* Tabs */
+"tab.apiaries" = "Bienenstände";
+"tab.scan" = "Scannen";
+"tab.print" = "QR drucken";
+"tab.settings" = "Einstellungen";
+
+/* Screens */
+"screen.apiaries" = "Bienenstände";
+"screen.qrCode" = "QR-Code";
+"screen.qrBatches" = "QR-Stapel";
+"screen.batchDetail" = "Stapel";
+"screen.initializeHive" = "Bienenstock einrichten";
+
+/* Fields */
+"field.email" = "E-Mail";
+"field.password" = "Passwort";
+"field.name" = "Name";
+"field.language" = "Sprache";
+"field.hiveName" = "Stockname";
+"field.hiveType" = "Stocktyp";
+"field.apiary" = "Bienenstand";
+"field.date" = "Datum";
+"field.description" = "Beschreibung";
+"field.address" = "Adresse";
+"field.location" = "Position";
+"field.notes" = "Notizen";
+"field.acquisitionDate" = "Anschaffungsdatum";
+"field.queenSeen" = "Königin gesehen";
+"field.queenColor" = "Königinfarbe";
+"field.broodFrames" = "Brutwaben";
+"field.honeyFrames" = "Honigwaben";
+"field.mood" = "Volksstimmung";
+"field.populationStrength" = "Volksstärke";
+"field.varroaCount" = "Varroa-Zählung";
+"field.swarmCellsSeen" = "Schwarmzellen gesehen";
+"field.treatmentApplied" = "Behandlung durchgeführt";
+"field.feedingDone" = "Fütterung erfolgt";
+"field.feedingType" = "Fütterungsart";
+"field.weightKg" = "Gewicht (kg)";
+"field.count" = "Anzahl Codes";
+
+/* Sections */
+"section.profile" = "Profil";
+"section.language" = "Sprache";
+"section.details" = "Details";
+"section.location" = "Standort";
+"section.notes" = "Notizen";
+"section.hives" = "Bienenstöcke";
+"section.inspections" = "Begehungen";
+"section.customFields" = "Eigene Felder";
+"section.newHive" = "Neuer Bienenstock";
+"section.date" = "Datum";
+"section.queen" = "Königin";
+"section.frames" = "Waben";
+"section.colony" = "Volk";
+"section.varroa" = "Varroa";
+"section.treatment" = "Behandlung & Fütterung";
+"section.weight" = "Gewicht";
+
+/* Labels */
+"label.hives" = "Stöcke";
+"label.neverInspected" = "Noch nie besucht";
+"label.queenSeen" = "Königin gesehen";
+"label.yes" = "Ja";
+"label.no" = "Nein";
+"label.notRecorded" = "Nicht erfasst";
+"label.unknown" = "Unbekannt";
+"label.add" = "Hinzufügen";
+"label.linked" = "verknüpft";
+"label.locationAutoFilled" = "Position wird automatisch erfasst";
+
+/* Actions */
+"action.save" = "Speichern";
+"action.cancel" = "Abbrechen";
+"action.done" = "Fertig";
+"action.scanQR" = "QR-Code scannen";
+"action.useMyLocation" = "Meinen Standort verwenden";
+"action.editApiary" = "Bienenstand bearbeiten";
+"action.newApiary" = "Neuer Bienenstand";
+"action.newInspection" = "Neue Begehung";
+"action.editInspection" = "Begehung bearbeiten";
+"action.saveProfile" = "Profil speichern";
+"action.logout" = "Abmelden";
+"action.newBatch" = "Neuer Stapel";
+"action.generate" = "Erstellen";
+"action.downloadPDF" = "PDF drucken";
+
+/* Empty states */
+"empty.apiaries.title" = "Keine Bienenstände";
+"empty.apiaries.description" = "Fügen Sie Ihren ersten Bienenstand hinzu.";
+"empty.hives.title" = "Keine Bienenstöcke";
+"empty.hives.description" = "Scannen Sie einen QR-Code, um den ersten Stock hinzuzufügen.";
+"empty.inspections" = "Noch keine Begehungen.";
+"empty.batches.title" = "Keine QR-Stapel";
+"empty.batches.description" = "Erstellen Sie QR-Codes zum Drucken und Aufkleben auf Ihre Bienenstöcke.";
+
+/* Alerts */
+"alert.error" = "Fehler";
+"alert.logoutConfirm" = "Möchten Sie sich wirklich abmelden?";
+"alert.batchCountHint" = "Geben Sie die Anzahl der QR-Codes ein (1–50).";
+
+/* Stats */
+"stat.inspections" = "Begehungen";
+"stat.daysSinceLast" = "Tage seit letzter";
+"stat.queenSeenRate" = "Königin gesehen";
+"stat.swarmAlerts" = "Schwarmmeldungen";
+"stat.moodDistribution" = "Volksstimmung";
+"stat.varroaTrend" = "Varroa-Verlauf";
+"stat.broodFrames" = "Brutwaben";
+"stat.honeyFrames" = "Honigwaben";
+"stat.weight" = "Gewicht (kg)";
+"stat.customRange" = "Eigener Zeitraum";
+"stat.from" = "Von";
+"stat.to" = "Bis";
+
+/* Scan */
+"scan.instruction" = "Scannen Sie den QR-Code auf Ihrem Bienenstock, um die Akte zu öffnen oder ihn erstmalig einzurichten.";
