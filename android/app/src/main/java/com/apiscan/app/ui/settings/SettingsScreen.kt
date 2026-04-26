@@ -3,7 +3,7 @@ package com.apiscan.app.ui.settings
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -92,7 +92,7 @@ fun SettingsScreen(
             navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, null) } },
             actions = {
                 IconButton(onClick = { showLogout = true }) {
-                    Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = stringResource(R.string.action_logout))
+                    Icon(Icons.Default.ExitToApp, contentDescription = stringResource(R.string.action_logout))
                 }
             }
         )
@@ -100,7 +100,7 @@ fun SettingsScreen(
         when {
             state.isLoading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
             else -> Column(
-                Modifier.padding(padding).padding(16.dp),
+                Modifier.fillMaxSize().padding(padding).padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 state.error?.let {
@@ -161,7 +161,7 @@ fun SettingsScreen(
                     modifier = Modifier.fillMaxWidth(),
                     colors   = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.Logout, null, Modifier.size(18.dp))
+                    Icon(Icons.Default.ExitToApp, null, Modifier.size(18.dp))
                     Spacer(Modifier.width(8.dp))
                     Text(stringResource(R.string.action_logout))
                 }

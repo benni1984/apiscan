@@ -95,8 +95,7 @@ fun SimpleLineChart(
                 join = androidx.compose.ui.graphics.StrokeJoin.Round
             )
         )
-        points.forEach { (_, v) ->
-            val i = points.indexOf(Pair(points.first { it.second == v }.first, v))
+        points.forEachIndexed { i, (_, v) ->
             val x = size.width * i / (points.size - 1)
             val y = size.height * (1f - (v - minVal) / range)
             drawCircle(lineColor, radius = 4.dp.toPx(), center = androidx.compose.ui.geometry.Offset(x, y))
