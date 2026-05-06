@@ -32,7 +32,7 @@ object Routes {
 }
 
 @Composable
-fun ApiScanNavGraph(tokenStore: TokenStore = androidx.hilt.android.EntryPointAccessors
+fun ApiScanNavGraph(tokenStore: TokenStore = dagger.hilt.android.EntryPointAccessors
     .fromApplication(
         androidx.compose.ui.platform.LocalContext.current.applicationContext,
         TokenStoreEntryPoint::class.java

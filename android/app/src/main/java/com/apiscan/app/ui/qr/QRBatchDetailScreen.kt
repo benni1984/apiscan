@@ -1,7 +1,9 @@
 package com.apiscan.app.ui.qr
 
-import android.content.Intent
+import android.app.DownloadManager
+import android.content.Context
 import android.net.Uri
+import android.os.Environment
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -33,6 +35,19 @@ fun QRBatchDetailScreen(
     val state   = vm.state.collectAsState().value
     val context = LocalContext.current
 
+    val downloadPdf = {
+        vm.accessToken?.let { token ->
+            val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+            val req = DownloadManager.Request(Uri.parse("$BASE_URL/qr-batches/$batchId/pdf"))
+                .addRequestHeader("Authorization", "Bearer $token")
+                .setMimeType("application/pdf")
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "qr-batch-${batchId.take(8)}.pdf")
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setTitle("QR Batch ${batchId.take(8)}")
+            dm.enqueue(req)
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -40,10 +55,9 @@ fun QRBatchDetailScreen(
                 navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, null) } },
                 actions = {
                     state.batch?.let {
-                        IconButton(onClick = {
-                            val url = "$BASE_URL/qr-batches/$batchId/pdf"
-                            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                        }) { Icon(Icons.Default.Download, contentDescription = stringResource(R.string.action_download_pdf)) }
+                        IconButton(onClick = { downloadPdf() }) {
+                            Icon(Icons.Default.Download, contentDescription = stringResource(R.string.action_download_pdf))
+                        }
                     }
                 }
             )
@@ -74,10 +88,7 @@ fun QRBatchDetailScreen(
                         ) {
                             Text(stringResource(R.string.label_qr_tokens), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                             Spacer(Modifier.weight(1f))
-                            OutlinedButton(onClick = {
-                                val url = "$BASE_URL/qr-batches/$batchId/pdf"
-                                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                            }) {
+                            OutlinedButton(onClick = { downloadPdf() }) {
                                 Icon(Icons.Default.Download, null, Modifier.size(16.dp))
                                 Spacer(Modifier.width(4.dp))
                                 Text(stringResource(R.string.action_download_pdf))

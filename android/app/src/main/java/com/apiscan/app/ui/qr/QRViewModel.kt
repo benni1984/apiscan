@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.apiscan.app.data.api.QrBatchOut
 import com.apiscan.app.data.api.QrBatchSummary
 import com.apiscan.app.data.api.QRScanResult
+import com.apiscan.app.data.local.TokenStore
 import com.apiscan.app.data.repository.HiveRepository
 import com.apiscan.app.data.repository.QrBatchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -89,10 +90,12 @@ data class QRBatchDetailState(
 @HiltViewModel
 class QRBatchDetailViewModel @Inject constructor(
     savedState: SavedStateHandle,
-    private val repo: QrBatchRepository
+    private val repo: QrBatchRepository,
+    private val tokenStore: TokenStore
 ) : ViewModel() {
 
     val batchId = savedState.get<String>("batchId")!!
+    val accessToken: String? get() = tokenStore.accessToken
     private val _state = MutableStateFlow(QRBatchDetailState())
     val state = _state.asStateFlow()
 
