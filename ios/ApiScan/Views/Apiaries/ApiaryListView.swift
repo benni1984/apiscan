@@ -9,11 +9,20 @@ struct ApiaryListView: View {
             if apiaryVM.isLoading && apiaryVM.apiaries.isEmpty {
                 ProgressView()
             } else if apiaryVM.apiaries.isEmpty {
-                ContentUnavailableView(
-                    NSLocalizedString("empty.apiaries.title", comment: ""),
-                    systemImage: "map",
-                    description: Text(NSLocalizedString("empty.apiaries.description", comment: ""))
-                )
+                if #available(iOS 17, *) {
+                    ContentUnavailableView(
+                        NSLocalizedString("empty.apiaries.title", comment: ""),
+                        systemImage: "map",
+                        description: Text(NSLocalizedString("empty.apiaries.description", comment: ""))
+                    )
+                } else {
+                    VStack(spacing: 12) {
+                        Image(systemName: "map").font(.largeTitle).foregroundColor(.secondary)
+                        Text(NSLocalizedString("empty.apiaries.title", comment: "")).font(.headline)
+                        Text(NSLocalizedString("empty.apiaries.description", comment: "")).font(.subheadline).foregroundColor(.secondary)
+                    }
+                    .padding()
+                }
             } else {
                 List {
                     ForEach(apiaryVM.apiaries) { apiary in
@@ -33,11 +42,9 @@ struct ApiaryListView: View {
         }
         .navigationTitle(NSLocalizedString("screen.apiaries", comment: ""))
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button { showCreate = true } label: { Image(systemName: "plus") }
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItemGroup(placement: .primaryAction) {
                 if apiaryVM.isLoading { ProgressView() }
+                Button { showCreate = true } label: { Image(systemName: "plus") }
             }
         }
         .refreshable { await apiaryVM.load() }

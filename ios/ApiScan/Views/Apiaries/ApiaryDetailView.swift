@@ -11,11 +11,20 @@ struct ApiaryDetailView: View {
             if hiveVM.isLoading && hiveVM.hives.isEmpty {
                 ProgressView()
             } else if hiveVM.hives.isEmpty {
-                ContentUnavailableView(
-                    NSLocalizedString("empty.hives.title", comment: ""),
-                    systemImage: "hexagon",
-                    description: Text(NSLocalizedString("empty.hives.description", comment: ""))
-                )
+                if #available(iOS 17, *) {
+                    ContentUnavailableView(
+                        NSLocalizedString("empty.hives.title", comment: ""),
+                        systemImage: "hexagon",
+                        description: Text(NSLocalizedString("empty.hives.description", comment: ""))
+                    )
+                } else {
+                    VStack(spacing: 12) {
+                        Image(systemName: "hexagon").font(.largeTitle).foregroundColor(.secondary)
+                        Text(NSLocalizedString("empty.hives.title", comment: "")).font(.headline)
+                        Text(NSLocalizedString("empty.hives.description", comment: "")).font(.subheadline).foregroundColor(.secondary)
+                    }
+                    .padding()
+                }
             } else {
                 List {
                     if let lat = apiary.latitude, let lon = apiary.longitude {
@@ -44,7 +53,7 @@ struct ApiaryDetailView: View {
         }
         .navigationTitle(apiary.name)
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
+            ToolbarItemGroup(placement: .primaryAction) {
                 Button { showEdit = true } label: {
                     Image(systemName: "pencil")
                 }
