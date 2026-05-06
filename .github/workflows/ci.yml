@@ -11,9 +11,35 @@ env:
 
 jobs:
 
+  # ── Detect which paths changed ────────────────────────────────────────────────
+  changes:
+    name: Detect changed paths
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      android: ${{ steps.filter.outputs.android }}
+      ios:     ${{ steps.filter.outputs.ios }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+              - '.github/workflows/ci.yml'
+            android:
+              - 'android/**'
+              - '.github/workflows/ci.yml'
+            ios:
+              - 'ios/**'
+              - '.github/workflows/ci.yml'
+
   # ── Backend ──────────────────────────────────────────────────────────────────
   backend:
     name: Backend (pytest)
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -36,6 +62,8 @@ jobs:
   # ── Android unit tests ───────────────────────────────────────────────────────
   android-unit:
     name: Android unit tests
+    needs: changes
+    if: needs.changes.outputs.android == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -62,6 +90,8 @@ jobs:
   # ── Android UI tests (emulator) ──────────────────────────────────────────────
   android-ui:
     name: Android UI tests (emulator)
+    needs: changes
+    if: needs.changes.outputs.android == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -102,8 +132,9 @@ jobs:
   # ── iOS build & test (macOS — push to main only) ─────────────────────────────
   ios:
     name: iOS build & test
+    needs: changes
+    if: needs.changes.outputs.ios == 'true' && github.event_name == 'push'
     runs-on: macos-latest
-    if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
 
