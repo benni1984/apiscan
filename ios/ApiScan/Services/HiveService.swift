@@ -1,6 +1,22 @@
 import Foundation
 
-struct HiveService {
+protocol HiveServiceProtocol {
+    func listForApiary(_ apiaryId: String, page: Int) async throws -> PaginatedResponse<HiveOut>
+    func get(_ id: String) async throws -> HiveOut
+    func initialize(request: HiveInitializeRequest) async throws -> HiveOut
+    func update(_ id: String, request: HiveUpdateRequest) async throws -> HiveOut
+    func delete(_ id: String) async throws
+    func resolveQR(token: String) async throws -> QRScanResult
+    func qrImageURL(hiveId: String) -> URL
+}
+
+extension HiveServiceProtocol {
+    func listForApiary(_ apiaryId: String) async throws -> PaginatedResponse<HiveOut> {
+        try await listForApiary(apiaryId, page: 1)
+    }
+}
+
+struct HiveService: HiveServiceProtocol {
     private let client = APIClient.shared
 
     func listForApiary(_ apiaryId: String, page: Int = 1) async throws -> PaginatedResponse<HiveOut> {

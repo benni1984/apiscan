@@ -7,7 +7,11 @@ final class HiveViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    private let service = HiveService()
+    private let service: any HiveServiceProtocol
+
+    init(service: any HiveServiceProtocol = HiveService()) {
+        self.service = service
+    }
 
     func load(apiaryId: String) async {
         isLoading = true

@@ -1,6 +1,14 @@
 import Foundation
 
-struct AuthService {
+protocol AuthServiceProtocol {
+    func register(email: String, password: String, name: String, locale: String) async throws -> TokenResponse
+    func login(email: String, password: String) async throws -> TokenResponse
+    func logout(refreshToken: String) async throws
+    func getMe() async throws -> UserOut
+    func updateMe(name: String?, locale: String?) async throws -> UserOut
+}
+
+struct AuthService: AuthServiceProtocol {
     private let client = APIClient.shared
 
     func register(email: String, password: String, name: String, locale: String) async throws -> TokenResponse {

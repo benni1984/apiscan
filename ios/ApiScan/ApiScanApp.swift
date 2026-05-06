@@ -11,6 +11,14 @@ import SwiftUI
 struct ApiScanApp: App {
     @StateObject private var authVM = AuthViewModel()
 
+    init() {
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("-resetKeychain") {
+            KeychainService.shared.clearAll()
+        }
+        #endif
+    }
+
     var body: some Scene {
         WindowGroup {
             Group {

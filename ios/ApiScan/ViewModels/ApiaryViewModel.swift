@@ -6,7 +6,11 @@ final class ApiaryViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    private let service = ApiaryService()
+    private let service: any ApiaryServiceProtocol
+
+    init(service: any ApiaryServiceProtocol = ApiaryService()) {
+        self.service = service
+    }
 
     func load() async {
         isLoading = true

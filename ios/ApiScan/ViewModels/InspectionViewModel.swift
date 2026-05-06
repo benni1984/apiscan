@@ -8,7 +8,11 @@ final class InspectionViewModel: ObservableObject {
 
     private var currentPage = 1
     private var hasMore = true
-    private let service = InspectionService()
+    private let service: any InspectionServiceProtocol
+
+    init(service: any InspectionServiceProtocol = InspectionService()) {
+        self.service = service
+    }
 
     func load(hiveId: String) async {
         guard !isLoading else { return }

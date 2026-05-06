@@ -1,6 +1,14 @@
 import Foundation
 
-struct InspectionService {
+protocol InspectionServiceProtocol {
+    func list(hiveId: String, page: Int) async throws -> PaginatedResponse<InspectionOut>
+    func get(_ id: String) async throws -> InspectionOut
+    func create(hiveId: String, request: InspectionCreateRequest) async throws -> InspectionOut
+    func update(_ id: String, request: InspectionCreateRequest) async throws -> InspectionOut
+    func delete(_ id: String) async throws
+}
+
+struct InspectionService: InspectionServiceProtocol {
     private let client = APIClient.shared
 
     func list(hiveId: String, page: Int = 1) async throws -> PaginatedResponse<InspectionOut> {

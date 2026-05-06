@@ -8,9 +8,10 @@ final class AuthViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    private let service = AuthService()
+    private let service: any AuthServiceProtocol
 
-    init() {
+    init(service: any AuthServiceProtocol = AuthService()) {
+        self.service = service
         isAuthenticated = KeychainService.shared.accessToken != nil
     }
 

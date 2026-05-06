@@ -33,15 +33,39 @@ targets:
         DEVELOPMENT_TEAM: ""
         CODE_SIGN_STYLE: Automatic
 
+  ApiScanTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: ApiScanTests
+    dependencies:
+      - target: ApiScan
+        embed: false
+
+  ApiScanUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: ApiScanUITests
+    dependencies:
+      - target: ApiScan
+
 schemes:
   ApiScan:
     build:
       targets:
         ApiScan: all
+        ApiScanTests: [test]
+        ApiScanUITests: [test]
     run:
       config: Debug
     test:
       config: Debug
+      targets:
+        - ApiScanTests
+        - ApiScanUITests
     profile:
       config: Release
     analyze:
