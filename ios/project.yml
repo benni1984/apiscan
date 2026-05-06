@@ -42,6 +42,10 @@ targets:
     dependencies:
       - target: ApiScan
         embed: false
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.apiscan.tests
 
   ApiScanUITests:
     type: bundle.ui-testing
@@ -51,6 +55,10 @@ targets:
       - path: ApiScanUITests
     dependencies:
       - target: ApiScan
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.apiscan.uitests
 
 schemes:
   ApiScan:
