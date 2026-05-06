@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApiScan — Apiary</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <a class="back-btn" href="index.html">← Map</a>
+  <a class="logo" href="index.html">🐝 Api<span>Scan</span></a>
+  <span class="subtitle" id="header-subtitle">Apiary detail</span>
+</header>
+
+<div class="page-body">
+  <div id="content">
+    <div class="spinner"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="config.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const apiaryId = params.get('id');
+
+  if (!apiaryId) {
+    document.getElementById('content').innerHTML =
+      '<div class="empty">No apiary ID provided. <a href="index.html">Back to map</a></div>';
+  } else {
+    fetch(`${API_BASE}/public/apiaries/${encodeURIComponent(apiaryId)}`)
+      .then(r => {
+        if (!r.ok) throw new Error(r.status);
+        return r.json();
+      })
+      .then(render)
+      .catch(err => {
+        document.getElementById('content').innerHTML =
+          `<div class="empty">${err.message === '404' ? 'Apiary not found.' : 'Could not load apiary data.'} <a href="index.html">Back to map</a></div>`;
+      });
+  }
+
+  function render(d) {
+    document.title = `ApiScan — ${d.name}`;
+    document.getElementById('header-subtitle').textContent = d.name;
+
+    const locParts = [];
+    if (d.address) locParts.push(d.address);
+    if (d.latitude != null && d.longitude != null)
+      locParts.push(`${d.latitude.toFixed(4)}, ${d.longitude.toFixed(4)}`);
+
+    const lastInsp = d.last_inspection_date
+      ? new Date(d.last_inspection_date).toLocaleDateString(undefined, { dateStyle: 'medium' })
+      : '—';
+    const avgVarroa = d.average_varroa != null ? d.average_varroa.toFixed(1) : '—';
+
+    const moodEntries = Object.entries(d.mood_distribution || {});
+    const hasMood = moodEntries.length > 0;
+
+    document.getElementById('content').innerHTML = `
+      <div class="apiary-hero">
+        <h1>${escHtml(d.name)}</h1>
+        <div class="meta">
+          ${locParts.length ? `<span>${escHtml(locParts.join(' · '))}</span>` : ''}
+          ${d.description ? `<span class="desc">${escHtml(d.description)}</span>` : ''}
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="num">${d.hive_count}</div>
+          <div class="label">Hives</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">${d.inspection_count}</div>
+          <div class="label">Inspections</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">${avgVarroa}</div>
+          <div class="label">Avg Varroa</div>
+        </div>
+        <div class="stat-box">
+          <div class="num" style="font-size:1.2rem">${lastInsp}</div>
+          <div class="label">Last Inspection</div>
+        </div>
+      </div>
+
+      ${hasMood ? `
+      <div class="card">
+        <h2>Mood Distribution</h2>
+        <div class="chart-wrap">
+          <canvas id="moodChart"></canvas>
+        </div>
+      </div>
+      ` : ''}
+
+      <div class="card">
+        <h2>Hives</h2>
+        ${d.hives.length === 0
+          ? '<div class="empty">No hives registered yet.</div>'
+          : `<table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Last Inspection</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${d.hives.map(h => `
+                  <tr>
+                    <td>${escHtml(h.name)}</td>
+                    <td><span class="badge">${escHtml(h.hive_type)}</span></td>
+                    <td>${h.last_inspection_date
+                      ? new Date(h.last_inspection_date).toLocaleDateString(undefined, { dateStyle: 'medium' })
+                      : '<span class="never">Never</span>'
+                    }</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>`
+        }
+      </div>
+    `;
+
+    if (hasMood) {
+      const labels = moodEntries.map(([k]) => k.charAt(0).toUpperCase() + k.slice(1));
+      const values = moodEntries.map(([, v]) => v);
+      const colors = ['#16a34a','#f59e0b','#ef4444','#3b82f6','#8b5cf6','#ec4899','#14b8a6'];
+
+      new Chart(document.getElementById('moodChart'), {
+        type: 'doughnut',
+        data: {
+          labels,
+          datasets: [{
+            data: values,
+            backgroundColor: colors.slice(0, labels.length),
+            borderWidth: 2,
+            borderColor: '#fff',
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: { font: { family: 'Inter', size: 13 }, padding: 16 },
+            },
+          },
+        },
+      });
+    }
+  }
+
+  function escHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
+</body>
+</html>

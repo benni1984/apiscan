@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApiScan — Live Hive Map</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html">🐝 Api<span>Scan</span></a>
+  <span class="subtitle">Live hive map</span>
+</header>
+
+<div class="stats-bar">
+  <div class="stat-pill">
+    <span class="num" id="stat-apiaries">—</span>
+    <span class="label">Apiaries</span>
+  </div>
+  <div class="stat-pill">
+    <span class="num" id="stat-hives">—</span>
+    <span class="label">Hives</span>
+  </div>
+  <div class="stat-pill">
+    <span class="num" id="stat-inspections">—</span>
+    <span class="label">Inspections</span>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="config.js"></script>
+<script>
+  const map = L.map('map').setView([48, 10], 4);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18,
+  }).addTo(map);
+
+  const hiveIcon = L.divIcon({
+    className: '',
+    html: `<div style="
+      background:#14532d;border:3px solid #f59e0b;
+      border-radius:50%;width:32px;height:32px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,.3);
+      cursor:pointer;
+    ">🐝</div>`,
+    iconSize:   [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor:[0, -18],
+  });
+
+  fetch(`${API_BASE}/public/stats`)
+    .then(r => r.json())
+    .then(data => {
+      document.getElementById('stat-apiaries').textContent   = data.apiary_count.toLocaleString();
+      document.getElementById('stat-hives').textContent      = data.hive_count.toLocaleString();
+      document.getElementById('stat-inspections').textContent = data.inspection_count.toLocaleString();
+
+      if (data.apiaries.length === 0) return;
+
+      const bounds = [];
+      data.apiaries.forEach(a => {
+        bounds.push([a.latitude, a.longitude]);
+        const marker = L.marker([a.latitude, a.longitude], { icon: hiveIcon }).addTo(map);
+        marker.bindPopup(`
+          <div class="map-popup">
+            <h3>${escHtml(a.name)}</h3>
+            <p>🐝 ${a.hive_count} hive${a.hive_count !== 1 ? 's' : ''}</p>
+            <a href="apiary.html?id=${a.id}">View details →</a>
+          </div>
+        `, { maxWidth: 220 });
+      });
+
+      if (bounds.length === 1) {
+        map.setView(bounds[0], 12);
+      } else {
+        map.fitBounds(bounds, { padding: [40, 40] });
+      }
+    })
+    .catch(() => {
+      document.getElementById('stat-apiaries').textContent = '—';
+    });
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
+</body>
+</html>
