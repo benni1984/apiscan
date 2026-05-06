@@ -14,11 +14,20 @@ struct QRBatchListView: View {
             if isLoading && batches.isEmpty {
                 ProgressView()
             } else if batches.isEmpty {
-                ContentUnavailableView(
-                    NSLocalizedString("empty.batches.title", comment: ""),
-                    systemImage: "printer",
-                    description: Text(NSLocalizedString("empty.batches.description", comment: ""))
-                )
+                if #available(iOS 17, *) {
+                    ContentUnavailableView(
+                        NSLocalizedString("empty.batches.title", comment: ""),
+                        systemImage: "printer",
+                        description: Text(NSLocalizedString("empty.batches.description", comment: ""))
+                    )
+                } else {
+                    VStack(spacing: 12) {
+                        Image(systemName: "printer").font(.largeTitle).foregroundColor(.secondary)
+                        Text(NSLocalizedString("empty.batches.title", comment: "")).font(.headline)
+                        Text(NSLocalizedString("empty.batches.description", comment: "")).font(.subheadline).foregroundColor(.secondary)
+                    }
+                    .padding()
+                }
             } else {
                 List(batches) { batch in
                     NavigationLink(destination: QRBatchDetailView(batchId: batch.id)) {
@@ -34,7 +43,7 @@ struct QRBatchListView: View {
         }
         .navigationTitle(NSLocalizedString("screen.qrBatches", comment: ""))
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
+            ToolbarItemGroup(placement: .primaryAction) {
                 Button { showCreate = true } label: { Image(systemName: "plus") }
             }
         }
@@ -102,7 +111,7 @@ struct QRBatchDetailView: View {
         }
         .navigationTitle(NSLocalizedString("screen.batchDetail", comment: ""))
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
+            ToolbarItemGroup(placement: .primaryAction) {
                 Link(destination: service.pdfURL(batchId: batchId)) {
                     Label(NSLocalizedString("action.downloadPDF", comment: ""), systemImage: "arrow.down.doc")
                 }

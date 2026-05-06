@@ -9,12 +9,16 @@ final class KeychainService {
 
     var accessToken: String? {
         get { read(key: "access_token") }
-        set { newValue == nil ? delete(key: "access_token") : save(newValue!, key: "access_token") }
+        set {
+            if let v = newValue { save(v, key: "access_token") } else { _ = delete(key: "access_token") }
+        }
     }
 
     var refreshToken: String? {
         get { read(key: "refresh_token") }
-        set { newValue == nil ? delete(key: "refresh_token") : save(newValue!, key: "refresh_token") }
+        set {
+            if let v = newValue { save(v, key: "refresh_token") } else { _ = delete(key: "refresh_token") }
+        }
     }
 
     func clearAll() {
