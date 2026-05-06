@@ -98,3 +98,30 @@ jobs:
         with:
           name: ui-test-results
           path: android/app/build/reports/androidTests/
+
+  # ── iOS build & test (macOS — push to main only) ─────────────────────────────
+  ios:
+    name: iOS build & test
+    runs-on: macos-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Build & test
+        run: |
+          xcodebuild test \
+            -project ios/ApiScan.xcodeproj \
+            -scheme ApiScan \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            -resultBundlePath TestResults \
+            | xcpretty --color || true
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-test-results
+          path: TestResults.xcresult
