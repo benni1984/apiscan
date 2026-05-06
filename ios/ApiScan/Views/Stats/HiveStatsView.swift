@@ -30,11 +30,19 @@ struct HiveStatsView: View {
                     // Mood
                     if !s.moodDistribution.isEmpty {
                         ChartCard(title: NSLocalizedString("stat.moodDistribution", comment: "")) {
-                            Chart(s.moodDistribution.sorted(by: { $0.key < $1.key }), id: \.key) { entry in
-                                SectorMark(angle: .value("Count", entry.value), innerRadius: .ratio(0.6))
-                                    .foregroundStyle(by: .value("Mood", entry.key.capitalized))
+                            if #available(iOS 17, *) {
+                                Chart(s.moodDistribution.sorted(by: { $0.key < $1.key }), id: \.key) { entry in
+                                    SectorMark(angle: .value("Count", entry.value), innerRadius: .ratio(0.6))
+                                        .foregroundStyle(by: .value("Mood", entry.key.capitalized))
+                                }
+                                .frame(height: 180)
+                            } else {
+                                Chart(s.moodDistribution.sorted(by: { $0.key < $1.key }), id: \.key) { entry in
+                                    BarMark(x: .value("Mood", entry.key.capitalized), y: .value("Count", entry.value))
+                                        .foregroundStyle(by: .value("Mood", entry.key.capitalized))
+                                }
+                                .frame(height: 180)
                             }
-                            .frame(height: 180)
                         }
                     }
 
@@ -63,8 +71,8 @@ struct HiveStatsView: View {
         }
         .navigationTitle(hiveName)
         .task { await load() }
-        .onChange(of: preset) { _, _ in Task { await load() } }
-        .onChange(of: useCustomRange) { _, _ in Task { await load() } }
+        .onChange(of: preset) { _ in Task { await load() } }
+        .onChange(of: useCustomRange) { _ in Task { await load() } }
     }
 
     private var periodPicker: some View {
