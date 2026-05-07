@@ -933,19 +933,25 @@
     document.querySelectorAll('.lang-dropdown').forEach(d => d.classList.remove('open'));
   };
 
-  window.i18nToggle = function (el, e) {
-    e.stopPropagation();
-    const dd = el.closest('.lang-switcher').querySelector('.lang-dropdown');
-    const wasOpen = dd.classList.contains('open');
-    document.querySelectorAll('.lang-dropdown').forEach(d => d.classList.remove('open'));
-    if (!wasOpen) dd.classList.add('open');
-  };
-
   document.addEventListener('click', function (e) {
     if (!e.target.closest('.lang-switcher')) {
       document.querySelectorAll('.lang-dropdown').forEach(d => d.classList.remove('open'));
     }
   });
 
-  document.addEventListener('DOMContentLoaded', apply);
+  document.addEventListener('DOMContentLoaded', function () {
+    apply();
+
+    // Attach toggle via addEventListener so stopPropagation reliably prevents
+    // the document-level handler from closing the dropdown on the same click.
+    document.querySelectorAll('.lang-current').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var dd = btn.closest('.lang-switcher').querySelector('.lang-dropdown');
+        var wasOpen = dd.classList.contains('open');
+        document.querySelectorAll('.lang-dropdown').forEach(function (d) { d.classList.remove('open'); });
+        if (!wasOpen) dd.classList.add('open');
+      });
+    });
+  });
 }());
