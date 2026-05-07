@@ -933,7 +933,8 @@
     document.querySelectorAll('.lang-dropdown').forEach(d => d.classList.remove('open'));
   };
 
-  window.i18nToggle = function (el) {
+  window.i18nToggle = function (el, e) {
+    e.stopPropagation();
     const dd = el.closest('.lang-switcher').querySelector('.lang-dropdown');
     const wasOpen = dd.classList.contains('open');
     document.querySelectorAll('.lang-dropdown').forEach(d => d.classList.remove('open'));
