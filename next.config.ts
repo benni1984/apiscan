@@ -4,11 +4,9 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 const nextConfig: NextConfig = {
-  webpack(config, { nextRuntime }) {
-    if (nextRuntime !== 'edge') {
-      config.optimization = config.optimization || {};
-      config.optimization.concatenateModules = false;
-    }
+  webpack(config) {
+    config.optimization = config.optimization || {};
+    config.optimization.concatenateModules = false;
     return config;
   },
   async redirects() {
