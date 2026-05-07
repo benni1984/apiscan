@@ -3,96 +3,414 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ApiScan — Live Hive Map</title>
+  <title>ApiScan — Protecting Pollinators Together</title>
+  <meta name="description" content="The beekeeping community app that turns every inspection into global data for bee conservation. Free for iOS and Android." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="landing.css" />
 </head>
 <body>
 
-<header>
-  <a class="logo" href="index.html">🐝 Api<span>Scan</span></a>
-  <span class="subtitle">Live hive map</span>
-</header>
-
-<div class="stats-bar">
-  <div class="stat-pill">
-    <span class="num" id="stat-apiaries">—</span>
-    <span class="label">Apiaries</span>
+<!-- ── Navigation ─────────────────────────────────────────── -->
+<nav class="site-nav" id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">🐝 Api<span>Scan</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="map.html"        data-i18n="nav.map">Live Map</a></li>
+      <li><a href="news.html"       data-i18n="nav.news">News</a></li>
+      <li><a href="contribute.html" data-i18n="nav.contribute">Contribute</a></li>
+      <li><a href="members.html"    data-i18n="nav.members">Members</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-current" onclick="i18nToggle(this)" aria-label="Switch language">
+        <span class="lang-current-text">🇬🇧 EN</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="lang-dropdown">
+        <button class="lang-option" data-lang="en" onclick="i18nSetLang('en')">🇬🇧 English</button>
+        <button class="lang-option" data-lang="de" onclick="i18nSetLang('de')">🇩🇪 Deutsch</button>
+        <button class="lang-option" data-lang="fr" onclick="i18nSetLang('fr')">🇫🇷 Français</button>
+        <button class="lang-option" data-lang="es" onclick="i18nSetLang('es')">🇪🇸 Español</button>
+      </div>
+    </div>
+    <a href="#download" class="nav-cta" data-i18n="nav.download">Download Free</a>
   </div>
-  <div class="stat-pill">
-    <span class="num" id="stat-hives">—</span>
-    <span class="label">Hives</span>
-  </div>
-  <div class="stat-pill">
-    <span class="num" id="stat-inspections">—</span>
-    <span class="label">Inspections</span>
-  </div>
-</div>
+</nav>
 
-<div id="map"></div>
+<!-- ── Hero ───────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge" data-aos="fade-down" data-i18n="hero.badge">Open Source · Community Driven · Free to Use</div>
+    <h1 data-aos="fade-up" data-aos-delay="80">
+      <span data-i18n="hero.title1">Saving Bees,</span><br>
+      <span class="hero-highlight" data-i18n="hero.title2">One Scan at a Time</span>
+    </h1>
+    <p class="hero-sub" data-aos="fade-up" data-aos-delay="160" data-i18n="hero.subtitle">
+      ApiScan turns every beekeeper into a citizen scientist. Log inspections, track hive health, and contribute to global data that helps researchers understand and protect honey bee populations worldwide.
+    </p>
+    <div class="hero-actions" data-aos="fade-up" data-aos-delay="240">
+      <a href="#download" class="btn-store btn-apple">
+        <i class="fab fa-apple"></i>
+        <span><small data-i18n="hero.apple.pre">Download on the</small><span data-i18n="hero.apple.store">App Store</span></span>
+      </a>
+      <a href="#download" class="btn-store btn-android">
+        <i class="fab fa-google-play"></i>
+        <span><small data-i18n="hero.google.pre">Get it on</small><span data-i18n="hero.google.play">Google Play</span></span>
+      </a>
+    </div>
+    <div class="hero-scroll-hint" data-aos="fade-up" data-aos-delay="400">
+      <span data-i18n="hero.scroll">Scroll to learn more</span>
+      <i class="fas fa-chevron-down bounce"></i>
+    </div>
+  </div>
+</section>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- ── Live Stats ──────────────────────────────────────────── -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-intro" data-aos="fade-up">
+      <h2 data-i18n="stats.title">Our Community, Right Now</h2>
+      <p data-i18n="stats.sub">Real-time numbers from our global network of beekeepers</p>
+    </div>
+    <div class="live-stats" data-aos="fade-up" data-aos-delay="80">
+      <div class="live-stat">
+        <div class="live-num" id="stat-apiaries">—</div>
+        <div class="live-label" data-i18n="stats.apiaries">Apiaries Registered</div>
+      </div>
+      <div class="live-stat">
+        <div class="live-num" id="stat-hives">—</div>
+        <div class="live-label" data-i18n="stats.hives">Hives Monitored</div>
+      </div>
+      <div class="live-stat">
+        <div class="live-num" id="stat-inspections">—</div>
+        <div class="live-label" data-i18n="stats.inspections">Inspections Logged</div>
+      </div>
+      <div class="live-stat">
+        <div class="live-num">42+</div>
+        <div class="live-label" data-i18n="stats.countries">Countries Reached</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ───────────────────────────────────────────── -->
+<section class="features-section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag" data-i18n="feat.tag">The App</div>
+      <h2 data-i18n="feat.title">Everything a beekeeper needs</h2>
+      <p data-i18n="feat.sub">From first-time hobbyist to commercial operation, ApiScan grows with you — and your data grows with the planet.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+        <span class="feature-icon">📱</span>
+        <h3 data-i18n="feat.qr.title">QR Scan &amp; Go</h3>
+        <p data-i18n="feat.qr.desc">Stick a QR code on each hive. Scan it on arrival and jump straight into your inspection — no searching, no typos, no forgotten hive names.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="80">
+        <span class="feature-icon">📊</span>
+        <h3 data-i18n="feat.track.title">Smart Tracking</h3>
+        <p data-i18n="feat.track.desc">Track brood frames, varroa counts, queen status, honey stores, and hive mood over time. Spot trends before they become problems.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="160">
+        <span class="feature-icon">🌍</span>
+        <h3 data-i18n="feat.global.title">Global Data Pool</h3>
+        <p data-i18n="feat.global.desc">Your anonymized data contributes to a global picture of hive health — shared with researchers studying colony collapse and disease spread.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="240">
+        <span class="feature-icon">📈</span>
+        <h3 data-i18n="feat.trends.title">Trend Analysis</h3>
+        <p data-i18n="feat.trends.desc">Visualize varroa counts across seasons, compare hive health across your apiary, and follow your colony's development in beautiful charts.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="320">
+        <span class="feature-icon">🖨️</span>
+        <h3 data-i18n="feat.batch.title">QR Batch Generation</h3>
+        <p data-i18n="feat.batch.desc">Generate batches of up to 50 QR codes and download a print-ready PDF — perfect for labelling a new apiary or replacing lost tags.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+        <span class="feature-icon">🔒</span>
+        <h3 data-i18n="feat.privacy.title">Your Data, Private</h3>
+        <p data-i18n="feat.privacy.desc">Precise locations and personal notes stay private. Only anonymized aggregates are shared — you control what's visible on the public map.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Why Bees Matter ────────────────────────────────────── -->
+<section class="mission-section">
+  <div class="container">
+    <div class="mission-content">
+      <div class="mission-text" data-aos="fade-right">
+        <div class="section-tag light" data-i18n="mission.tag">Why It Matters</div>
+        <h2 data-i18n="mission.title">One third of everything you eat depends on bees</h2>
+        <p data-i18n="mission.p1">Honey bees and wild pollinators fertilize roughly 35 % of the world's food supply — fruits, vegetables, nuts, and oils. But populations have been declining for decades, and science is still scrambling to understand exactly why.</p>
+        <ul class="mission-list">
+          <li><i class="fas fa-check-circle"></i> <span data-i18n="mission.li1">Colony Collapse Disorder affects millions of hives every year</span></li>
+          <li><i class="fas fa-check-circle"></i> <span data-i18n="mission.li2">Varroa mite is the #1 threat to managed bee colonies globally</span></li>
+          <li><i class="fas fa-check-circle"></i> <span data-i18n="mission.li3">Pesticides, habitat loss, and climate change compound the pressure</span></li>
+          <li><i class="fas fa-check-circle"></i> <span data-i18n="mission.li4">Real-time beekeeper data is essential for early-warning systems</span></li>
+        </ul>
+        <p class="mission-callout" data-i18n="mission.callout">When you log an inspection in ApiScan, you're not just managing your hive — you're adding a data point to a global early-warning network for bee health.</p>
+      </div>
+      <div class="mission-visual" data-aos="fade-left" data-aos-delay="80">
+        <div class="hex-stat">
+          <div class="hex-num">75%</div>
+          <div class="hex-label" data-i18n="hex1.label">of flowering crops depend on animal pollination</div>
+        </div>
+        <div class="hex-stat amber">
+          <div class="hex-num">40%</div>
+          <div class="hex-label" data-i18n="hex2.label">of insect pollinator species face extinction risk</div>
+        </div>
+        <div class="hex-stat">
+          <div class="hex-num">$577B</div>
+          <div class="hex-label" data-i18n="hex3.label">annual value of global pollination services</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Community Power ────────────────────────────────────── -->
+<section class="community-section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag" data-i18n="comm.tag">Collective Intelligence</div>
+      <h2 data-i18n="comm.title">Why community data changes everything</h2>
+      <p data-i18n="comm.sub">A single beekeeper sees one apiary. Together, we see the world — and we can do something about it.</p>
+    </div>
+    <div class="community-grid" data-aos="fade-up" data-aos-delay="80">
+      <div class="community-card accent-green">
+        <i class="fas fa-map-marked-alt"></i>
+        <h3 data-i18n="comm.disease.title">Disease Mapping</h3>
+        <p data-i18n="comm.disease.desc">Identify geographic clusters of varroa infestation or disease outbreaks before they spread, enabling targeted beekeeper intervention across regions.</p>
+      </div>
+      <div class="community-card accent-amber">
+        <i class="fas fa-chart-line"></i>
+        <h3 data-i18n="comm.seasonal.title">Seasonal Trends</h3>
+        <p data-i18n="comm.seasonal.desc">Cross-reference hive health with weather patterns, bloom calendars, and local land-use to pinpoint what's driving colony losses in each area.</p>
+      </div>
+      <div class="community-card accent-green">
+        <i class="fas fa-university"></i>
+        <h3 data-i18n="comm.research.title">Research Partnership</h3>
+        <p data-i18n="comm.research.desc">Our anonymized dataset is shared with university researchers and conservation NGOs, contributing to peer-reviewed science on pollinator health.</p>
+      </div>
+      <div class="community-card accent-amber">
+        <i class="fas fa-seedling"></i>
+        <h3 data-i18n="comm.policy.title">Policy Change</h3>
+        <p data-i18n="comm.policy.desc">Hard data from thousands of apiaries gives beekeepers a powerful evidence-based voice in conversations about pesticide regulation and habitat protection.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Roadmap ─────────────────────────────────────────────── -->
+<section class="roadmap-section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag" data-i18n="road.tag">What's Next</div>
+      <h2 data-i18n="road.title">On the Roadmap</h2>
+      <p data-i18n="road.sub">We're honest about what's shipped and what's planned. Here's where we're heading.</p>
+    </div>
+    <div class="roadmap-grid" data-aos="fade-up" data-aos-delay="60">
+      <div class="roadmap-card">
+        <span class="roadmap-status planned" data-i18n="road.label.planned">Planned</span>
+        <h3 data-i18n="road.remind.title">Inspection Reminders</h3>
+        <p data-i18n="road.remind.desc">Push notifications when a hive is overdue for inspection.</p>
+      </div>
+      <div class="roadmap-card">
+        <span class="roadmap-status planned" data-i18n="road.label.planned">Planned</span>
+        <h3 data-i18n="road.export.title">Data Export (CSV / JSON)</h3>
+        <p data-i18n="road.export.desc">Download your complete inspection history for your own analysis or records.</p>
+      </div>
+      <div class="roadmap-card">
+        <span class="roadmap-status progress" data-i18n="road.label.progress">In Progress</span>
+        <h3 data-i18n="road.fields.title">Custom Fields in Forms</h3>
+        <p data-i18n="road.fields.desc">Full UI for your custom inspection field definitions — backend is already done.</p>
+      </div>
+      <div class="roadmap-card">
+        <span class="roadmap-status planned" data-i18n="road.label.planned">Planned</span>
+        <h3 data-i18n="road.heat.title">Regional Heatmaps</h3>
+        <p data-i18n="road.heat.desc">Varroa risk overlays and disease cluster maps updated weekly from community data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Support / Pricing ──────────────────────────────────── -->
+<section class="support-section" id="support">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag" data-i18n="support.tag">Support the Mission</div>
+      <h2 data-i18n="support.title">Keep the hives buzzing</h2>
+      <p data-i18n="support.sub">ApiScan is free to use. A small contribution keeps the servers running, funds new features, and supports our research partnerships. No beekeeper should be priced out.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <!-- Free -->
+      <div class="pricing-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="pricing-tier" data-i18n="price.free.tier">Free Forever</div>
+        <div class="pricing-price">€0 <span data-i18n="price.month">/ month</span></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check"></i> <span data-i18n="price.free.f1">Unlimited hives &amp; inspections</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="price.free.f2">QR code scanning &amp; batch generation</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="price.free.f3">Basic statistics per hive</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="price.free.f4">Community data contribution</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="price.free.f5">Public live map</span></li>
+          <li class="dim"><i class="fas fa-times"></i> <span data-i18n="price.free.f6">Advanced charts &amp; trends</span></li>
+          <li class="dim"><i class="fas fa-times"></i> <span data-i18n="price.free.f7">Data export</span></li>
+          <li class="dim"><i class="fas fa-times"></i> <span data-i18n="price.free.f8">Members area</span></li>
+        </ul>
+        <a href="#download" class="btn-outline" data-i18n="btn.free">Download Free</a>
+      </div>
+
+      <!-- Supporter -->
+      <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="100">
+        <div class="pricing-badge" data-i18n="price.sup.badge">Most Popular</div>
+        <div class="pricing-tier" data-i18n="price.sup.tier">Supporter</div>
+        <div class="pricing-price">€2.99 <span data-i18n="price.month">/ month</span></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check"></i> <span data-i18n="price.sup.f1">Everything in Free</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="price.sup.f2">Advanced trend charts (in-app)</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="price.sup.f3">Members area &amp; global stats</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="price.sup.f4">Priority support</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="price.sup.f5">Your name in the app credits</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="price.sup.f6">Early access to new features</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="price.sup.f7">Data export (CSV / JSON)</span> <span class="coming-soon-badge" data-i18n="price.coming">Coming soon</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="price.sup.f8">Regional heatmaps</span> <span class="coming-soon-badge" data-i18n="price.coming">Coming soon</span></li>
+        </ul>
+        <a href="#download" class="btn-primary" data-i18n="btn.supporter">Get Supporter</a>
+      </div>
+
+      <!-- Donate -->
+      <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="pricing-tier" data-i18n="price.donate.tier">One-time Donation</div>
+        <div class="pricing-price" data-i18n="price.donate.price">Your choice</div>
+        <p class="pricing-note" data-i18n="price.donate.note">Every contribution, no matter the size, helps keep ApiScan independent, ad-free, and free for beekeepers who need it most.</p>
+        <div class="donation-buttons">
+          <a href="https://ko-fi.com/apiscan" class="btn-donate btn-kofi" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-coffee"></i> <span data-i18n="btn.kofi">Support on Ko-fi</span>
+          </a>
+          <a href="https://www.paypal.com/donate?hosted_button_id=PLACEHOLDER" class="btn-donate btn-paypal" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-paypal"></i> <span data-i18n="btn.paypal">Donate via PayPal</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Download ───────────────────────────────────────────── -->
+<section class="download-section" id="download">
+  <div class="container">
+    <div class="download-content" data-aos="fade-up">
+      <div class="section-tag light" data-i18n="dl.tag">Get Started Today</div>
+      <h2 data-i18n="dl.title">Download ApiScan — it's free</h2>
+      <p data-i18n="dl.sub">Available on iOS and Android. Scan your first hive in under two minutes.</p>
+      <div class="download-badges">
+        <a href="#" class="store-badge apple-badge" aria-label="Download on the App Store">
+          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" height="52" />
+        </a>
+        <a href="#" class="store-badge google-badge" aria-label="Get it on Google Play">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" height="52" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Map Preview ────────────────────────────────────────── -->
+<section class="map-preview-section">
+  <div class="container">
+    <div class="map-preview-content" data-aos="fade-up">
+      <h2 data-i18n="map.preview.title">See our community on the map</h2>
+      <p data-i18n="map.preview.sub">Explore apiaries registered by beekeepers around the world — updated in real time.</p>
+      <a href="map.html" class="btn-outline-dark" data-i18n="map.preview.btn">Open Live Map →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="footer-logo" href="index.html">🐝 Api<span>Scan</span></a>
+        <p data-i18n="footer.tagline">Open-source beekeeping for a healthier planet. Built by beekeepers, for beekeepers.</p>
+        <div class="footer-social">
+          <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.explore">Explore</h4>
+        <ul>
+          <li><a href="map.html"     data-i18n="nav.map">Live Map</a></li>
+          <li><a href="members.html" data-i18n="nav.members">Members Area</a></li>
+          <li><a href="news.html"    data-i18n="nav.news">News</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.community">Community</h4>
+        <ul>
+          <li><a href="contribute.html" data-i18n="nav.contribute">Contribute</a></li>
+          <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.support">Support Us</h4>
+        <ul>
+          <li><a href="https://ko-fi.com/apiscan" target="_blank" rel="noopener">Ko-fi</a></li>
+          <li><a href="https://www.paypal.com/donate?hosted_button_id=PLACEHOLDER" target="_blank" rel="noopener">PayPal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="footer.copyright">© 2025 ApiScan. Released under the MIT License.</p>
+      <p data-i18n="footer.made">Made with 🐝 for beekeepers everywhere.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script src="config.js"></script>
+<script src="i18n.js"></script>
 <script>
-  const map = L.map('map').setView([48, 10], 4);
+  AOS.init({ duration: 650, once: true, offset: 60 });
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    maxZoom: 18,
-  }).addTo(map);
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
 
-  const hiveIcon = L.divIcon({
-    className: '',
-    html: `<div style="
-      background:#14532d;border:3px solid #f59e0b;
-      border-radius:50%;width:32px;height:32px;
-      display:flex;align-items:center;justify-content:center;
-      font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,.3);
-      cursor:pointer;
-    ">🐝</div>`,
-    iconSize:   [32, 32],
-    iconAnchor: [16, 16],
-    popupAnchor:[0, -18],
+  document.getElementById('nav-toggle').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
   });
+
+  function animateCount(el, target) {
+    const dur = 1600;
+    const start = performance.now();
+    function step(now) {
+      const e = 1 - Math.pow(1 - Math.min((now - start) / dur, 1), 3);
+      el.textContent = Math.round(target * e).toLocaleString();
+      if (e < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
 
   fetch(`${API_BASE}/public/stats`)
     .then(r => r.json())
     .then(data => {
-      document.getElementById('stat-apiaries').textContent   = data.apiary_count.toLocaleString();
-      document.getElementById('stat-hives').textContent      = data.hive_count.toLocaleString();
-      document.getElementById('stat-inspections').textContent = data.inspection_count.toLocaleString();
-
-      if (data.apiaries.length === 0) return;
-
-      const bounds = [];
-      data.apiaries.forEach(a => {
-        bounds.push([a.latitude, a.longitude]);
-        const marker = L.marker([a.latitude, a.longitude], { icon: hiveIcon }).addTo(map);
-        marker.bindPopup(`
-          <div class="map-popup">
-            <h3>${escHtml(a.name)}</h3>
-            <p>🐝 ${a.hive_count} hive${a.hive_count !== 1 ? 's' : ''}</p>
-            <a href="apiary.html?id=${a.id}">View details →</a>
-          </div>
-        `, { maxWidth: 220 });
-      });
-
-      if (bounds.length === 1) {
-        map.setView(bounds[0], 12);
-      } else {
-        map.fitBounds(bounds, { padding: [40, 40] });
-      }
+      animateCount(document.getElementById('stat-apiaries'),   data.apiary_count);
+      animateCount(document.getElementById('stat-hives'),      data.hive_count);
+      animateCount(document.getElementById('stat-inspections'), data.inspection_count);
     })
-    .catch(() => {
-      document.getElementById('stat-apiaries').textContent = '—';
-    });
-
-  function escHtml(s) {
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
+    .catch(() => {});
 </script>
 </body>
 </html>

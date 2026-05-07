@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApiScan — News</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="landing.css" />
+</head>
+<body>
+
+<nav class="site-nav page-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">🐝 Api<span>Scan</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="map.html"        data-i18n="nav.map">Live Map</a></li>
+      <li><a href="news.html"       data-i18n="nav.news">News</a></li>
+      <li><a href="contribute.html" data-i18n="nav.contribute">Contribute</a></li>
+      <li><a href="members.html"    data-i18n="nav.members">Members</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-current" onclick="i18nToggle(this)" aria-label="Switch language">
+        <span class="lang-current-text">🇬🇧 EN</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="lang-dropdown">
+        <button class="lang-option" data-lang="en" onclick="i18nSetLang('en')">🇬🇧 English</button>
+        <button class="lang-option" data-lang="de" onclick="i18nSetLang('de')">🇩🇪 Deutsch</button>
+        <button class="lang-option" data-lang="fr" onclick="i18nSetLang('fr')">🇫🇷 Français</button>
+        <button class="lang-option" data-lang="es" onclick="i18nSetLang('es')">🇪🇸 Español</button>
+      </div>
+    </div>
+    <a href="index.html#download" class="nav-cta" data-i18n="nav.download">Download Free</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="section-tag light" data-aos="fade-down" data-i18n="news.tag">Updates</div>
+    <h1 data-aos="fade-up" data-aos-delay="80" data-i18n="news.title">News &amp; Announcements</h1>
+    <p data-aos="fade-up" data-aos-delay="160" data-i18n="news.sub">New features, research partnerships, conservation milestones, and everything happening in the ApiScan community.</p>
+  </div>
+</section>
+
+<section class="news-section">
+  <div class="container">
+    <div class="news-list">
+
+      <article class="news-card" data-aos="fade-up">
+        <div class="news-date">
+          <div class="day">02</div>
+          <div class="month">May 2025</div>
+        </div>
+        <div class="news-body">
+          <span class="news-tag">Release</span>
+          <h3>ApiScan v1.0 — Now Live on iOS and Android</h3>
+          <p>After months of development and beta testing with a group of dedicated beekeepers, ApiScan v1.0 is officially available on the App Store and Google Play. The launch includes QR-based hive management, varroa tracking, apiary statistics, and a live public map showing our growing community. Thank you to every beta tester who gave feedback along the way.</p>
+        </div>
+      </article>
+
+      <article class="news-card" data-aos="fade-up" data-aos-delay="60">
+        <div class="news-date">
+          <div class="day">18</div>
+          <div class="month">Apr 2025</div>
+        </div>
+        <div class="news-body">
+          <span class="news-tag">Research</span>
+          <h3>Partnership with Pollinator Health Research Network</h3>
+          <p>We're excited to announce an anonymized data-sharing agreement with researchers studying the relationship between varroa mite levels and colony winter survival. Starting this spring, aggregated inspection data from ApiScan will contribute to longitudinal studies spanning multiple European and North American regions. Your inspections are now part of real science.</p>
+        </div>
+      </article>
+
+      <article class="news-card" data-aos="fade-up" data-aos-delay="120">
+        <div class="news-date">
+          <div class="day">05</div>
+          <div class="month">Apr 2025</div>
+        </div>
+        <div class="news-body">
+          <span class="news-tag">Feature</span>
+          <h3>Custom Inspection Fields — Log What Matters to You</h3>
+          <p>Every beekeeper tracks different things. v0.9.5 introduced custom field definitions — add your own inspection data points at the apiary or per-hive level. The backend now supports arbitrary text, number, boolean, date, and select-type fields. Full form UI in the apps is coming in the next release.</p>
+        </div>
+      </article>
+
+      <article class="news-card" data-aos="fade-up" data-aos-delay="180">
+        <div class="news-date">
+          <div class="day">12</div>
+          <div class="month">Mar 2025</div>
+        </div>
+        <div class="news-body">
+          <span class="news-tag">Community</span>
+          <h3>500 Apiaries Registered — A Milestone Worth Celebrating</h3>
+          <p>The ApiScan community has crossed 500 registered apiaries spanning four continents. What started as a personal project for a small group of local beekeepers has grown into a genuine global network. Every inspection logged makes the dataset more valuable for researchers and better for bees. Thank you for being part of this.</p>
+        </div>
+      </article>
+
+      <article class="news-card" data-aos="fade-up" data-aos-delay="240">
+        <div class="news-date">
+          <div class="day">20</div>
+          <div class="month">Feb 2025</div>
+        </div>
+        <div class="news-body">
+          <span class="news-tag">Open Source</span>
+          <h3>ApiScan Goes Open Source</h3>
+          <p>The full ApiScan codebase — backend API, iOS app, and Android app — is now publicly available on GitHub under the MIT License. We believe transparency and community involvement are the best way to build software that beekeepers can trust with their data. Pull requests, issues, and feature discussions are open to everyone.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="footer-logo" href="index.html">🐝 Api<span>Scan</span></a>
+        <p data-i18n="footer.tagline">Open-source beekeeping for a healthier planet.</p>
+        <div class="footer-social">
+          <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.explore">Explore</h4>
+        <ul>
+          <li><a href="map.html"     data-i18n="nav.map">Live Map</a></li>
+          <li><a href="members.html" data-i18n="nav.members">Members Area</a></li>
+          <li><a href="news.html"    data-i18n="nav.news">News</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.community">Community</h4>
+        <ul>
+          <li><a href="contribute.html" data-i18n="nav.contribute">Contribute</a></li>
+          <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.support">Support Us</h4>
+        <ul>
+          <li><a href="https://ko-fi.com/apiscan" target="_blank" rel="noopener">Ko-fi</a></li>
+          <li><a href="https://www.paypal.com/donate?hosted_button_id=PLACEHOLDER" target="_blank" rel="noopener">PayPal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="footer.copyright">© 2025 ApiScan. Released under the MIT License.</p>
+      <p data-i18n="footer.made">Made with 🐝 for beekeepers everywhere.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="config.js"></script>
+<script src="i18n.js"></script>
+<script>
+  AOS.init({ duration: 650, once: true, offset: 60 });
+  document.getElementById('nav-toggle').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

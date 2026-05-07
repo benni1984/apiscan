@@ -65,6 +65,18 @@ The source of truth for all endpoints, request/response shapes, and field enums 
 
 Always work in one component per session. Do not mix backend, iOS, and Android in the same context window. Start each session by stating which component you are working on.
 
+## Issue-Driven Workflow
+
+Every piece of work must be tied to a GitHub issue.
+
+1. **Before starting any work** — identify the issue it belongs to. If no issue exists, create one with `gh issue create --repo benni1984/apiscan` before writing a single line of code.
+2. **Reference the issue** in every commit message: `fix: language dropdown z-index (#8)`.
+3. **An issue may only be closed when:**
+   - The relevant tests exist (unit, integration, or UI — whichever applies to the component)
+   - All CI builds are green (`pytest` for backend, `./gradlew test` for Android, Cmd+U for iOS)
+   - The PR or commit that resolves it is merged to `main`
+4. Do not close issues manually as a shortcut. Use `gh issue close <number> --repo benni1984/apiscan` only after the above conditions are met.
+
 ## Build Order for New Features
 
 1. Update `docs/api-contract.md` first

@@ -1,0 +1,16 @@
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/.pytest_cache/
+backend/tests/
+backend/test.db
+backend/apiscan.db
+backend/seed_demo.py
+android/
+ios/
+docs/
+.github/
+.claude/

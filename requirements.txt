@@ -1,3 +1,5 @@
+# Production dependencies for Vercel deployment.
+# Test-only packages (pytest, httpx, pytest-asyncio) are intentionally excluded.
 fastapi==0.115.5
 uvicorn[standard]==0.32.1
 sqlalchemy==2.0.36
@@ -11,6 +13,3 @@ python-multipart==0.0.12
 qrcode[pil]==8.0
 reportlab==4.2.5
 psycopg2-binary==2.9.10
-pytest==8.3.4
-httpx==0.28.1
-pytest-asyncio==0.24.0

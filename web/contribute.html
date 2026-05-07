@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApiScan — Contribute</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="landing.css" />
+</head>
+<body>
+
+<nav class="site-nav page-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">🐝 Api<span>Scan</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="map.html"        data-i18n="nav.map">Live Map</a></li>
+      <li><a href="news.html"       data-i18n="nav.news">News</a></li>
+      <li><a href="contribute.html" data-i18n="nav.contribute">Contribute</a></li>
+      <li><a href="members.html"    data-i18n="nav.members">Members</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-current" onclick="i18nToggle(this)" aria-label="Switch language">
+        <span class="lang-current-text">🇬🇧 EN</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="lang-dropdown">
+        <button class="lang-option" data-lang="en" onclick="i18nSetLang('en')">🇬🇧 English</button>
+        <button class="lang-option" data-lang="de" onclick="i18nSetLang('de')">🇩🇪 Deutsch</button>
+        <button class="lang-option" data-lang="fr" onclick="i18nSetLang('fr')">🇫🇷 Français</button>
+        <button class="lang-option" data-lang="es" onclick="i18nSetLang('es')">🇪🇸 Español</button>
+      </div>
+    </div>
+    <a href="index.html#download" class="nav-cta" data-i18n="nav.download">Download Free</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="section-tag light" data-aos="fade-down" data-i18n="contrib.tag">Open Source</div>
+    <h1 data-aos="fade-up" data-aos-delay="80" data-i18n="contrib.title">Help Build ApiScan</h1>
+    <p data-aos="fade-up" data-aos-delay="160" data-i18n="contrib.sub">ApiScan is an open-source project built by and for the beekeeping community. Every contribution — whether code, documentation, translation, or feedback — makes a difference.</p>
+  </div>
+</section>
+
+<!-- ── Ways to Contribute ─────────────────────────────────── -->
+<section class="contribute-section">
+  <div class="container">
+
+    <div class="section-header" data-aos="fade-up">
+      <h2 data-i18n="contrib.ways.title">Ways to Contribute</h2>
+      <p data-i18n="contrib.ways.sub">You don't need to be a programmer to help. There's a meaningful role for everyone who cares about bees.</p>
+    </div>
+
+    <div class="contribute-grid" data-aos="fade-up" data-aos-delay="60">
+      <div class="contribute-card">
+        <i class="fas fa-bug"></i>
+        <h3 data-i18n="contrib.bug.title">Report Bugs</h3>
+        <p data-i18n="contrib.bug.desc">Found something that doesn't work? Open a GitHub issue with device info, OS version, and steps to reproduce.</p>
+        <a href="https://github.com/apiscan/apiscan/issues/new" class="card-link" target="_blank" rel="noopener" data-i18n="contrib.bug.link">Open an issue on GitHub →</a>
+      </div>
+      <div class="contribute-card">
+        <i class="fas fa-code-branch"></i>
+        <h3 data-i18n="contrib.code.title">Submit Code</h3>
+        <p data-i18n="contrib.code.desc">Fork the repo, create a branch, open a PR. Backend (Python), iOS (Swift), Android (Kotlin) — all welcome.</p>
+        <a href="https://github.com/apiscan/apiscan" class="card-link" target="_blank" rel="noopener" data-i18n="contrib.code.link">View the repository →</a>
+      </div>
+      <div class="contribute-card">
+        <i class="fas fa-book"></i>
+        <h3 data-i18n="contrib.docs.title">Improve Documentation</h3>
+        <p data-i18n="contrib.docs.desc">Help improve the in-app help text, the API contract, architecture notes, or this website.</p>
+        <a href="https://github.com/apiscan/apiscan/tree/main/docs" class="card-link" target="_blank" rel="noopener" data-i18n="contrib.docs.link">Browse the docs folder →</a>
+      </div>
+      <div class="contribute-card">
+        <i class="fas fa-language"></i>
+        <h3 data-i18n="contrib.trans.title">Translate the App</h3>
+        <p data-i18n="contrib.trans.desc">Bilingual? Help add or improve a translation. iOS uses .strings files, Android uses XML resources — no programming required.</p>
+        <a href="https://github.com/apiscan/apiscan/discussions" class="card-link" target="_blank" rel="noopener" data-i18n="contrib.trans.link">Join the translation discussion →</a>
+      </div>
+      <div class="contribute-card">
+        <i class="fas fa-flask"></i>
+        <h3 data-i18n="contrib.test.title">Test New Features</h3>
+        <p data-i18n="contrib.test.desc">Join the beta program and give feedback before features ship. Your real-world perspective beats any automated test.</p>
+        <a href="https://github.com/apiscan/apiscan/discussions" class="card-link" target="_blank" rel="noopener" data-i18n="contrib.test.link">Join the beta discussion →</a>
+      </div>
+      <div class="contribute-card">
+        <i class="fas fa-share-alt"></i>
+        <h3 data-i18n="contrib.spread.title">Spread the Word</h3>
+        <p data-i18n="contrib.spread.desc">Tell your beekeeping club or online community about ApiScan. Every new beekeeper strengthens the global dataset.</p>
+        <a href="index.html#download" class="card-link" data-i18n="contrib.spread.link">Share the download link →</a>
+      </div>
+    </div>
+
+    <div class="github-cta" data-aos="fade-up">
+      <h2 data-i18n="contrib.github.title">🐝 The Hive is on GitHub</h2>
+      <p data-i18n="contrib.github.desc">ApiScan is fully open source under the MIT License. Read the code, open issues, fork it, and make it better.</p>
+      <a href="https://github.com/apiscan/apiscan" class="btn-github" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i> <span data-i18n="contrib.github.btn">View on GitHub</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Feature Request Form ───────────────────────────────── -->
+<section class="feature-request-section" id="feature-request">
+  <div class="container">
+
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-tag" data-i18n="fr.tag">GitHub Integration</div>
+      <h2 data-i18n="fr.title">Request a Feature or Report a Bug</h2>
+      <p data-i18n="fr.sub">Fill in the form and we'll open a pre-filled GitHub issue for you — one click to submit. No account needed to preview; GitHub login required to post.</p>
+    </div>
+
+    <div class="fr-form-wrap" data-aos="fade-up" data-aos-delay="60">
+      <form id="feature-form" novalidate>
+
+        <div class="form-group">
+          <label for="fr-title" data-i18n="fr.label.title">Title</label>
+          <input type="text" id="fr-title" required
+                 data-i18n-placeholder="fr.ph.title"
+                 placeholder="Short, descriptive title" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fr-category" data-i18n="fr.label.cat">Category</label>
+            <select id="fr-category">
+              <option value="enhancement" data-i18n="fr.cat.feature">✨ New Feature</option>
+              <option value="bug"         data-i18n="fr.cat.bug">🐛 Bug Report</option>
+              <option value="enhancement" data-i18n="fr.cat.enhance">⚡ Enhancement</option>
+              <option value="question"    data-i18n="fr.cat.idea">💡 Idea / Discussion</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fr-platform" data-i18n="fr.label.platform">Platform</label>
+            <select id="fr-platform">
+              <option value=""         data-i18n="fr.platform.all">All Platforms</option>
+              <option value="iOS"      data-i18n="fr.platform.ios">iOS</option>
+              <option value="Android"  data-i18n="fr.platform.android">Android</option>
+              <option value="Backend"  data-i18n="fr.platform.backend">Backend / API</option>
+              <option value="Website"  data-i18n="fr.platform.web">Website</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="fr-desc" data-i18n="fr.label.desc">Description</label>
+          <textarea id="fr-desc" rows="5" required
+                    data-i18n-placeholder="fr.ph.desc"
+                    placeholder="Describe the feature or bug in detail. What should happen? What does happen?"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="fr-usecase" data-i18n="fr.label.usecase">Use Case / Why</label>
+          <textarea id="fr-usecase" rows="3"
+                    data-i18n-placeholder="fr.ph.usecase"
+                    placeholder="Why do you need this? How would you use it?"></textarea>
+        </div>
+
+        <div class="fr-actions">
+          <button type="submit" class="btn-primary">
+            <i class="fab fa-github"></i> <span data-i18n="fr.btn">Open on GitHub →</span>
+          </button>
+          <p class="fr-note" data-i18n="fr.note">You'll be redirected to GitHub to review and submit the issue.</p>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="footer-logo" href="index.html">🐝 Api<span>Scan</span></a>
+        <p data-i18n="footer.tagline">Open-source beekeeping for a healthier planet.</p>
+        <div class="footer-social">
+          <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.explore">Explore</h4>
+        <ul>
+          <li><a href="map.html"     data-i18n="nav.map">Live Map</a></li>
+          <li><a href="members.html" data-i18n="nav.members">Members Area</a></li>
+          <li><a href="news.html"    data-i18n="nav.news">News</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.community">Community</h4>
+        <ul>
+          <li><a href="contribute.html" data-i18n="nav.contribute">Contribute</a></li>
+          <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.support">Support Us</h4>
+        <ul>
+          <li><a href="https://ko-fi.com/apiscan" target="_blank" rel="noopener">Ko-fi</a></li>
+          <li><a href="https://www.paypal.com/donate?hosted_button_id=PLACEHOLDER" target="_blank" rel="noopener">PayPal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="footer.copyright">© 2025 ApiScan. Released under the MIT License.</p>
+      <p data-i18n="footer.made">Made with 🐝 for beekeepers everywhere.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="config.js"></script>
+<script src="i18n.js"></script>
+<script>
+  AOS.init({ duration: 650, once: true, offset: 60 });
+
+  document.getElementById('nav-toggle').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  document.getElementById('feature-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const title    = document.getElementById('fr-title').value.trim();
+    const category = document.getElementById('fr-category').value;
+    const platform = document.getElementById('fr-platform').value;
+    const desc     = document.getElementById('fr-desc').value.trim();
+    const usecase  = document.getElementById('fr-usecase').value.trim();
+
+    if (!title || !desc) {
+      alert('Please fill in the title and description.');
+      return;
+    }
+
+    const platformLine = platform ? `**Platform:** ${platform}\n\n` : '';
+    const usecasePart  = usecase  ? `### Use Case / Why\n${usecase}\n\n` : '';
+
+    const body = [
+      '### Description',
+      desc,
+      '',
+      platformLine.trim() ? platformLine : '',
+      usecasePart,
+      '---',
+      '*Submitted via [ApiScan website](https://apiscan.app)*',
+    ].filter(Boolean).join('\n');
+
+    const url = new URL(`https://github.com/${GITHUB_REPO}/issues/new`);
+    url.searchParams.set('title', title);
+    url.searchParams.set('body',  body);
+    url.searchParams.set('labels', category);
+
+    window.open(url.toString(), '_blank', 'noopener,noreferrer');
+  });
+</script>
+</body>
+</html>

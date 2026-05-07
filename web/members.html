@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApiScan — Members Area</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="landing.css" />
+</head>
+<body>
+
+<nav class="site-nav page-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">🐝 Api<span>Scan</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="map.html"        data-i18n="nav.map">Live Map</a></li>
+      <li><a href="news.html"       data-i18n="nav.news">News</a></li>
+      <li><a href="contribute.html" data-i18n="nav.contribute">Contribute</a></li>
+      <li><a href="members.html"    data-i18n="nav.members">Members</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-current" onclick="i18nToggle(this)" aria-label="Switch language">
+        <span class="lang-current-text">🇬🇧 EN</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="lang-dropdown">
+        <button class="lang-option" data-lang="en" onclick="i18nSetLang('en')">🇬🇧 English</button>
+        <button class="lang-option" data-lang="de" onclick="i18nSetLang('de')">🇩🇪 Deutsch</button>
+        <button class="lang-option" data-lang="fr" onclick="i18nSetLang('fr')">🇫🇷 Français</button>
+        <button class="lang-option" data-lang="es" onclick="i18nSetLang('es')">🇪🇸 Español</button>
+      </div>
+    </div>
+    <a href="index.html#download" class="nav-cta" data-i18n="nav.download">Download Free</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="section-tag light" data-aos="fade-down" data-i18n="members.tag">Members Area</div>
+    <h1 data-aos="fade-up" data-aos-delay="80" data-i18n="members.title">Community Insights</h1>
+    <p data-aos="fade-up" data-aos-delay="160" data-i18n="members.sub">Supporters unlock deeper statistics, global trends, and research-grade data that help you become a better beekeeper — and help science understand our bees.</p>
+  </div>
+</section>
+
+<section class="members-section">
+  <div class="container">
+
+    <!-- Public stats -->
+    <div class="section-header" data-aos="fade-up">
+      <h2 data-i18n="members.snap.title">Global Community Snapshot</h2>
+      <p data-i18n="members.snap.sub">These numbers are available to everyone. Supporters see much more.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:64px;" data-aos="fade-up" data-aos-delay="60">
+      <div class="stat-box">
+        <div class="num" id="m-apiaries">—</div>
+        <div class="label" data-i18n="stats.apiaries">Apiaries Worldwide</div>
+      </div>
+      <div class="stat-box">
+        <div class="num" id="m-hives">—</div>
+        <div class="label" data-i18n="stats.hives">Hives Monitored</div>
+      </div>
+      <div class="stat-box">
+        <div class="num" id="m-inspections">—</div>
+        <div class="label" data-i18n="stats.inspections">Inspections Logged</div>
+      </div>
+    </div>
+
+    <!-- Blurred members preview -->
+    <div class="members-teaser" data-aos="fade-up">
+      <div class="members-teaser-header">
+        <i class="fas fa-chart-bar"></i>
+        <div>
+          <h3 data-i18n="members.teaser.title">Advanced Global Statistics</h3>
+          <p data-i18n="members.teaser.sub">Supporter-only — unlock in the app</p>
+        </div>
+      </div>
+      <div class="members-preview">
+        <div class="members-preview-grid">
+          <div class="members-preview-stat"><div class="num">3.2</div><div class="label">Avg Varroa (global)</div></div>
+          <div class="members-preview-stat"><div class="num">78%</div><div class="label">Hives: Good Mood</div></div>
+          <div class="members-preview-stat"><div class="num">6.4</div><div class="label">Avg Brood Frames</div></div>
+          <div class="members-preview-stat"><div class="num">12d</div><div class="label">Avg Inspection Interval</div></div>
+        </div>
+        <div style="height:120px;background:linear-gradient(90deg,#dcfce7,#fef3c7,#dcfce7);border-radius:12px;opacity:.5;margin-top:16px;"></div>
+      </div>
+      <div class="members-gate">
+        <h3 data-i18n="members.gate.title">Unlock the full picture</h3>
+        <p data-i18n="members.gate.desc">Supporters see regional varroa trends, seasonal hive health curves, queen replacement rates, and cross-referenced weather &amp; bloom data — all accessible directly in the ApiScan app.</p>
+        <a href="index.html#download" class="btn-primary" style="display:inline-block;margin-bottom:8px;" data-i18n="members.gate.cta">Get the App</a>
+        <p style="font-size:.82rem;color:var(--muted);margin-top:12px;" data-i18n="members.gate.note">Upgrade to Supporter (€2.99 / month) inside the app after signing up.</p>
+      </div>
+    </div>
+
+    <!-- What supporters get -->
+    <div class="section-header" data-aos="fade-up" style="margin-top:80px;">
+      <h2 data-i18n="members.benefits.title">What Supporters Get</h2>
+      <p data-i18n="members.benefits.sub">Every euro goes directly into keeping ApiScan independent and funding research partnerships.</p>
+    </div>
+
+    <div class="members-benefits" data-aos="fade-up" data-aos-delay="60">
+      <div class="benefit-card">
+        <i class="fas fa-globe"></i>
+        <h4 data-i18n="members.b1.title">Global Health Dashboard</h4>
+        <p data-i18n="members.b1.desc">Real-time varroa index, mood distribution, and inspection frequency across all regions.</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-chart-area"></i>
+        <h4 data-i18n="members.b2.title">Seasonal Trend Charts</h4>
+        <p data-i18n="members.b2.desc">How does hive health in your region compare to last year? And to beekeepers 500 km away?</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-download"></i>
+        <h4 data-i18n="members.b3.title">Full Data Export</h4>
+        <p data-i18n="members.b3.desc">Download your complete inspection history as CSV or JSON — planned for the next major release. <span class="coming-soon-badge" data-i18n="price.coming">Coming soon</span></p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-map"></i>
+        <h4 data-i18n="members.b4.title">Regional Heatmaps</h4>
+        <p data-i18n="members.b4.desc">Disease cluster maps and varroa risk overlays — planned for the next major release. <span class="coming-soon-badge" data-i18n="price.coming">Coming soon</span></p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-microscope"></i>
+        <h4 data-i18n="members.b5.title">Research Data Portal</h4>
+        <p data-i18n="members.b5.desc">Access the anonymized dataset used in our university research partnerships.</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-star"></i>
+        <h4 data-i18n="members.b6.title">Early Access + Credits</h4>
+        <p data-i18n="members.b6.desc">Try new features first and get your name listed in the app. The hive remembers its builders.</p>
+      </div>
+    </div>
+
+    <!-- Coming soon: web dashboard -->
+    <div style="margin-top:64px;background:linear-gradient(135deg,var(--green) 0%,var(--green-mid) 100%);border-radius:20px;padding:48px;text-align:center;color:#fff;" data-aos="fade-up">
+      <div class="section-tag light" style="margin-bottom:16px;" data-i18n="members.coming.tag">Coming Soon</div>
+      <h2 style="font-size:1.7rem;font-weight:800;margin-bottom:12px;" data-i18n="members.coming.title">Web Dashboard for Members</h2>
+      <p style="color:rgba(255,255,255,.8);max-width:520px;margin:0 auto 28px;font-size:1rem;line-height:1.65;" data-i18n="members.coming.desc">We're building a full web-based members dashboard so you can explore your data and the global dataset directly in the browser — no app required.</p>
+      <a href="https://github.com/apiscan/apiscan" class="btn-github" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i> <span data-i18n="members.coming.btn">Watch on GitHub</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="footer-logo" href="index.html">🐝 Api<span>Scan</span></a>
+        <p data-i18n="footer.tagline">Open-source beekeeping for a healthier planet.</p>
+        <div class="footer-social">
+          <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.explore">Explore</h4>
+        <ul>
+          <li><a href="map.html"     data-i18n="nav.map">Live Map</a></li>
+          <li><a href="members.html" data-i18n="nav.members">Members Area</a></li>
+          <li><a href="news.html"    data-i18n="nav.news">News</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.community">Community</h4>
+        <ul>
+          <li><a href="contribute.html" data-i18n="nav.contribute">Contribute</a></li>
+          <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.support">Support Us</h4>
+        <ul>
+          <li><a href="https://ko-fi.com/apiscan" target="_blank" rel="noopener">Ko-fi</a></li>
+          <li><a href="https://www.paypal.com/donate?hosted_button_id=PLACEHOLDER" target="_blank" rel="noopener">PayPal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="footer.copyright">© 2025 ApiScan. Released under the MIT License.</p>
+      <p data-i18n="footer.made">Made with 🐝 for beekeepers everywhere.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="config.js"></script>
+<script src="i18n.js"></script>
+<script>
+  AOS.init({ duration: 650, once: true, offset: 60 });
+  document.getElementById('nav-toggle').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  fetch(`${API_BASE}/public/stats`)
+    .then(r => r.json())
+    .then(data => {
+      document.getElementById('m-apiaries').textContent    = data.apiary_count.toLocaleString();
+      document.getElementById('m-hives').textContent       = data.hive_count.toLocaleString();
+      document.getElementById('m-inspections').textContent = data.inspection_count.toLocaleString();
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>

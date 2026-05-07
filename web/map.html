@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApiScan — Live Hive Map</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="site-nav page-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">🐝 Api<span>Scan</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="map.html"        data-i18n="nav.map">Live Map</a></li>
+      <li><a href="news.html"       data-i18n="nav.news">News</a></li>
+      <li><a href="contribute.html" data-i18n="nav.contribute">Contribute</a></li>
+      <li><a href="members.html"    data-i18n="nav.members">Members</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-current" onclick="i18nToggle(this)" aria-label="Switch language">
+        <span class="lang-current-text">🇬🇧 EN</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="lang-dropdown">
+        <button class="lang-option" data-lang="en" onclick="i18nSetLang('en')">🇬🇧 English</button>
+        <button class="lang-option" data-lang="de" onclick="i18nSetLang('de')">🇩🇪 Deutsch</button>
+        <button class="lang-option" data-lang="fr" onclick="i18nSetLang('fr')">🇫🇷 Français</button>
+        <button class="lang-option" data-lang="es" onclick="i18nSetLang('es')">🇪🇸 Español</button>
+      </div>
+    </div>
+    <a href="index.html#download" class="nav-cta" data-i18n="nav.download">Download Free</a>
+  </div>
+</nav>
+
+<div class="map-stats-bar">
+  <div class="map-stat-pill">
+    <span class="num" id="stat-apiaries">—</span>
+    <span class="label" data-i18n="map.stat.apiaries">Apiaries</span>
+  </div>
+  <div class="map-stat-pill">
+    <span class="num" id="stat-hives">—</span>
+    <span class="label" data-i18n="map.stat.hives">Hives</span>
+  </div>
+  <div class="map-stat-pill">
+    <span class="num" id="stat-inspections">—</span>
+    <span class="label" data-i18n="map.stat.inspections">Inspections</span>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="config.js"></script>
+<script src="i18n.js"></script>
+<script>
+  document.getElementById('nav-toggle').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  const map = L.map('map').setView([48, 10], 4);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18,
+  }).addTo(map);
+
+  const hiveIcon = L.divIcon({
+    className: '',
+    html: `<div style="
+      background:#14532d;border:3px solid #f59e0b;
+      border-radius:50%;width:32px;height:32px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,.3);
+      cursor:pointer;
+    ">🐝</div>`,
+    iconSize:    [32, 32],
+    iconAnchor:  [16, 16],
+    popupAnchor: [0, -18],
+  });
+
+  fetch(`${API_BASE}/public/stats`)
+    .then(r => r.json())
+    .then(data => {
+      document.getElementById('stat-apiaries').textContent    = data.apiary_count.toLocaleString();
+      document.getElementById('stat-hives').textContent       = data.hive_count.toLocaleString();
+      document.getElementById('stat-inspections').textContent = data.inspection_count.toLocaleString();
+
+      if (data.apiaries.length === 0) return;
+
+      const bounds = [];
+      data.apiaries.forEach(a => {
+        bounds.push([a.latitude, a.longitude]);
+        const marker = L.marker([a.latitude, a.longitude], { icon: hiveIcon }).addTo(map);
+        marker.bindPopup(`
+          <div class="map-popup">
+            <h3>${escHtml(a.name)}</h3>
+            <p>🐝 ${a.hive_count} hive${a.hive_count !== 1 ? 's' : ''}</p>
+            <a href="apiary.html?id=${a.id}">View details →</a>
+          </div>
+        `, { maxWidth: 220 });
+      });
+
+      if (bounds.length === 1) {
+        map.setView(bounds[0], 12);
+      } else {
+        map.fitBounds(bounds, { padding: [40, 40] });
+      }
+    })
+    .catch(() => {
+      document.getElementById('stat-apiaries').textContent = '—';
+    });
+
+  function escHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+</script>
+</body>
+</html>
