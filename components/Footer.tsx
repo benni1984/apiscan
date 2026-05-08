@@ -40,6 +40,12 @@ export default function Footer() {
               <li><a href="https://www.paypal.com/donate?hosted_button_id=PLACEHOLDER" target="_blank" rel="noopener">PayPal</a></li>
             </ul>
           </div>
+          <div className="footer-links">
+            <h4>{t('legal')}</h4>
+            <ul>
+              <li><Link href="/privacy">{t('privacy')}</Link></li>
+            </ul>
+          </div>
         </div>
         <div className="footer-bottom">
           <p>{t('copyright')}</p>

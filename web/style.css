@@ -439,6 +439,42 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────
+   Legal / Privacy page
+───────────────────────────────────────────────────────────── */
+.legal-page {
+  padding: 80px 0 120px;
+  min-height: 60vh;
+}
+.legal-page h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+.legal-updated {
+  font-size: .85rem;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+.legal-intro {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  max-width: 760px;
+}
+.legal-page h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--green);
+  margin: 32px 0 8px;
+}
+.legal-page p {
+  max-width: 760px;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+/* ─────────────────────────────────────────────────────────────
    Map page (map.html)
 ───────────────────────────────────────────────────────────── */
 .map-stats-bar {

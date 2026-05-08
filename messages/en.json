@@ -12,6 +12,8 @@
     "explore": "Explore",
     "community": "Community",
     "support": "Support Us",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
     "copyright": "© 2025 ApiScan. Released under the MIT License.",
     "made": "Made with 🐝 for beekeepers everywhere."
   },
@@ -168,6 +170,27 @@
     "platform": { "all": "All Platforms", "ios": "iOS", "android": "Android", "backend": "Backend / API", "web": "Website" },
     "btn": "Open on GitHub →",
     "note": "You'll be redirected to GitHub to review and submit the issue."
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "updated": "Last updated: May 2026",
+    "intro": "ApiScan is an open-source beekeeping app. This policy explains what data we collect, why we collect it, and the choices you have — including how you control whether your apiary appears on the public map.",
+    "s1title": "1. Data we collect",
+    "s1body": "When you register: your email address, chosen display name, and preferred language. When you use the app: apiary names and GPS coordinates (if you enter them), hive details, and inspection records you log. We do not collect device identifiers, advertising IDs, or precise location data without you explicitly entering coordinates in the app.",
+    "s2title": "2. Public map — opt-in",
+    "s2body": "The public map shows anonymised apiary pins to help visualise global beekeeping activity. Participation is strictly opt-in. By default every apiary you create is private — it never appears on the map and is never exposed via the public API. You can enable 'Show on public map' per apiary in the app settings at any time and disable it again just as easily. When enabled, the pin shows your apiary name, GPS coordinates, and hive count. No user identity or inspection detail is ever shared publicly.",
+    "s3title": "3. How we use your data",
+    "s3body": "Your data is used solely to run the app (authentication, storing and displaying your records) and, only if you opt in, to show your apiary pin on the public map and contribute aggregate counts to the global statistics (total apiaries, hives, inspections). We do not sell, trade, or rent personal data. We do not use it for advertising.",
+    "s4title": "4. Legal basis (GDPR)",
+    "s4body": "For EU/EEA users, we process your data on the basis of contract performance (Art. 6(1)(b) GDPR) for the core app features, and on the basis of your explicit consent (Art. 6(1)(a) GDPR) for public map participation. You can withdraw consent at any time by toggling the 'Show on public map' switch off.",
+    "s5title": "5. Data retention",
+    "s5body": "Your account data is kept for as long as your account is active. You can request full deletion by contacting us at the address below — we will delete your account and all associated records within 30 days. Anonymised aggregate statistics (total counts) that have already been served publicly cannot be retracted.",
+    "s6title": "6. Your rights",
+    "s6body": "Under GDPR you have the right to access, rectify, erase, and port your personal data, and to object to processing. To exercise these rights, contact us at privacy@apiscan.app. If you believe your rights have not been respected, you may lodge a complaint with your national data protection authority.",
+    "s7title": "7. Security",
+    "s7body": "Passwords are hashed with bcrypt and never stored in plain text. API access requires a signed JWT token. Data in transit is encrypted via TLS. We review security practices regularly.",
+    "s8title": "8. Contact",
+    "s8body": "Questions about this policy or your data? Email us at privacy@apiscan.app."
   },
   "members": {
     "tag": "Members Area",
