@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 
 const LOCALE_FLAGS: Record<string, string> = {
@@ -47,11 +47,7 @@ export default function Nav({ locale, isHome = false }: { locale: string; isHome
 
   function switchLocale(next: string) {
     setDdOpen(false);
-    const segments = pathname.split('/');
-    const isLocaleSegment = routing.locales.includes(segments[1] as (typeof routing.locales)[number]);
-    const rest = isLocaleSegment ? segments.slice(2).join('/') : segments.slice(1).join('/');
-    const newPath = next === routing.defaultLocale ? `/${rest}` : `/${next}/${rest}`;
-    router.push(newPath || '/');
+    router.replace(pathname, { locale: next });
   }
 
   const navClass = ['site-nav', !isHome && 'page-nav', isHome && scrolled && 'scrolled']
