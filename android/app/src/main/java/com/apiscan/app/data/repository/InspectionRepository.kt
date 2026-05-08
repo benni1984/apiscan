@@ -17,4 +17,7 @@ class InspectionRepository @Inject constructor(private val api: ApiService) {
         api.updateInspection(id, request)
 
     suspend fun delete(id: String) { api.deleteInspection(id) }
+
+    suspend fun listFieldDefinitions(): List<FieldDefinitionOut> =
+        api.listFieldDefinitions()
 }

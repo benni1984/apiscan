@@ -18,8 +18,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.apiscan.app.R
+import com.apiscan.app.data.api.FieldDefinitionOut
 import com.apiscan.app.data.api.InspectionCreateRequest
 import com.apiscan.app.data.api.InspectionOut
+import com.apiscan.app.data.repository.ApiaryRepository
+import com.apiscan.app.data.repository.HiveRepository
 import com.apiscan.app.data.repository.InspectionRepository
 import com.apiscan.app.ui.common.ErrorBanner
 import com.apiscan.app.ui.hives.ExposedDropdownMenuForList
@@ -30,21 +33,35 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-data class InspectionFormState(val existing: InspectionOut? = null, val isLoading: Boolean = false, val error: String? = null, val saved: Boolean = false)
+data class InspectionFormState(
+    val existing: InspectionOut? = null,
+    val fieldDefs: List<FieldDefinitionOut> = emptyList(),
+    val isLoading: Boolean = false,
+    val error: String? = null,
+    val saved: Boolean = false,
+)
 
 @HiltViewModel
 class InspectionFormViewModel @Inject constructor(
     savedState: SavedStateHandle,
-    private val repo: InspectionRepository
+    private val repo: InspectionRepository,
+    private val hiveRepo: HiveRepository,
+    private val apiaryRepo: ApiaryRepository,
 ) : ViewModel() {
     val hiveId       = savedState.get<String>("hiveId")!!
     val inspectionId = savedState.get<String>("inspectionId")?.ifEmpty { null }
     private val _state = MutableStateFlow(InspectionFormState())
     val state = _state.asStateFlow()
 
-    init {
-        inspectionId?.let { id ->
-            // We receive the inspection via navigation arg if needed — for now just save mode
+    init { loadFieldDefs() }
+
+    private fun loadFieldDefs() = viewModelScope.launch {
+        runCatching {
+            val hive = hiveRepo.get(hiveId)
+            val userDefs   = repo.listFieldDefinitions().filter { it.target == "inspection" }
+            val apiaryDefs = apiaryRepo.fieldDefinitions(hive.apiaryId).filter { it.target == "inspection" }
+            val merged = (userDefs + apiaryDefs).sortedBy { it.sortOrder }
+            _state.update { it.copy(fieldDefs = merged) }
         }
     }
 
@@ -91,6 +108,7 @@ fun InspectionFormScreen(
 
     val moods       = listOf("", "calm", "nervous", "aggressive")
     val queenColors = listOf("", "white", "yellow", "red", "green", "blue")
+    val customValues = remember { mutableStateMapOf<String, String>() }
 
     Scaffold(topBar = {
         TopAppBar(
@@ -99,6 +117,14 @@ fun InspectionFormScreen(
             actions = {
                 TextButton(
                     onClick  = {
+                        val customFields = state.fieldDefs.associate { def ->
+                            val raw = customValues[def.id] ?: ""
+                            def.name to when (def.type) {
+                                "number" -> raw.toDoubleOrNull()
+                                "boolean" -> raw == "true"
+                                else -> raw.ifBlank { null }
+                            }
+                        }.filterValues { it != null }
                         vm.save(InspectionCreateRequest(
                             date               = date,
                             queenSeen          = queenSeen,
@@ -113,7 +139,8 @@ fun InspectionFormScreen(
                             feedingDone        = feedingDone,
                             feedingType        = feedingType.ifBlank { null },
                             weightKg           = weightKg.toDoubleOrNull(),
-                            notes              = notes.ifBlank { null }
+                            notes              = notes.ifBlank { null },
+                            customFields       = customFields
                         ))
                     },
                     enabled = !state.isLoading
@@ -180,6 +207,41 @@ fun InspectionFormScreen(
             OutlinedTextField(value = notes, onValueChange = { notes = it },
                 label = { Text(stringResource(R.string.field_notes)) },
                 minLines = 3, modifier = Modifier.fillMaxWidth())
+
+            if (state.fieldDefs.isNotEmpty()) {
+                SectionLabel(stringResource(R.string.section_custom_fields))
+                state.fieldDefs.forEach { def ->
+                    val value = customValues[def.id] ?: ""
+                    when (def.type) {
+                        "boolean" -> OptionalBooleanRow(def.name, value.toBooleanStrictOrNull()) { v ->
+                            customValues[def.id] = v?.toString() ?: ""
+                        }
+                        "number" -> OutlinedTextField(
+                            value = value,
+                            onValueChange = { customValues[def.id] = it },
+                            label = { Text(def.name) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                            singleLine = true, modifier = Modifier.fillMaxWidth()
+                        )
+                        "select" -> if (def.options.isNotEmpty()) {
+                            val opts = listOf("") + def.options
+                            ExposedDropdownMenuForList(
+                                label = def.name,
+                                options = opts.map { it.ifBlank { stringResource(R.string.label_not_recorded) } },
+                                selectedIndex = opts.indexOf(value).coerceAtLeast(0),
+                                onSelect = { customValues[def.id] = opts[it] }
+                            )
+                        }
+                        else -> OutlinedTextField(
+                            value = value,
+                            onValueChange = { customValues[def.id] = it },
+                            label = { Text(def.name) },
+                            singleLine = def.type != "text",
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                }
+            }
 
             Spacer(Modifier.height(16.dp))
         }

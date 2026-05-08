@@ -3,6 +3,8 @@ package com.apiscan.app.ui.inspections
 import androidx.lifecycle.SavedStateHandle
 import com.apiscan.app.data.api.InspectionCreateRequest
 import com.apiscan.app.data.api.InspectionOut
+import com.apiscan.app.data.repository.ApiaryRepository
+import com.apiscan.app.data.repository.HiveRepository
 import com.apiscan.app.data.repository.InspectionRepository
 import io.mockk.*
 import kotlinx.coroutines.Dispatchers
@@ -17,10 +19,20 @@ import org.junit.Test
 class InspectionFormViewModelTest {
 
     private val repo = mockk<InspectionRepository>()
+    private val hiveRepo = mockk<HiveRepository>()
+    private val apiaryRepo = mockk<ApiaryRepository>()
 
     @Before
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
+        coEvery { repo.listFieldDefinitions() } returns emptyList()
+        coEvery { hiveRepo.get(any()) } returns com.apiscan.app.data.api.HiveOut(
+            id = "h1", qrToken = "token", apiaryId = "a1", name = "Hive 1",
+            hiveType = "langstroth", latitude = null, longitude = null,
+            acquisitionDate = null, notes = null, customFields = emptyMap(),
+            initializedAt = "2024-01-01", lastInspectionAt = null, createdAt = "2024-01-01"
+        )
+        coEvery { apiaryRepo.fieldDefinitions(any()) } returns emptyList()
     }
 
     @After
@@ -95,11 +107,11 @@ class InspectionFormViewModelTest {
     }
 
     private fun vmForNew() = InspectionFormViewModel(
-        SavedStateHandle(mapOf("hiveId" to "h1", "inspectionId" to "")), repo
+        SavedStateHandle(mapOf("hiveId" to "h1", "inspectionId" to "")), repo, hiveRepo, apiaryRepo
     )
 
     private fun vmForEdit(inspectionId: String) = InspectionFormViewModel(
-        SavedStateHandle(mapOf("hiveId" to "h1", "inspectionId" to inspectionId)), repo
+        SavedStateHandle(mapOf("hiveId" to "h1", "inspectionId" to inspectionId)), repo, hiveRepo, apiaryRepo
     )
 
     private fun request() = InspectionCreateRequest(
