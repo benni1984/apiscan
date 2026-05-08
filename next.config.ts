@@ -4,6 +4,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 const nextConfig: NextConfig = {
+  turbopack: { root: __dirname },
   webpack(config) {
     config.optimization = config.optimization || {};
     config.optimization.concatenateModules = false;
