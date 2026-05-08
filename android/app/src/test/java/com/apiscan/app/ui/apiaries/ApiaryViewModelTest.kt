@@ -52,10 +52,10 @@ class ApiaryViewModelTest {
     @Test
     fun `create adds apiary to list and calls onDone with id`() = runTest {
         val newApiary = apiary("a1")
-        coEvery { repo.create("Meadow", null, null, null, null) } returns newApiary
+        coEvery { repo.create("Meadow", null, null, null, null, false) } returns newApiary
         var receivedId = ""
 
-        vm.create("Meadow", null, null, null, null) { id -> receivedId = id }
+        vm.create("Meadow", null, null, null, null, false) { id -> receivedId = id }
 
         assertTrue(vm.state.value.apiaries.contains(newApiary))
         assertEquals("a1", receivedId)
@@ -63,9 +63,9 @@ class ApiaryViewModelTest {
 
     @Test
     fun `create failure sets error`() = runTest {
-        coEvery { repo.create(any(), any(), any(), any(), any()) } throws RuntimeException("conflict")
+        coEvery { repo.create(any(), any(), any(), any(), any(), any()) } throws RuntimeException("conflict")
 
-        vm.create("Meadow", null, null, null, null) {}
+        vm.create("Meadow", null, null, null, null, false) {}
 
         assertEquals("conflict", vm.state.value.error)
     }
@@ -76,9 +76,9 @@ class ApiaryViewModelTest {
         val updated = original.copy(name = "Updated")
         coEvery { repo.list() } returns listOf(original)
         vm.load()
-        coEvery { repo.update("a1", "Updated", null, null, null, null) } returns updated
+        coEvery { repo.update("a1", "Updated", null, null, null, null, false) } returns updated
 
-        vm.update("a1", "Updated", null, null, null, null) {}
+        vm.update("a1", "Updated", null, null, null, null, false) {}
 
         assertEquals("Updated", vm.state.value.apiaries.first().name)
     }
@@ -119,6 +119,6 @@ class ApiaryViewModelTest {
     private fun apiary(id: String) = ApiaryOut(
         id = id, name = "Apiary $id", description = null,
         latitude = null, longitude = null, address = null,
-        hiveCount = 0, createdAt = "2024-01-01"
+        hiveCount = 0, isPublic = false, createdAt = "2024-01-01"
     )
 }

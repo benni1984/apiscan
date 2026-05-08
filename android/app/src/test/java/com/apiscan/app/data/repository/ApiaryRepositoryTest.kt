@@ -39,23 +39,23 @@ class ApiaryRepositoryTest {
     @Test
     fun `create sends correct request body`() = runTest {
         val a = apiary("new")
-        coEvery { api.createApiary(ApiaryCreate("Meadow", null, 48.0, 11.0, "Road 1")) } returns a
+        coEvery { api.createApiary(ApiaryCreate("Meadow", null, 48.0, 11.0, "Road 1", false)) } returns a
 
-        val result = repo.create("Meadow", null, 48.0, 11.0, "Road 1")
+        val result = repo.create("Meadow", null, 48.0, 11.0, "Road 1", false)
 
         assertEquals(a, result)
-        coVerify { api.createApiary(ApiaryCreate("Meadow", null, 48.0, 11.0, "Road 1")) }
+        coVerify { api.createApiary(ApiaryCreate("Meadow", null, 48.0, 11.0, "Road 1", false)) }
     }
 
     @Test
     fun `update sends correct request body`() = runTest {
         val updated = apiary("a1").copy(name = "Updated")
-        coEvery { api.updateApiary("a1", ApiaryCreate("Updated", null, null, null, null)) } returns updated
+        coEvery { api.updateApiary("a1", ApiaryCreate("Updated", null, null, null, null, false)) } returns updated
 
-        val result = repo.update("a1", "Updated", null, null, null, null)
+        val result = repo.update("a1", "Updated", null, null, null, null, false)
 
         assertEquals("Updated", result.name)
-        coVerify { api.updateApiary("a1", ApiaryCreate("Updated", null, null, null, null)) }
+        coVerify { api.updateApiary("a1", ApiaryCreate("Updated", null, null, null, null, false)) }
     }
 
     @Test
@@ -91,7 +91,7 @@ class ApiaryRepositoryTest {
     private fun apiary(id: String) = ApiaryOut(
         id = id, name = "Apiary $id", description = null,
         latitude = null, longitude = null, address = null,
-        hiveCount = 0, createdAt = "2024-01-01"
+        hiveCount = 0, isPublic = false, createdAt = "2024-01-01"
     )
 
     private fun fieldDef(id: String) = FieldDefinitionOut(

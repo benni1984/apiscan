@@ -19,7 +19,7 @@ import javax.inject.Inject
 @RunWith(AndroidJUnit4::class)
 class HiveDetailScreenTest {
 
-    private val apiary = ApiaryOut("apiary-1", "Meadow", null, null, null, null, 1, "2024-01-01")
+    private val apiary = ApiaryOut("apiary-1", "Meadow", null, null, null, null, 1, false, "2024-01-01")
     private val hive   = HiveOut(
         id = "hive-1", qrToken = "qr-token-1", apiaryId = "apiary-1",
         name = "Hive Alpha", hiveType = "langstroth",

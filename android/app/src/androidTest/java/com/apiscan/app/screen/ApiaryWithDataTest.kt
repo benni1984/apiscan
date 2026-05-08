@@ -30,8 +30,8 @@ import javax.inject.Inject
 class ApiaryWithDataTest {
 
     private val testApiaries = listOf(
-        ApiaryOut("id-1", "Honey Farm",   null, null, null, null, 3, "2024-01-01T00:00:00"),
-        ApiaryOut("id-2", "Garden Hives", null, null, null, "Main St", 1, "2024-02-01T00:00:00"),
+        ApiaryOut("id-1", "Honey Farm",   null, null, null, null,     3, false, "2024-01-01T00:00:00"),
+        ApiaryOut("id-2", "Garden Hives", null, null, null, "Main St",1, false, "2024-02-01T00:00:00"),
     )
 
     @BindValue @JvmField
