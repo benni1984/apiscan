@@ -30,19 +30,11 @@ struct HiveStatsView: View {
                     // Mood
                     if !s.moodDistribution.isEmpty {
                         ChartCard(title: NSLocalizedString("stat.moodDistribution", comment: "")) {
-                            if #available(iOS 17, *) {
-                                Chart(s.moodDistribution.sorted(by: { $0.key < $1.key }), id: \.key) { entry in
-                                    SectorMark(angle: .value("Count", entry.value), innerRadius: .ratio(0.6))
-                                        .foregroundStyle(by: .value("Mood", entry.key.capitalized))
-                                }
-                                .frame(height: 180)
-                            } else {
-                                Chart(s.moodDistribution.sorted(by: { $0.key < $1.key }), id: \.key) { entry in
-                                    BarMark(x: .value("Mood", entry.key.capitalized), y: .value("Count", entry.value))
-                                        .foregroundStyle(by: .value("Mood", entry.key.capitalized))
-                                }
-                                .frame(height: 180)
+                            Chart(s.moodDistribution.sorted(by: { $0.key < $1.key }), id: \.key) { entry in
+                                SectorMark(angle: .value("Count", entry.value), innerRadius: .ratio(0.6))
+                                    .foregroundStyle(by: .value("Mood", entry.key.capitalized))
                             }
+                            .frame(height: 180)
                         }
                     }
 
