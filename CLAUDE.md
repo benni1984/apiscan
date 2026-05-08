@@ -7,6 +7,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **ApiScan** — a beekeeping inspection app for iOS and Android.
 Beekeepers scan a QR code on a hive, log inspection data, and view stats over time.
 
+## Claude Code Plugins (project scope)
+
+Plugins installed at project scope for this repo (`claude plugin list`). Pull them with `claude plugin install <name>@claude-plugins-official --scope project` if missing.
+
+| Plugin | Purpose |
+|--------|---------|
+| `vercel@claude-plugins-official` | Next.js / Vercel guidance for the `web/` Next.js 16 app — covers App Router, Turbopack, AI SDK, AI Gateway, deploys, env, shadcn, routing middleware, and more. Skills load as `vercel:<name>`. |
+| `kotlin-lsp@claude-plugins-official` | Kotlin language server for the `android/` Jetpack Compose app — completions, go-to-definition, diagnostics in Kotlin sources. |
+| `swift-lsp@claude-plugins-official` | Swift language server for the `ios/` SwiftUI app — same capabilities for `.swift` sources. Note: full Xcode build/test still requires macOS. |
+| `frontend-design@claude-plugins-official` (user scope) | Design-quality UI guidance for the `web/` app. |
+| `code-review@claude-plugins-official` (user scope) | PR review skill (`/code-review:code-review`). |
+| `code-simplifier@claude-plugins-official` (user scope) | Code simplification subagent. |
+
+No logo-design plugin is installed — that workflow is handled ad-hoc.
+
 ## Repository Structure
 
 ```
