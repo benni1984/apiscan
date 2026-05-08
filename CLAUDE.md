@@ -48,7 +48,7 @@ The source of truth for all endpoints, request/response shapes, and field enums 
 
 ## iOS (Swift / SwiftUI)
 
-- Minimum deployment target: iOS 16
+- Minimum deployment target: iOS 17
 - UI framework: SwiftUI
 - QR scanning: `AVFoundation` / `DataScannerViewController`
 - Networking: `URLSession` with async/await
