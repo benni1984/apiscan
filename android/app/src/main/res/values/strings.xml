@@ -43,6 +43,8 @@
     <string name="field_display_name">Display Name</string>
     <string name="field_description">Description</string>
     <string name="field_address">Address</string>
+    <string name="field_show_on_public_map">Show on public map</string>
+    <string name="field_show_on_public_map_hint">Share your apiary pin with the global community (opt-in)</string>
     <string name="field_language">Language</string>
     <string name="field_date">Date (yyyy-MM-dd)</string>
     <string name="field_date_from">From</string>

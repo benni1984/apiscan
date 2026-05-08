@@ -52,9 +52,17 @@ data class ApiaryOut(
     val longitude: Double?,
     val address: String?,
     @SerializedName("hive_count") val hiveCount: Int,
+    @SerializedName("is_public") val isPublic: Boolean = false,
     @SerializedName("created_at") val createdAt: String
 )
-data class ApiaryCreate(val name: String, val description: String?, val latitude: Double?, val longitude: Double?, val address: String?)
+data class ApiaryCreate(
+    val name: String,
+    val description: String?,
+    val latitude: Double?,
+    val longitude: Double?,
+    val address: String?,
+    @SerializedName("is_public") val isPublic: Boolean = false,
+)
 
 // MARK: - QR Batches
 data class QrTokenOut(

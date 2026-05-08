@@ -30,16 +30,16 @@ class ApiaryViewModel @Inject constructor(private val repo: ApiaryRepository) : 
             .onFailure { e  -> _state.update { it.copy(isLoading = false, error = e.message) } }
     }
 
-    fun create(name: String, description: String?, lat: Double?, lon: Double?, address: String?, onDone: (String) -> Unit) =
+    fun create(name: String, description: String?, lat: Double?, lon: Double?, address: String?, isPublic: Boolean, onDone: (String) -> Unit) =
         viewModelScope.launch {
-            runCatching { repo.create(name, description, lat, lon, address) }
+            runCatching { repo.create(name, description, lat, lon, address, isPublic) }
                 .onSuccess { a -> _state.update { it.copy(apiaries = it.apiaries + a) }; onDone(a.id) }
                 .onFailure { e -> _state.update { it.copy(error = e.message) } }
         }
 
-    fun update(id: String, name: String, description: String?, lat: Double?, lon: Double?, address: String?, onDone: () -> Unit) =
+    fun update(id: String, name: String, description: String?, lat: Double?, lon: Double?, address: String?, isPublic: Boolean, onDone: () -> Unit) =
         viewModelScope.launch {
-            runCatching { repo.update(id, name, description, lat, lon, address) }
+            runCatching { repo.update(id, name, description, lat, lon, address, isPublic) }
                 .onSuccess { updated ->
                     _state.update { it.copy(apiaries = it.apiaries.map { a -> if (a.id == id) updated else a }) }
                     onDone()

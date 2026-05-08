@@ -68,8 +68,8 @@ fun ApiaryListScreen(
 
     if (showCreate) {
         ApiaryFormDialog(
-            onConfirm = { name, desc, lat, lon, addr ->
-                vm.create(name, desc, lat, lon, addr) { showCreate = false }
+            onConfirm = { name, desc, lat, lon, addr, isPublic ->
+                vm.create(name, desc, lat, lon, addr, isPublic) { showCreate = false }
             },
             onDismiss = { showCreate = false }
         )

@@ -11,11 +11,11 @@ class ApiaryRepository @Inject constructor(private val api: ApiService) {
 
     suspend fun get(id: String): ApiaryOut = api.getApiary(id)
 
-    suspend fun create(name: String, description: String?, latitude: Double?, longitude: Double?, address: String?): ApiaryOut =
-        api.createApiary(ApiaryCreate(name, description, latitude, longitude, address))
+    suspend fun create(name: String, description: String?, latitude: Double?, longitude: Double?, address: String?, isPublic: Boolean = false): ApiaryOut =
+        api.createApiary(ApiaryCreate(name, description, latitude, longitude, address, isPublic))
 
-    suspend fun update(id: String, name: String, description: String?, latitude: Double?, longitude: Double?, address: String?): ApiaryOut =
-        api.updateApiary(id, ApiaryCreate(name, description, latitude, longitude, address))
+    suspend fun update(id: String, name: String, description: String?, latitude: Double?, longitude: Double?, address: String?, isPublic: Boolean = false): ApiaryOut =
+        api.updateApiary(id, ApiaryCreate(name, description, latitude, longitude, address, isPublic))
 
     suspend fun delete(id: String) { api.deleteApiary(id) }
 
