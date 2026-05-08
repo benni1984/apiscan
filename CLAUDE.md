@@ -76,6 +76,10 @@ The source of truth for all endpoints, request/response shapes, and field enums 
 - **Brood frames** — number of frames with brood (0–10)
 - **Varroa count** — mite count from sugar roll or alcohol wash
 
+## Git & PR Workflow
+
+After pushing a branch, always open a PR immediately. Once all CI checks are green, merge it — no need to ask first.
+
 ## Session Discipline
 
 Always work in one component per session. Do not mix backend, iOS, and Android in the same context window. Start each session by stating which component you are working on.
