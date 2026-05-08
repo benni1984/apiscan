@@ -35,6 +35,8 @@
     <string name="action_generate">Generate</string>
     <string name="action_download_pdf">Download PDF</string>
     <string name="action_grant_permission">Grant Permission</string>
+    <string name="action_export_data">Export Data</string>
+    <string name="action_download">Download</string>
 
     <!-- Fields -->
     <string name="field_email">Email</string>
@@ -83,6 +85,7 @@
     <string name="section_inspections">Inspections</string>
     <string name="section_account">Account</string>
     <string name="section_language">Language</string>
+    <string name="section_export">Data Export</string>
 
     <!-- Labels -->
     <string name="label_not_recorded">Not recorded</string>
@@ -94,6 +97,8 @@
     <string name="label_batch_summary">%1$d / %2$d linked · %3$s</string>
     <string name="label_batch_count_hint">Enter the number of QR codes to print (1–100).</string>
     <string name="label_created">Created %1$s</string>
+    <string name="label_select_apiary">Select apiary</string>
+    <string name="label_select_format">File format</string>
     <string name="label_linked_of">%1$d of %2$d linked</string>
     <string name="label_qr_tokens">Tokens</string>
     <string name="label_token_linked">Linked to hive</string>
