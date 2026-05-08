@@ -116,6 +116,7 @@ class ApiaryCreate(BaseModel):
     latitude: Optional[float] = None
     longitude: Optional[float] = None
     address: Optional[str] = None
+    is_public: bool = False
 
 
 class ApiaryUpdate(BaseModel):
@@ -124,6 +125,7 @@ class ApiaryUpdate(BaseModel):
     latitude: Optional[float] = None
     longitude: Optional[float] = None
     address: Optional[str] = None
+    is_public: Optional[bool] = None
 
 
 class ApiaryOut(BaseModel):
@@ -134,6 +136,7 @@ class ApiaryOut(BaseModel):
     longitude: Optional[float]
     address: Optional[str]
     hive_count: int
+    is_public: bool
     created_at: datetime
 
     model_config = {"from_attributes": True}

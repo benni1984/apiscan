@@ -4,10 +4,10 @@ import pytest
 @pytest.fixture
 def seeded(auth_client):
     apiary1 = auth_client.post("/api/v1/apiaries", json={
-        "name": "Riverside", "latitude": 48.85, "longitude": 2.35
+        "name": "Riverside", "latitude": 48.85, "longitude": 2.35, "is_public": True
     }).json()
     apiary2 = auth_client.post("/api/v1/apiaries", json={
-        "name": "No GPS"
+        "name": "No GPS", "is_public": True
     }).json()
 
     for apiary, n_hives in [(apiary1, 2), (apiary2, 1)]:
@@ -69,6 +69,22 @@ def test_public_apiary_detail_no_auth(client, seeded):
 def test_public_apiary_not_found(client):
     r = client.get("/api/v1/public/apiaries/does-not-exist")
     assert r.status_code == 404
+
+
+def test_private_apiary_returns_404(client, auth_client):
+    private = auth_client.post("/api/v1/apiaries", json={
+        "name": "Secret apiary", "latitude": 50.0, "longitude": 10.0
+        # is_public defaults to False
+    }).json()
+    r = client.get(f"/api/v1/public/apiaries/{private['id']}")
+    assert r.status_code == 404
+
+
+def test_private_apiary_excluded_from_stats(client, auth_client):
+    auth_client.post("/api/v1/apiaries", json={"name": "Private", "latitude": 50.0, "longitude": 10.0})
+    data = client.get("/api/v1/public/stats").json()
+    assert data["apiary_count"] == 0
+    assert len(data["apiaries"]) == 0
 
 
 def test_public_apiary_no_inspections(client, seeded):

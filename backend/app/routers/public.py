@@ -55,9 +55,14 @@ class PublicApiaryDetail(BaseModel):
 
 @router.get("/stats", response_model=GlobalStats)
 def global_stats(db: DB):
-    apiaries = db.query(Apiary).all()
-    hives    = db.query(Hive).all()
-    inspections = db.query(Inspection).all()
+    public_apiaries = db.query(Apiary).filter(Apiary.is_public.is_(True)).all()
+    hive_ids = {h.id for a in public_apiaries for h in a.hives}
+    inspection_count = (
+        db.query(Inspection)
+        .filter(Inspection.hive_id.in_(hive_ids))
+        .count()
+        if hive_ids else 0
+    )
 
     pins = [
         PublicApiaryPin(
@@ -67,14 +72,14 @@ def global_stats(db: DB):
             longitude=a.longitude,
             hive_count=len(a.hives),
         )
-        for a in apiaries
+        for a in public_apiaries
         if a.latitude is not None and a.longitude is not None
     ]
 
     return GlobalStats(
-        apiary_count=len(apiaries),
-        hive_count=len(hives),
-        inspection_count=len(inspections),
+        apiary_count=len(public_apiaries),
+        hive_count=sum(len(a.hives) for a in public_apiaries),
+        inspection_count=inspection_count,
         apiaries=pins,
     )
 
@@ -82,7 +87,7 @@ def global_stats(db: DB):
 @router.get("/apiaries/{apiary_id}", response_model=PublicApiaryDetail)
 def public_apiary(apiary_id: str, db: DB, accept_language: str = "en"):
     apiary = db.get(Apiary, apiary_id)
-    if apiary is None:
+    if apiary is None or not apiary.is_public:
         raise HTTPException(404, detail=error("APIARY_NOT_FOUND", accept_language))
 
     all_inspections: list[Inspection] = []

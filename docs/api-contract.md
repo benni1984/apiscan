@@ -240,9 +240,12 @@ An apiary is a named location. Hives belong to exactly one apiary.
   "longitude": "float | null",
   "address": "string | null",
   "hive_count": 3,
+  "is_public": false,
   "created_at": "datetime"
 }
 ```
+
+`is_public` controls whether this apiary appears on the public map. Defaults to `false` (opt-in). Apiaries with `is_public = false` are invisible to the public endpoints even if they have GPS coordinates.
 
 ### POST / PUT `/apiaries` — Request body
 
@@ -252,7 +255,8 @@ An apiary is a named location. Hives belong to exactly one apiary.
   "description": "string | null",
   "latitude": 48.8566,
   "longitude": 2.3522,
-  "address": "string | null"
+  "address": "string | null",
+  "is_public": false
 }
 ```
 
@@ -578,7 +582,7 @@ They expose only aggregate, anonymised data. Individual inspection records and u
 
 ### GET `/public/stats`
 
-Returns platform-wide aggregate numbers and the coordinates of every apiary that has at least one hive, for use as map markers.
+Returns platform-wide aggregate numbers and the coordinates of every apiary that has opted in to the public map, for use as map markers.
 
 **Response 200**
 
@@ -599,7 +603,7 @@ Returns platform-wide aggregate numbers and the coordinates of every apiary that
 }
 ```
 
-Only apiaries with `latitude != null AND longitude != null` appear in `apiaries`.
+All counts (`apiary_count`, `hive_count`, `inspection_count`) and the `apiaries` pin list include **only** apiaries where `is_public = true AND latitude != null AND longitude != null`.
 
 ---
 
@@ -633,7 +637,7 @@ Returns a public summary of one apiary: location, hives, and aggregated inspecti
 }
 ```
 
-**Response 404** — `APIARY_NOT_FOUND`
+**Response 404** — `APIARY_NOT_FOUND` (also returned when the apiary exists but `is_public = false`)
 
 ---
 

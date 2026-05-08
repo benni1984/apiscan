@@ -26,6 +26,7 @@ def _to_out(apiary: Apiary) -> ApiaryOut:
         longitude=apiary.longitude,
         address=apiary.address,
         hive_count=len(apiary.hives),
+        is_public=apiary.is_public,
         created_at=apiary.created_at,
     )
 

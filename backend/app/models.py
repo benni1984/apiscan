@@ -52,6 +52,7 @@ class Apiary(Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     address = Column(String, nullable=True)
+    is_public = Column(Boolean, default=False, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     user = relationship("User", back_populates="apiaries")
