@@ -120,6 +120,21 @@ interface ApiService {
     @DELETE("inspections/{id}")
     suspend fun deleteInspection(@Path("id") id: String): Response<Unit>
 
+    // Export
+    @Streaming
+    @GET("hives/{hiveId}/inspections/export")
+    suspend fun exportHiveInspections(
+        @Path("hiveId") hiveId: String,
+        @Query("format") format: String
+    ): ResponseBody
+
+    @Streaming
+    @GET("apiaries/{apiaryId}/inspections/export")
+    suspend fun exportApiaryInspections(
+        @Path("apiaryId") apiaryId: String,
+        @Query("format") format: String
+    ): ResponseBody
+
     // Stats
     @GET("hives/{id}/stats")
     suspend fun hiveStats(

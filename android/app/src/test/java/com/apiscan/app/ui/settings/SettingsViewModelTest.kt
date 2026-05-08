@@ -1,7 +1,9 @@
 package com.apiscan.app.ui.settings
 
 import com.apiscan.app.data.api.UserOut
+import com.apiscan.app.data.repository.ApiaryRepository
 import com.apiscan.app.data.repository.AuthRepository
+import com.apiscan.app.data.repository.ExportRepository
 import io.mockk.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,13 +17,16 @@ import org.junit.Test
 class SettingsViewModelTest {
 
     private val repo = mockk<AuthRepository>()
+    private val apiaryRepo = mockk<ApiaryRepository>()
+    private val exportRepo = mockk<ExportRepository>()
     private lateinit var vm: SettingsViewModel
 
     @Before
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
         coEvery { repo.getMe() } returns user()
-        vm = SettingsViewModel(repo)
+        coEvery { apiaryRepo.list() } returns emptyList()
+        vm = SettingsViewModel(repo, apiaryRepo, exportRepo)
     }
 
     @After
@@ -39,7 +44,7 @@ class SettingsViewModelTest {
     @Test
     fun `init failure sets error`() = runTest {
         coEvery { repo.getMe() } throws RuntimeException("Unauthorized")
-        val vm = SettingsViewModel(repo)
+        val vm = SettingsViewModel(repo, apiaryRepo, exportRepo)
 
         assertEquals("Unauthorized", vm.state.value.error)
         assertNull(vm.state.value.user)

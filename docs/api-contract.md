@@ -568,6 +568,42 @@ Stats can be filtered by a preset window or an explicit date range. Both query p
 
 ---
 
+## Export
+
+All export endpoints require authentication. The authenticated user must own the hive or apiary.
+
+### `GET /hives/{hive_id}/inspections/export`
+
+Download all inspections for a single hive.
+
+| Query param | Type | Default | Values |
+|-------------|------|---------|--------|
+| `format` | string | `json` | `json`, `csv` |
+
+**JSON response** (`application/json`, `Content-Disposition: attachment; filename="hive_{id}_inspections.json"`):
+```json
+[ /* array of InspectionOut objects, newest first */ ]
+```
+
+**CSV response** (`text/csv`, `Content-Disposition: attachment; filename="hive_{id}_inspections.csv"`):
+Flat rows with columns: `id`, `hive_id`, `date`, `queen_seen`, `queen_color`, `brood_frames`, `honey_frames`, `mood`, `population_strength`, `varroa_count`, `swarm_cells_seen`, `treatment_applied`, `feeding_done`, `feeding_type`, `weight_kg`, `notes`, `created_at`, followed by one column per distinct custom-field key found across all inspections.
+
+---
+
+### `GET /apiaries/{apiary_id}/inspections/export`
+
+Download all inspections for every hive in an apiary.
+
+| Query param | Type | Default | Values |
+|-------------|------|---------|--------|
+| `format` | string | `json` | `json`, `csv` |
+
+**JSON response**: same structure as the hive endpoint — flat array of `InspectionOut` objects.
+
+**CSV response**: same columns as the hive endpoint plus a leading `hive_name` column identifying which hive each row belongs to.
+
+---
+
 ## Public Dashboard
 
 All endpoints in this section are **public** — no `Authorization` header required.

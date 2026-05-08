@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import Base, engine
-from app.routers import auth, users, field_definitions, apiaries, qr_batches, hives, inspections, stats, public
+from app.routers import auth, users, field_definitions, apiaries, qr_batches, hives, inspections, stats, public, export
 
 
 @asynccontextmanager
@@ -36,3 +36,4 @@ app.include_router(hives.router, prefix=PREFIX)
 app.include_router(inspections.router, prefix=PREFIX)
 app.include_router(stats.router, prefix=PREFIX)
 app.include_router(public.router, prefix=PREFIX)
+app.include_router(export.router, prefix=PREFIX)
