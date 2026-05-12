@@ -124,3 +124,10 @@
 
 /* Scan */
 "scan.instruction" = "Scannen Sie den QR-Code auf Ihrem Bienenstock, um die Akte zu öffnen oder ihn erstmalig einzurichten.";
+
+/* Export */
+"section.export" = "Datenexport";
+"action.exportData" = "Daten exportieren";
+"action.download" = "Herunterladen";
+"label.selectApiary" = "Bienenstand auswählen";
+"label.selectFormat" = "Dateiformat";

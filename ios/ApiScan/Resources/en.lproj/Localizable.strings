@@ -124,3 +124,10 @@
 
 /* Scan */
 "scan.instruction" = "Scan the QR code on your hive to open its record or set it up for the first time.";
+
+/* Export */
+"section.export" = "Data Export";
+"action.exportData" = "Export Data";
+"action.download" = "Download";
+"label.selectApiary" = "Select apiary";
+"label.selectFormat" = "File format";

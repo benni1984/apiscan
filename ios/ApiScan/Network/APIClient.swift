@@ -64,6 +64,14 @@ final class APIClient {
         try await performVoid(method: "POST", path: path, bodyData: try encoder.encode(body), requiresAuth: false)
     }
 
+    func getRawData(_ path: String) async throws -> Data {
+        let req = try buildRequest(method: "GET", path: path, bodyData: nil, requiresAuth: true)
+        let (data, resp) = try await execute(req)
+        if (200..<300).contains(resp.statusCode) { return data }
+        let msg = (try? decoder.decode(APIErrorEnvelope.self, from: data))?.error.message ?? "Request failed"
+        throw APIError.server(msg)
+    }
+
     // MARK: - Private
 
     private func perform<T: Decodable>(

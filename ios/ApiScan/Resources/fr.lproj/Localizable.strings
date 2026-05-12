@@ -124,3 +124,10 @@
 
 /* Scan */
 "scan.instruction" = "Scannez le code QR sur votre ruche pour ouvrir sa fiche ou la configurer pour la première fois.";
+
+/* Export */
+"section.export" = "Export de données";
+"action.exportData" = "Exporter les données";
+"action.download" = "Télécharger";
+"label.selectApiary" = "Sélectionner un rucher";
+"label.selectFormat" = "Format de fichier";
