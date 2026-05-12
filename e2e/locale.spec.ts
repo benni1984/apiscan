@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 test('home page renders in English by default', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-  await expect(page.getByRole('link', { name: /Live Map/i })).toBeVisible();
+  await expect(page.locator('#nav-links').getByRole('link', { name: 'Live Map' })).toBeVisible();
 });
 
 // ── Direct locale URLs ────────────────────────────────────────────────────────
@@ -26,7 +26,7 @@ test('home page renders in English by default', async ({ page }) => {
 test('visiting /de serves German content', async ({ page }) => {
   await page.goto('/de');
   await expect(page.locator('html')).toHaveAttribute('lang', 'de');
-  await expect(page.getByRole('link', { name: /Live-Karte/i })).toBeVisible();
+  await expect(page.locator('#nav-links').getByRole('link', { name: 'Live-Karte' })).toBeVisible();
 });
 
 test('visiting /fr serves French content', async ({ page }) => {
@@ -43,14 +43,14 @@ test('visiting /es serves Spanish content', async ({ page }) => {
 
 test('switching language updates URL and page content', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('link', { name: /Live Map/i })).toBeVisible();
+  await expect(page.locator('#nav-links').getByRole('link', { name: 'Live Map' })).toBeVisible();
 
   await page.getByLabel('Switch language').click();
   await page.getByText('🇩🇪 Deutsch').click();
 
   await expect(page).toHaveURL('/de');
   await expect(page.locator('html')).toHaveAttribute('lang', 'de');
-  await expect(page.getByRole('link', { name: /Live-Karte/i })).toBeVisible();
+  await expect(page.locator('#nav-links').getByRole('link', { name: 'Live-Karte' })).toBeVisible();
 });
 
 // ── Edge cases ────────────────────────────────────────────────────────────────
