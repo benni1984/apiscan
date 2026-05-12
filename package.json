@@ -21,6 +21,9 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.60.3"
+  },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "@testing-library/dom": "^10.4.1",
