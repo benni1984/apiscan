@@ -153,34 +153,33 @@ jobs:
           path: android/app/build/reports/androidTests/
 
   # ── iOS build & test ─────────────────────────────────────────────────────────
-  # Only spends macOS minutes on push to main when ios/ actually changed.
-  # On PRs (or pushes that didn't touch ios/) the job runs on ubuntu and just
-  # reports success.
+  # Runs on macos-latest whenever ios/ changes (both PRs and pushes to main).
+  # Uses a path filter so unchanged runs report success without spending macOS minutes.
   ios:
     name: iOS build & test
     needs: changes
-    runs-on: ${{ (needs.changes.outputs.ios == 'true' && github.event_name == 'push') && 'macos-latest' || 'ubuntu-latest' }}
+    runs-on: ${{ needs.changes.outputs.ios == 'true' && 'macos-latest' || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@v4
 
       - name: Skip notice
-        if: needs.changes.outputs.ios != 'true' || github.event_name != 'push'
-        run: echo "iOS work only runs on push to main when ios/ changed — reporting success."
+        if: needs.changes.outputs.ios != 'true'
+        run: echo "iOS unchanged — reporting success without running tests."
 
       - name: Select Xcode
-        if: needs.changes.outputs.ios == 'true' && github.event_name == 'push'
+        if: needs.changes.outputs.ios == 'true'
         run: sudo xcode-select -s /Applications/Xcode.app
 
       - name: Install XcodeGen
-        if: needs.changes.outputs.ios == 'true' && github.event_name == 'push'
+        if: needs.changes.outputs.ios == 'true'
         run: brew install xcodegen
 
       - name: Generate Xcode project
-        if: needs.changes.outputs.ios == 'true' && github.event_name == 'push'
+        if: needs.changes.outputs.ios == 'true'
         run: cd ios && xcodegen generate --spec project.yml
 
       - name: Resolve simulator
-        if: needs.changes.outputs.ios == 'true' && github.event_name == 'push'
+        if: needs.changes.outputs.ios == 'true'
         run: |
           UDID=$(xcrun simctl list devices available \
             | grep 'iPhone 16 (' | head -1 | awk -F'[()]' '{print $2}')
@@ -193,7 +192,7 @@ jobs:
           echo "SIMULATOR_UDID=$UDID" >> "$GITHUB_ENV"
 
       - name: Build & test
-        if: needs.changes.outputs.ios == 'true' && github.event_name == 'push'
+        if: needs.changes.outputs.ios == 'true'
         run: |
           xcodebuild test \
             -project ios/ApiScan.xcodeproj \
@@ -202,7 +201,7 @@ jobs:
             -resultBundlePath TestResults
 
       - name: Upload test results
-        if: always() && needs.changes.outputs.ios == 'true' && github.event_name == 'push'
+        if: always() && needs.changes.outputs.ios == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: ios-test-results

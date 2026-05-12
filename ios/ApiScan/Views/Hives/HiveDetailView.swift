@@ -58,6 +58,7 @@ struct HiveDetailView: View {
                 Button { showQR = true } label: { Image(systemName: "qrcode") }
                 Button { showStats = true } label: { Image(systemName: "chart.xyaxis.line") }
                 Button { showAddInspection = true } label: { Image(systemName: "plus") }
+                    .accessibilityLabel(NSLocalizedString("action.newInspection", comment: ""))
             }
         }
         .task { await inspectionVM.load(hiveId: hive.id) }

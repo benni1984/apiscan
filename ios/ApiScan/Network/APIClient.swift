@@ -23,20 +23,29 @@ enum APIError: LocalizedError {
 }
 
 final class APIClient {
-    static let shared = APIClient()
+    static var shared = APIClient()
 
     var baseURL = URL(string: "http://localhost:8000/api/v1")!
 
-    private let session = URLSession.shared
+    private let session: URLSession
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
     private var refreshTask: Task<Void, Error>?
 
-    private init() {
+    private init(session: URLSession = .shared) {
+        self.session = session
         decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         encoder = JSONEncoder()
     }
+
+    #if DEBUG
+    static func forUITesting() -> APIClient {
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [MockURLProtocol.self]
+        return APIClient(session: URLSession(configuration: config))
+    }
+    #endif
 
     // MARK: - Public
 

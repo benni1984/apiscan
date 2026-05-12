@@ -112,9 +112,9 @@ All routes implemented and tested. Run `pytest` from `backend/`.
 | Stats | Hive / apiary / overview | ✓ test_stats.py |
 | Public API | Global stats + apiary map pins | ✓ test_public.py |
 
-### Android — IMPLEMENTED ✓ / PARTIALLY TESTED
+### Android — IMPLEMENTED ✓ / FULLY TESTED ✓
 
-All screens and ViewModels implemented. Unit tests cover all ViewModels and key repositories. UI tests cover the auth and apiary flows.
+All screens and ViewModels implemented and tested. Unit tests run with `./gradlew test`. UI/instrumented tests run with `./gradlew connectedAndroidTest` (requires emulator or device, also run in CI via `android-ui` job).
 
 **Unit tests** (`./gradlew test`) — all passing:
 
@@ -123,37 +123,69 @@ All screens and ViewModels implemented. Unit tests cover all ViewModels and key 
 | AuthViewModelTest | login/register success + failure, clearError |
 | AuthRepositoryTest | token storage, logout edge cases, delegation |
 | ApiaryViewModelTest | load, create, update, delete, error states |
+| ApiaryRepositoryTest | list, get, create, update, delete, fieldDefinitions |
 | HiveRepositoryTest | QR resolve (linked/unlinked), list, get, delete |
 | HiveDetailViewModelTest | initial load, delete inspection, error |
 | InspectionRepositoryTest | list with pagination, create, update, delete |
 | InspectionFormViewModelTest | create vs. update mode, saved state, errors |
+| QrBatchRepositoryTest | list, get, create |
+| StatsRepositoryTest | hiveStats, apiaryStats with all params |
+| QRViewModelTest | QRScan resolve linked/unlinked/error, QRBatchList load/create |
 | SettingsViewModelTest | load user, update name/locale, logout |
 | DtoTest | QrTokenOut, QRScanResult, PaginatedResponse |
-
-**Missing unit tests** (write next):
-- ApiaryRepositoryTest
-- QrBatchRepositoryTest
-- StatsRepositoryTest
-- QRViewModel test
 
 **UI / instrumented tests** (`./gradlew connectedAndroidTest`) — all passing:
 
 | File | What it covers |
 |------|---------------|
 | LoginScreenTest | fields shown, button disabled when empty, navigate to register, error banner on failure, successful login navigates to apiary list |
+| RegisterScreenTest | fields shown, button state, error banner, success navigates to apiary list |
 | ApiaryScreenTest | empty state (title, empty message, FAB), Settings nav, sign-out dialog, email shown |
 | ApiaryWithDataTest | two apiaries rendered, hive counts correct |
+| HiveDetailScreenTest | hive name, hive type, empty inspections, inspection date, FAB navigates to form |
+| InspectionFormScreenTest | form sections shown, save success, save error banner |
+| QRBatchListScreenTest | nav title, empty state, FAB, batch creation |
+| SettingsScreenTest | email shown, language section, save on name edit, error banner |
 
-**Missing UI tests** (write next):
-- RegisterScreenTest
-- HiveDetailScreenTest
-- InspectionFormScreenTest
-- QRBatchListScreenTest
-- SettingsScreenTest (update profile, locale)
+### iOS — IMPLEMENTED ✓ / TESTED VIA CI ✓
 
-### iOS — IMPLEMENTED ✓ / NOT TESTED
+Full feature parity with Android. Tests run via GitHub Actions CI on `macos-latest` whenever `ios/` changes (both PRs and pushes to main). Tests can be authored on any OS and run in CI without needing a local macOS machine.
 
-Full feature parity with Android — all screens and services implemented. **Zero automated tests.** Tests must be written in a macOS session using Xcode / XCTest.
+**How iOS CI works:**
+- `ci.yml` `ios` job: path-filtered, uses `macos-latest` when `ios/` changed
+- XcodeGen regenerates the `.xcodeproj` from `ios/project.yml` on the runner
+- `xcodebuild test` runs both unit tests (`ApiScanTests`) and UI tests (`ApiScanUITests`) on an iPhone 16 simulator
+- Results uploaded as `ios-test-results.xcresult` artifact
+
+**Mock infrastructure for UI tests** (`ios/ApiScan/Testing/MockURLProtocol.swift`, `#if DEBUG` only):
+- Register `MockURLProtocol` via `URLSessionConfiguration.protocolClasses` to intercept all URLSession requests
+- Pre-configured handler sets: `authenticatedHandlers`, `apiaryWithHiveHandlers`, `unauthenticatedHandlers`
+- Activated via launch arguments in `ApiScanApp.init()`:
+  - `-mockAuthenticated` — sets fake keychain token + empty-list mock responses
+  - `-mockApiaryWithHive` — sets token + one apiary with one hive for deep-navigation tests
+  - `-mockServer` — mock responses only, no token (for Login/Register success-path tests)
+
+**Unit tests** (XCTest, `ApiScanTests/`) — all passing in CI:
+
+| File | What it covers |
+|------|---------------|
+| AuthViewModelTests | login/register success + failure, logout, loadProfile, updateProfile |
+| ApiaryViewModelTests | load, create, update, delete, errorMessage |
+| HiveViewModelTests | load, initialize, delete, update, resolveQR linked/unlinked |
+| InspectionViewModelTests | load, create, delete, update, loadMore pagination |
+| DTOTests | JSONValue roundtrip, PaginatedResponse snake_case, QrTokenOut, UserOut, InspectionOut |
+
+**UI tests** (XCUITest, `ApiScanUITests/`) — all passing in CI:
+
+| File | What it covers |
+|------|---------------|
+| LoginUITests | fields shown, button state, navigate to register |
+| RegisterUITests | fields shown, button state, success navigates to Apiaries |
+| ApiaryListUITests | title, empty state, FAB, apiary name shown, navigate into apiary |
+| HiveDetailUITests | hive name, hive type, empty inspections, New Inspection button opens form |
+| InspectionFormUITests | title, date/queen/frames sections, Save/Cancel buttons, Cancel dismisses |
+| SettingsUITests | email shown, language options, Save Profile button, Log Out button |
+| QRBatchListUITests | title, empty state, FAB |
 
 Screens: Login, Register, ApiaryList, ApiaryDetail, ApiaryForm, HiveDetail, HiveInitialize, HiveQR, InspectionForm, InspectionDetail, QRScanner, QRBatchList, HiveStats, Settings.
 
@@ -190,6 +222,30 @@ Order 1 runs `hiltRule.inject()` so `@Inject` fields are available before the ac
 
 ### Waiting for async results
 Use `composeRule.waitUntil(timeoutMillis = 5_000) { onAllNodesWithText("...").fetchSemanticsNodes().isNotEmpty() }` before `assertIsDisplayed()`. Do not rely on `waitForIdle()` alone for ViewModel coroutine results.
+
+## iOS Testing Notes (Lessons Learned)
+
+### Running iOS tests without macOS
+Write test files locally (any OS), push to a branch, open a PR — the `ios` CI job on `macos-latest` compiles and runs everything via `xcodebuild test`. The `.xcresult` bundle is uploaded as an artifact for inspection.
+
+### MockURLProtocol pattern
+`MockURLProtocol` intercepts all requests for a `URLSession` built with `URLSessionConfiguration.ephemeral` + `protocolClasses = [MockURLProtocol.self]`. The handler list is ordered: **most-specific patterns first**. Example for paths that share prefixes:
+```
+("hives/h-1/inspections", ...) // before "hives/h-1"
+("apiaries/a-1/hives",    ...) // before "apiaries/a-1"
+("apiaries/a-1",          ...) // before "apiaries"
+("apiaries",              ...) // catch-all
+```
+
+### Launch argument contract
+| Argument | Effect |
+|----------|--------|
+| `-resetKeychain` | Clears all tokens — app starts at Login |
+| `-mockAuthenticated` | Clears keychain, sets fake token, mounts empty-list mock — app starts at Apiaries |
+| `-mockApiaryWithHive` | Same as above but mock returns one apiary + one hive |
+| `-mockServer` | Mounts mock only (no token) — app starts at Login, auth calls return real-looking responses |
+
+Do NOT mix `-mockAuthenticated` / `-mockApiaryWithHive` with `-resetKeychain` (the mock flags already clear the keychain first).
 
 ### coVerify for confirming mock calls
 Add `coVerify(timeout = 3_000) { apiService.login(any()) }` before the `waitUntil` check. If it passes, the mock was reached — helps distinguish "click not registered" from "state not reflected in UI".

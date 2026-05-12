@@ -13,8 +13,25 @@ struct ApiScanApp: App {
 
     init() {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-resetKeychain") {
+        let args = ProcessInfo.processInfo.arguments
+        if args.contains("-resetKeychain") {
             KeychainService.shared.clearAll()
+        }
+        if args.contains("-mockApiaryWithHive") {
+            KeychainService.shared.clearAll()
+            KeychainService.shared.accessToken = "ui-test-token"
+            KeychainService.shared.refreshToken = "ui-test-refresh"
+            MockURLProtocol.configure(MockURLProtocol.apiaryWithHiveHandlers)
+            APIClient.shared = .forUITesting()
+        } else if args.contains("-mockAuthenticated") {
+            KeychainService.shared.clearAll()
+            KeychainService.shared.accessToken = "ui-test-token"
+            KeychainService.shared.refreshToken = "ui-test-refresh"
+            MockURLProtocol.configure(MockURLProtocol.authenticatedHandlers)
+            APIClient.shared = .forUITesting()
+        } else if args.contains("-mockServer") {
+            MockURLProtocol.configure(MockURLProtocol.unauthenticatedHandlers)
+            APIClient.shared = .forUITesting()
         }
         #endif
     }
