@@ -19,6 +19,7 @@ jobs:
       backend: ${{ steps.filter.outputs.backend }}
       android: ${{ steps.filter.outputs.android }}
       ios:     ${{ steps.filter.outputs.ios }}
+      web:     ${{ steps.filter.outputs.web }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -33,6 +34,16 @@ jobs:
               - '.github/workflows/ci.yml'
             ios:
               - 'ios/**'
+              - '.github/workflows/ci.yml'
+            web:
+              - 'app/**'
+              - 'components/**'
+              - 'i18n/**'
+              - 'messages/**'
+              - 'web/**'
+              - 'next.config.ts'
+              - 'package.json'
+              - 'package-lock.json'
               - '.github/workflows/ci.yml'
 
   # Each component job below always runs and always reports success when its
@@ -206,3 +217,52 @@ jobs:
         with:
           name: ios-test-results
           path: TestResults.xcresult
+
+  # ── Web build & test ──────────────────────────────────────────────────────────
+  web:
+    name: Web build & test
+    needs: changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip notice
+        if: needs.changes.outputs.web != 'true'
+        run: echo "Web unchanged — reporting success without running tests."
+
+      - uses: actions/setup-node@v4
+        if: needs.changes.outputs.web == 'true'
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        if: needs.changes.outputs.web == 'true'
+        # The lock file is generated on Windows and omits resolved URLs for
+        # Linux-specific optional binaries (@parcel/watcher, rollup, etc.).
+        # Deleting it forces npm to resolve all optional deps for the current OS.
+        run: rm -f package-lock.json && npm install
+
+      - name: Run unit tests (Vitest)
+        if: needs.changes.outputs.web == 'true'
+        run: npm test
+
+      - name: Install Playwright browser
+        if: needs.changes.outputs.web == 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        if: needs.changes.outputs.web == 'true'
+        run: npm run build
+
+      - name: Run e2e tests (Playwright)
+        if: needs.changes.outputs.web == 'true'
+        run: npm run test:e2e
+
+      - name: Upload Playwright report
+        if: always() && needs.changes.outputs.web == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
