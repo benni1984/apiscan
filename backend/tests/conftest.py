@@ -1,10 +1,14 @@
 import pytest
+from unittest.mock import patch
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from app.database import Base, get_db
+from app.utils.geocoding import CityLocation
 from main import app
+
+_CITY = CityLocation(name="TestCity", latitude=48.1, longitude=11.6)
 
 TEST_DB_URL = "sqlite:///./test.db"
 engine = create_engine(TEST_DB_URL, connect_args={"check_same_thread": False})
@@ -24,6 +28,12 @@ def setup_db():
     Base.metadata.create_all(bind=engine)
     yield
     Base.metadata.drop_all(bind=engine)
+
+
+@pytest.fixture(autouse=True)
+def mock_geocoder():
+    with patch("app.routers.apiaries.reverse_geocode_city", return_value=_CITY):
+        yield
 
 
 @pytest.fixture

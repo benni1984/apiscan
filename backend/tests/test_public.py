@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import patch
 
 
 @pytest.fixture
@@ -35,11 +36,15 @@ def test_global_stats(client, seeded):
 
 def test_global_stats_map_pins_only_gps_apiaries(client, seeded):
     data = client.get("/api/v1/public/stats").json()
-    # Only apiary with GPS appears in pins
+    # Only apiary with GPS (geocoded to city centroid) appears in pins
     assert len(data["apiaries"]) == 1
     pin = data["apiaries"][0]
     assert pin["name"] == "Riverside"
     assert pin["hive_count"] == 2
+    # Coordinates must be city centroid, not exact GPS
+    assert pin["latitude"] == 48.1
+    assert pin["longitude"] == 11.6
+    assert pin["city_name"] == "TestCity"
 
 
 def test_global_stats_no_auth_required(client):
@@ -58,6 +63,11 @@ def test_public_apiary_detail(client, seeded):
     assert data["average_varroa"] == 3.0
     assert data["mood_distribution"]["calm"] == 2
     assert len(data["hives"]) == 2
+    # Location privacy: city centroid, not exact GPS
+    assert data["latitude"] == 48.1
+    assert data["longitude"] == 11.6
+    assert data["city_name"] == "TestCity"
+    assert "address" not in data
 
 
 def test_public_apiary_detail_no_auth(client, seeded):
@@ -113,4 +123,36 @@ def test_global_stats_empty_db(client):
     assert data["apiary_count"] == 0
     assert data["hive_count"] == 0
     assert data["inspection_count"] == 0
+    assert data["apiaries"] == []
+
+
+def test_location_privacy_exact_coords_not_exposed(client, seeded):
+    apiary1, _ = seeded
+    data = client.get(f"/api/v1/public/apiaries/{apiary1['id']}").json()
+    # Exact coords (48.85, 2.35) must not appear — only city centroid
+    assert data["latitude"] != 48.85
+    assert data["longitude"] != 2.35
+
+
+def test_location_privacy_geocoder_fallback(auth_client, client):
+    with patch("app.routers.apiaries.reverse_geocode_city", return_value=None):
+        auth_client.post("/api/v1/apiaries", json={
+            "name": "Fallback Apiary", "latitude": 48.85, "longitude": 2.35, "is_public": True
+        })
+    data = client.get("/api/v1/public/stats").json()
+    assert len(data["apiaries"]) == 1
+    pin = data["apiaries"][0]
+    # Fallback: round to 1 decimal (~11 km precision)
+    assert pin["latitude"] == round(48.85, 1)
+    assert pin["longitude"] == round(2.35, 1)
+    assert pin["city_name"] is None
+
+
+def test_private_apiary_city_coords_not_public(auth_client, client):
+    auth_client.post("/api/v1/apiaries", json={
+        "name": "Private", "latitude": 48.85, "longitude": 2.35
+        # is_public defaults to False
+    })
+    data = client.get("/api/v1/public/stats").json()
+    assert data["apiary_count"] == 0
     assert data["apiaries"] == []

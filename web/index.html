@@ -74,6 +74,7 @@
         marker.bindPopup(`
           <div class="map-popup">
             <h3>${escHtml(a.name)}</h3>
+            ${a.city_name ? `<p>📍 ${escHtml(a.city_name)}</p>` : ''}
             <p>🐝 ${a.hive_count} hive${a.hive_count !== 1 ? 's' : ''}</p>
             <a href="apiary.html?id=${a.id}">View details →</a>
           </div>

@@ -50,9 +50,7 @@
     document.getElementById('header-subtitle').textContent = d.name;
 
     const locParts = [];
-    if (d.address) locParts.push(d.address);
-    if (d.latitude != null && d.longitude != null)
-      locParts.push(`${d.latitude.toFixed(4)}, ${d.longitude.toFixed(4)}`);
+    if (d.city_name) locParts.push(d.city_name);
 
     const lastInsp = d.last_inspection_date
       ? new Date(d.last_inspection_date).toLocaleDateString(undefined, { dateStyle: 'medium' })

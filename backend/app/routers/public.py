@@ -17,8 +17,9 @@ router = APIRouter(prefix="/public", tags=["public"])
 class PublicApiaryPin(BaseModel):
     id: str
     name: str
-    latitude: float
-    longitude: float
+    city_name: Optional[str]
+    latitude: Optional[float]
+    longitude: Optional[float]
     hive_count: int
 
 
@@ -39,10 +40,10 @@ class PublicHiveSummary(BaseModel):
 class PublicApiaryDetail(BaseModel):
     id: str
     name: str
-    description: Optional[str]
+    city_name: Optional[str]
     latitude: Optional[float]
     longitude: Optional[float]
-    address: Optional[str]
+    description: Optional[str]
     hive_count: int
     inspection_count: int
     last_inspection_date: Optional[str]
@@ -68,12 +69,13 @@ def global_stats(db: DB):
         PublicApiaryPin(
             id=a.id,
             name=a.name,
-            latitude=a.latitude,
-            longitude=a.longitude,
+            city_name=a.city_name,
+            latitude=a.city_latitude,
+            longitude=a.city_longitude,
             hive_count=len(a.hives),
         )
         for a in public_apiaries
-        if a.latitude is not None and a.longitude is not None
+        if a.city_latitude is not None and a.city_longitude is not None
     ]
 
     return GlobalStats(
@@ -119,10 +121,10 @@ def public_apiary(apiary_id: str, db: DB, accept_language: str = "en"):
     return PublicApiaryDetail(
         id=apiary.id,
         name=apiary.name,
+        city_name=apiary.city_name,
+        latitude=apiary.city_latitude,
+        longitude=apiary.city_longitude,
         description=apiary.description,
-        latitude=apiary.latitude,
-        longitude=apiary.longitude,
-        address=apiary.address,
         hive_count=len(apiary.hives),
         inspection_count=len(all_inspections),
         last_inspection_date=last_date,

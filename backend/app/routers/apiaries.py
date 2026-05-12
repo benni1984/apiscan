@@ -2,12 +2,35 @@ import math
 from typing import Optional
 
 from fastapi import APIRouter, Header, HTTPException, Query
+from sqlalchemy.orm import Session
+
 from app.deps import CurrentUser, DB
 from app.i18n import error
 from app.models import Apiary
 from app.schemas import ApiaryCreate, ApiaryOut, ApiaryUpdate, PaginatedResponse
+from app.utils.geocoding import reverse_geocode_city
 
 router = APIRouter(prefix="/apiaries", tags=["apiaries"])
+
+
+def _maybe_geocode(apiary: Apiary, db: Session) -> None:
+    """Populate city_* columns when apiary is public and has GPS coordinates."""
+    if apiary.is_public and apiary.latitude is not None and apiary.longitude is not None:
+        result = reverse_geocode_city(apiary.latitude, apiary.longitude)
+        if result:
+            apiary.city_name = result.name
+            apiary.city_latitude = result.latitude
+            apiary.city_longitude = result.longitude
+        else:
+            apiary.city_name = None
+            apiary.city_latitude = round(apiary.latitude, 1)
+            apiary.city_longitude = round(apiary.longitude, 1)
+    else:
+        apiary.city_name = None
+        apiary.city_latitude = None
+        apiary.city_longitude = None
+    db.commit()
+    db.refresh(apiary)
 
 
 def _get_or_404(apiary_id: str, user_id: str, db: DB, lang):
@@ -56,6 +79,7 @@ def create_apiary(body: ApiaryCreate, current_user: CurrentUser, db: DB):
     db.add(apiary)
     db.commit()
     db.refresh(apiary)
+    _maybe_geocode(apiary, db)
     return _to_out(apiary)
 
 
@@ -82,6 +106,7 @@ def update_apiary(
         setattr(apiary, field, value)
     db.commit()
     db.refresh(apiary)
+    _maybe_geocode(apiary, db)
     return _to_out(apiary)
 
 
