@@ -65,6 +65,7 @@ final class MockApiaryService: ApiaryServiceProtocol {
     func update(_ id: String, name: String?, description: String?, latitude: Double?, longitude: Double?, address: String?) async throws -> ApiaryOut { try updateResult.get() }
     func delete(_ id: String) async throws { if let err = deleteError { throw err } }
     func fieldDefinitions(_ apiaryId: String) async throws -> [FieldDefinitionOut] { [] }
+    func userFieldDefinitions() async throws -> [FieldDefinitionOut] { [] }
     func createFieldDefinition(_ apiaryId: String, body: FieldDefinitionCreate) async throws -> FieldDefinitionOut {
         FieldDefinitionOut(id: "fd-1", scope: "apiary", apiaryId: apiaryId,
                            target: body.target, name: body.name, type: body.type,
