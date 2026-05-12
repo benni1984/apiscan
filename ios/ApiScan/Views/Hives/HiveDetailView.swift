@@ -37,7 +37,7 @@ struct HiveDetailView: View {
                         .foregroundColor(.secondary)
                 } else {
                     ForEach(inspectionVM.inspections) { insp in
-                        NavigationLink(destination: InspectionDetailView(inspection: insp, hiveId: hive.id, inspectionVM: inspectionVM)) {
+                        NavigationLink(destination: InspectionDetailView(inspection: insp, hiveId: hive.id, apiaryId: apiaryId, inspectionVM: inspectionVM)) {
                             InspectionRow(inspection: insp)
                         }
                     }
@@ -63,7 +63,7 @@ struct HiveDetailView: View {
         .task { await inspectionVM.load(hiveId: hive.id) }
         .refreshable { await inspectionVM.load(hiveId: hive.id) }
         .sheet(isPresented: $showAddInspection) {
-            InspectionFormView(hiveId: hive.id, mode: .create) { req in
+            InspectionFormView(hiveId: hive.id, apiaryId: apiaryId, mode: .create) { req in
                 _ = try await inspectionVM.create(hiveId: hive.id, request: req)
                 showAddInspection = false
             }

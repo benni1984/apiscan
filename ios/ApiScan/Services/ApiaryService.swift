@@ -9,6 +9,7 @@ protocol ApiaryServiceProtocol {
     func fieldDefinitions(_ apiaryId: String) async throws -> [FieldDefinitionOut]
     func createFieldDefinition(_ apiaryId: String, body: FieldDefinitionCreate) async throws -> FieldDefinitionOut
     func deleteFieldDefinition(_ apiaryId: String, fieldId: String) async throws
+    func userFieldDefinitions() async throws -> [FieldDefinitionOut]
 }
 
 extension ApiaryServiceProtocol {
@@ -50,5 +51,9 @@ struct ApiaryService: ApiaryServiceProtocol {
 
     func deleteFieldDefinition(_ apiaryId: String, fieldId: String) async throws {
         try await client.delete("apiaries/\(apiaryId)/field-definitions/\(fieldId)")
+    }
+
+    func userFieldDefinitions() async throws -> [FieldDefinitionOut] {
+        try await client.get("field-definitions")
     }
 }
