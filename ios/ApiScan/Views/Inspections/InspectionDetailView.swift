@@ -3,6 +3,7 @@ import SwiftUI
 struct InspectionDetailView: View {
     let inspection: InspectionOut
     let hiveId: String
+    let apiaryId: String
     @ObservedObject var inspectionVM: InspectionViewModel
     @State private var showEdit = false
     @Environment(\.dismiss) var dismiss
@@ -70,7 +71,7 @@ struct InspectionDetailView: View {
             }
         }
         .sheet(isPresented: $showEdit) {
-            InspectionFormView(hiveId: hiveId, mode: .edit(inspection)) { req in
+            InspectionFormView(hiveId: hiveId, apiaryId: apiaryId, mode: .edit(inspection)) { req in
                 try await inspectionVM.update(inspection.id, request: req)
                 showEdit = false
             }
