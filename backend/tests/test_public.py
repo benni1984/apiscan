@@ -156,3 +156,63 @@ def test_private_apiary_city_coords_not_public(auth_client, client):
     data = client.get("/api/v1/public/stats").json()
     assert data["apiary_count"] == 0
     assert data["apiaries"] == []
+
+
+# ── Heatmap ───────────────────────────────────────────────────────────────────
+
+def test_heatmap_empty_returns_geojson(client):
+    r = client.get("/api/v1/public/heatmap")
+    assert r.status_code == 200
+    data = r.json()
+    assert data["type"] == "FeatureCollection"
+    assert data["features"] == []
+
+
+def test_heatmap_no_auth_required(client):
+    assert client.get("/api/v1/public/heatmap").status_code == 200
+
+
+def test_heatmap_aggregates_varroa_by_grid_cell(client, seeded):
+    data = client.get("/api/v1/public/heatmap").json()
+    assert len(data["features"]) >= 1
+    feature = data["features"][0]
+    assert feature["type"] == "Feature"
+    assert feature["geometry"]["type"] == "Polygon"
+    props = feature["properties"]
+    assert props["avg_varroa"] == 3.0
+    assert props["apiary_count"] >= 1
+    assert props["inspection_count"] >= 1
+
+
+def test_heatmap_polygon_has_five_coordinates(client, seeded):
+    data = client.get("/api/v1/public/heatmap").json()
+    coords = data["features"][0]["geometry"]["coordinates"][0]
+    assert len(coords) == 5
+    assert coords[0] == coords[4]  # closed ring
+
+
+def test_heatmap_excludes_private_apiaries(client, auth_client):
+    token = auth_client.post("/api/v1/qr-batches", json={"count": 1}).json()["tokens"][0]["token"]
+    private = auth_client.post("/api/v1/apiaries", json={
+        "name": "Secret", "latitude": 51.5, "longitude": -0.1
+    }).json()
+    hive = auth_client.post("/api/v1/hives/initialize", json={
+        "qr_token": token, "apiary_id": private["id"], "name": "H", "hive_type": "langstroth"
+    }).json()
+    auth_client.post(f"/api/v1/hives/{hive['id']}/inspections", json={"date": "2026-04-01", "varroa_count": 99})
+    data = client.get("/api/v1/public/heatmap").json()
+    all_varroa = [f["properties"]["avg_varroa"] for f in data["features"]]
+    assert 99.0 not in all_varroa
+
+
+def test_heatmap_excludes_inspections_without_varroa(client, auth_client):
+    token = auth_client.post("/api/v1/qr-batches", json={"count": 1}).json()["tokens"][0]["token"]
+    apiary = auth_client.post("/api/v1/apiaries", json={
+        "name": "No Varroa", "latitude": 52.0, "longitude": 13.0, "is_public": True
+    }).json()
+    hive = auth_client.post("/api/v1/hives/initialize", json={
+        "qr_token": token, "apiary_id": apiary["id"], "name": "H", "hive_type": "langstroth"
+    }).json()
+    auth_client.post(f"/api/v1/hives/{hive['id']}/inspections", json={"date": "2026-04-01", "mood": "calm"})
+    data = client.get("/api/v1/public/heatmap").json()
+    assert data["features"] == []

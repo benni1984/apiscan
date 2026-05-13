@@ -16,14 +16,42 @@ interface StatsData {
   inspection_count: number;
   apiaries: Apiary[];
 }
+interface HeatmapData {
+  type: string;
+  features: {
+    type: string;
+    geometry: { type: string; coordinates: number[][][] };
+    properties: { avg_varroa: number; apiary_count: number; inspection_count: number };
+  }[];
+}
+
+function varroaColor(avg: number): string {
+  if (avg < 2) return '#22c55e';
+  if (avg < 5) return '#f59e0b';
+  return '#ef4444';
+}
 
 function esc(s: string) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-export default function MapClient({ labels }: { labels: { apiaries: string; hives: string; inspections: string; hiveSingular: string; hivePlural: string; viewDetails: string } }) {
+interface Labels {
+  apiaries: string;
+  hives: string;
+  inspections: string;
+  hiveSingular: string;
+  hivePlural: string;
+  viewDetails: string;
+  heatmapToggle: string;
+  heatmapLow: string;
+  heatmapMedium: string;
+  heatmapHigh: string;
+}
+
+export default function MapClient({ labels }: { labels: Labels }) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [stats, setStats] = useState({ apiaries: '—', hives: '—', inspections: '—' });
+  const [hasHeatmap, setHasHeatmap] = useState(false);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -46,16 +74,19 @@ export default function MapClient({ labels }: { labels: { apiaries: string; hive
         popupAnchor: [0, -18],
       });
 
-      fetch('/api/v1/public/stats')
-        .then(r => r.json())
-        .then((data: StatsData) => {
-          if (destroyed) return;
-          setStats({
-            apiaries: data.apiary_count.toLocaleString(),
-            hives: data.hive_count.toLocaleString(),
-            inspections: data.inspection_count.toLocaleString(),
-          });
-          if (!data.apiaries?.length) return;
+      Promise.all([
+        fetch('/api/v1/public/stats').then(r => r.json()),
+        fetch('/api/v1/public/heatmap').then(r => r.json()),
+      ]).then(([data, heatmap]: [StatsData, HeatmapData]) => {
+        if (destroyed) return;
+
+        setStats({
+          apiaries: data.apiary_count.toLocaleString(),
+          hives: data.hive_count.toLocaleString(),
+          inspections: data.inspection_count.toLocaleString(),
+        });
+
+        if (data.apiaries?.length) {
           const bounds: [number, number][] = [];
           data.apiaries.forEach(a => {
             bounds.push([a.latitude, a.longitude]);
@@ -67,8 +98,46 @@ export default function MapClient({ labels }: { labels: { apiaries: string; hive
           });
           if (bounds.length === 1) map.setView(bounds[0], 12);
           else map.fitBounds(bounds, { padding: [40, 40] });
-        })
-        .catch(() => {});
+        }
+
+        if (heatmap.features?.length) {
+          const heatmapLayer = L.default.geoJSON(heatmap as any, {
+            style: feature => ({
+              fillColor: varroaColor(feature?.properties.avg_varroa ?? 0),
+              fillOpacity: 0.5,
+              color: '#fff',
+              weight: 1,
+            }),
+            onEachFeature: (feature, layer) => {
+              const p = feature.properties;
+              layer.bindPopup(
+                `<div class="map-popup"><h3>🪲 Varroa: ${p.avg_varroa}</h3><p>${p.apiary_count} apiar${p.apiary_count !== 1 ? 'ies' : 'y'} · ${p.inspection_count} inspection${p.inspection_count !== 1 ? 's' : ''}</p></div>`,
+                { maxWidth: 200 }
+              );
+            },
+          });
+
+          L.default.control.layers(
+            {},
+            { [labels.heatmapToggle]: heatmapLayer },
+            { collapsed: false, position: 'topright' }
+          ).addTo(map);
+
+          // Legend control
+          const legend = new L.default.Control({ position: 'bottomleft' });
+          legend.onAdd = () => {
+            const div = L.default.DomUtil.create('div', 'map-heatmap-legend');
+            div.innerHTML =
+              `<div class="legend-row"><span class="legend-dot" style="background:#22c55e"></span>${labels.heatmapLow}</div>` +
+              `<div class="legend-row"><span class="legend-dot" style="background:#f59e0b"></span>${labels.heatmapMedium}</div>` +
+              `<div class="legend-row"><span class="legend-dot" style="background:#ef4444"></span>${labels.heatmapHigh}</div>`;
+            return div;
+          };
+          legend.addTo(map);
+
+          setHasHeatmap(true);
+        }
+      }).catch(() => {});
 
       return () => { destroyed = true; map.remove(); };
     });

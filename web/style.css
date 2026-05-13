@@ -679,6 +679,17 @@ tr:last-child td { border-bottom: none; }
 }
 .map-popup a:hover { background: var(--green); }
 
+.map-heatmap-legend {
+  background: rgba(255,255,255,.95);
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,.2);
+  font-size: .8rem;
+  line-height: 1.6;
+}
+.legend-row { display: flex; align-items: center; gap: 6px; }
+.legend-dot  { display: inline-block; width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
 @media (max-width: 600px) {
   .map-stats-bar { flex-wrap: wrap; }
   .map-stat-pill { min-width: 50%; }

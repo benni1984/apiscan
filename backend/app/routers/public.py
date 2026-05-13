@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -8,6 +8,8 @@ from sqlalchemy.orm import Session
 from app.deps import DB
 from app.i18n import error
 from app.models import Apiary, Hive, Inspection
+
+_CELL = 0.5  # grid cell size in degrees (~50 km)
 
 router = APIRouter(prefix="/public", tags=["public"])
 
@@ -132,3 +134,56 @@ def public_apiary(apiary_id: str, db: DB, accept_language: str = "en"):
         mood_distribution=dict(mood_dist),
         hives=hive_summaries,
     )
+
+
+@router.get("/heatmap")
+def public_heatmap(db: DB) -> Dict[str, Any]:
+    """GeoJSON FeatureCollection of ~0.5° grid cells with average varroa counts."""
+    rows = (
+        db.query(
+            Apiary.id,
+            Apiary.city_latitude,
+            Apiary.city_longitude,
+            Inspection.varroa_count,
+        )
+        .join(Hive, Hive.apiary_id == Apiary.id)
+        .join(Inspection, Inspection.hive_id == Hive.id)
+        .filter(
+            Apiary.is_public.is_(True),
+            Apiary.city_latitude.isnot(None),
+            Apiary.city_longitude.isnot(None),
+            Inspection.varroa_count.isnot(None),
+        )
+        .all()
+    )
+
+    cells: Dict[tuple, Dict] = defaultdict(lambda: {"varroa": [], "apiary_ids": set()})
+    for apiary_id, lat, lon, varroa in rows:
+        key = (round(lat / _CELL) * _CELL, round(lon / _CELL) * _CELL)
+        cells[key]["varroa"].append(varroa)
+        cells[key]["apiary_ids"].add(apiary_id)
+
+    features = []
+    half = _CELL / 2
+    for (clat, clon), cell in cells.items():
+        avg = round(sum(cell["varroa"]) / len(cell["varroa"]), 2)
+        features.append({
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [clon - half, clat - half],
+                    [clon + half, clat - half],
+                    [clon + half, clat + half],
+                    [clon - half, clat + half],
+                    [clon - half, clat - half],
+                ]],
+            },
+            "properties": {
+                "avg_varroa": avg,
+                "apiary_count": len(cell["apiary_ids"]),
+                "inspection_count": len(cell["varroa"]),
+            },
+        })
+
+    return {"type": "FeatureCollection", "features": features}

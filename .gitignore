@@ -14,8 +14,10 @@ dist/
 build/
 .pytest_cache/
 
-# Node (if needed)
+# Node / Next.js
 node_modules/
+.next/
+.vercel/
 
 # iOS
 ios/.build/

@@ -613,6 +613,35 @@ They expose only aggregate, anonymised data. Individual inspection records and u
 |--------|------|-------------|
 | GET | `/public/stats` | Global aggregate stats + all apiary pins |
 | GET | `/public/apiaries/{id}` | Public detail for one apiary |
+| GET | `/public/heatmap` | Varroa density GeoJSON for public map overlay |
+
+---
+
+### GET `/public/heatmap`
+
+Returns a GeoJSON FeatureCollection of ~0.5° grid cells (~50 km) showing average varroa mite counts from all public apiaries. Only cells with at least one varroa reading are included. Coordinates use city-level precision (privacy-protected centroids).
+
+**Response 200**
+
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[9.75, 47.75], [10.25, 47.75], [10.25, 48.25], [9.75, 48.25], [9.75, 47.75]]]
+      },
+      "properties": {
+        "avg_varroa": 3.2,
+        "apiary_count": 4,
+        "inspection_count": 23
+      }
+    }
+  ]
+}
+```
 
 ---
 

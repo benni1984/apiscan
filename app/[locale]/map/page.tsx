@@ -15,6 +15,10 @@ export default function MapPage() {
       hiveSingular: t('popup.hiveSingular'),
       hivePlural: t('popup.hivePlural'),
       viewDetails: t('popup.viewDetails'),
+      heatmapToggle: t('heatmap.toggle'),
+      heatmapLow: t('heatmap.low'),
+      heatmapMedium: t('heatmap.medium'),
+      heatmapHigh: t('heatmap.high'),
     }} />
   );
 }

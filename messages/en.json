@@ -140,6 +140,12 @@
       "hiveSingular": "hive",
       "hivePlural": "hives",
       "viewDetails": "View details →"
+    },
+    "heatmap": {
+      "toggle": "Varroa Heatmap",
+      "low": "Low (< 2)",
+      "medium": "Medium (2–5)",
+      "high": "High (> 5)"
     }
   },
   "news": {
