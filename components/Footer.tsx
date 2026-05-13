@@ -36,8 +36,8 @@ export default function Footer() {
           <div className="footer-links">
             <h4>{t('support')}</h4>
             <ul>
-              <li><a href="https://ko-fi.com/apiscan" target="_blank" rel="noopener">Ko-fi</a></li>
-              <li><a href="https://www.paypal.com/donate?hosted_button_id=PLACEHOLDER" target="_blank" rel="noopener">PayPal</a></li>
+              <li><a href="https://ko-fi.com/apiscan" target="_blank" rel="noopener" data-umami-event="footer_kofi">Ko-fi</a></li>
+              <li><a href="https://www.paypal.com/donate?hosted_button_id=PLACEHOLDER" target="_blank" rel="noopener" data-umami-event="footer_paypal">PayPal</a></li>
             </ul>
           </div>
           <div className="footer-links">

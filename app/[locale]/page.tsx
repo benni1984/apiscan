@@ -21,11 +21,11 @@ export default function HomePage() {
           </h1>
           <p className="hero-sub" data-aos="fade-up" data-aos-delay="160">{t('hero.subtitle')}</p>
           <div className="hero-actions" data-aos="fade-up" data-aos-delay="240">
-            <a href="#download" className="btn-store btn-apple">
+            <a href="#download" className="btn-store btn-apple" data-umami-event="hero_store_ios">
               <i className="fab fa-apple" />
               <span><small>{t('hero.apple.pre')}</small><span>{t('hero.apple.store')}</span></span>
             </a>
-            <a href="#download" className="btn-store btn-android">
+            <a href="#download" className="btn-store btn-android" data-umami-event="hero_store_android">
               <i className="fab fa-google-play" />
               <span><small>{t('hero.google.pre')}</small><span>{t('hero.google.play')}</span></span>
             </a>
@@ -160,15 +160,15 @@ export default function HomePage() {
                 <li><i className="fas fa-check" /> <span>{t('price.sup.f7')}</span> <span className="coming-soon-badge">{t('price.coming')}</span></li>
                 <li><i className="fas fa-check" /> <span>{t('price.sup.f8')}</span> <span className="coming-soon-badge">{t('price.coming')}</span></li>
               </ul>
-              <a href="#download" className="btn-primary">{t('btn.supporter')}</a>
+              <a href="#download" className="btn-primary" data-umami-event="pricing_supporter_cta">{t('btn.supporter')}</a>
             </div>
             <div className="pricing-card" data-aos="fade-up" data-aos-delay="200">
               <div className="pricing-tier">{t('price.donate.tier')}</div>
               <div className="pricing-price">{t('price.donate.price')}</div>
               <p className="pricing-note">{t('price.donate.note')}</p>
               <div className="donation-buttons">
-                <a href="https://ko-fi.com/apiscan" className="btn-donate btn-kofi" target="_blank" rel="noopener noreferrer"><i className="fas fa-coffee" /> {t('btn.kofi')}</a>
-                <a href="https://www.paypal.com/donate?hosted_button_id=PLACEHOLDER" className="btn-donate btn-paypal" target="_blank" rel="noopener noreferrer"><i className="fab fa-paypal" /> {t('btn.paypal')}</a>
+                <a href="https://ko-fi.com/apiscan" className="btn-donate btn-kofi" target="_blank" rel="noopener noreferrer" data-umami-event="donate_kofi"><i className="fas fa-coffee" /> {t('btn.kofi')}</a>
+                <a href="https://www.paypal.com/donate?hosted_button_id=PLACEHOLDER" className="btn-donate btn-paypal" target="_blank" rel="noopener noreferrer" data-umami-event="donate_paypal"><i className="fab fa-paypal" /> {t('btn.paypal')}</a>
               </div>
             </div>
           </div>
@@ -183,10 +183,10 @@ export default function HomePage() {
             <h2>{t('dl.title')}</h2>
             <p>{t('dl.sub')}</p>
             <div className="download-badges">
-              <a href="#" className="store-badge apple-badge" aria-label="Download on the App Store">
+              <a href="#" className="store-badge apple-badge" aria-label="Download on the App Store" data-umami-event="download_ios">
                 <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" height={52} />
               </a>
-              <a href="#" className="store-badge google-badge" aria-label="Get it on Google Play">
+              <a href="#" className="store-badge google-badge" aria-label="Get it on Google Play" data-umami-event="download_android">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" height={52} />
               </a>
             </div>

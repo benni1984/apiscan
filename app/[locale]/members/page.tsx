@@ -42,7 +42,7 @@ export default function MembersPage() {
             <div className="members-gate">
               <h3>{t('gate.title')}</h3>
               <p>{t('gate.desc')}</p>
-              <a href="/#download" className="btn-primary" style={{display:'inline-block',marginBottom:'8px'}}>{t('gate.cta')}</a>
+              <a href="/#download" className="btn-primary" style={{display:'inline-block',marginBottom:'8px'}} data-umami-event="members_get_app">{t('gate.cta')}</a>
               <p style={{fontSize:'.82rem',color:'var(--muted)',marginTop:'12px'}}>{t('gate.note')}</p>
             </div>
           </div>
