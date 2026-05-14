@@ -220,6 +220,13 @@
       "errorGeneric": "Registration failed. Please try again."
     },
     "nav": { "apiaries": "My Apiaries", "logout": "Log out" },
+    "admin": {
+      "nav": { "section": "Admin", "stats": "Platform Stats", "users": "Users", "map": "Map", "health": "Health" },
+      "stats": { "title": "Platform Statistics", "totalUsers": "Total Users", "newUsers": "New Users", "supporters": "Supporters", "totalApiaries": "Total Apiaries", "publicApiaries": "Public Apiaries", "totalHives": "Total Hives", "totalInspections": "Total Inspections", "activeUsers": "Active Users (30d)", "activeSessions": "Active Sessions", "preset": "Period" },
+      "users": { "title": "User Management", "search": "Search by email…", "all": "All", "supportersOnly": "Supporters only", "email": "Email", "name": "Name", "joined": "Joined", "supporter": "Supporter", "actions": "Actions", "makeSupporter": "Make Supporter", "removeSupporter": "Remove Supporter", "revokeSessions": "Revoke Sessions", "delete": "Delete", "confirmDelete": "Delete this user and all their data? This cannot be undone.", "confirmRevoke": "Revoke all sessions for this user?" },
+      "map": { "title": "Map Moderation", "all": "All Public Apiaries", "flagged": "Flagged", "name": "Apiary", "owner": "Owner", "hives": "Hives", "setPrivate": "Set Private", "noFlagged": "No flagged apiaries." },
+      "health": { "title": "Data Health", "inactiveUsers": "Inactive Users", "zeroHives": "Zero-Inspection Hives", "noVarroa": "Missing Varroa Data", "inactiveDesc": "Registered > 30 days ago, no inspections", "zeroDesc": "Initialized but never inspected", "noVarroaDesc": "Inspections without a varroa count", "email": "Email", "joined": "Joined", "apiaries": "Apiaries", "hive": "Hive", "apiary": "Apiary", "missing": "Missing Count", "noData": "No issues found." }
+    },
     "apiaries": {
       "title": "My Apiaries",
       "empty": "No apiaries yet. Add your first apiary in the app.",

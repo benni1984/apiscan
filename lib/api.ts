@@ -142,7 +142,7 @@ export async function getInspections(hiveId: string): Promise<Paginated<Inspecti
 }
 
 // ── Types ──────────────────────────────────────────────────────────────────────
-export interface User { id: string; email: string; name: string; locale: string; created_at: string; }
+export interface User { id: string; email: string; name: string; locale: string; created_at: string; is_admin: boolean; is_supporter: boolean; }
 export interface Apiary { id: string; name: string; hive_count: number; is_public: boolean; description?: string; }
 export interface Hive { id: string; name: string; hive_type: string; apiary_id: string; last_inspection_at?: string; }
 export interface Inspection {
@@ -160,4 +160,102 @@ export interface ApiaryStats {
   average_varroa?: number;
   mood_distribution: { calm: number; nervous: number; aggressive: number };
 }
-export interface Paginated<T> { items: T[]; total: number; page: number; per_page: number; }
+export interface Paginated<T> { items: T[]; total: number; page: number; per_page: number; pages: number; }
+
+// ── Admin types ────────────────────────────────────────────────────────────────
+export interface AdminUser { id: string; email: string; name: string; locale: string; is_admin: boolean; is_supporter: boolean; created_at: string; }
+export interface AdminApiary { id: string; name: string; owner_email: string; latitude?: number; longitude?: number; hive_count: number; is_public: boolean; created_at: string; }
+export interface PlatformStats { preset: string; total_users: number; new_users_in_period: number; supporter_count: number; total_apiaries: number; public_apiaries: number; total_hives: number; total_inspections: number; active_users_30d: number; signups_by_day: { date: string; count: number }[]; }
+export interface HealthSummary { inactive_users: number; zero_inspection_hives: number; no_varroa_inspections: number; }
+export interface InactiveUser { id: string; email: string; name: string; created_at: string; apiary_count: number; }
+export interface NoVarroaApiary { apiary_id: string; apiary_name: string; owner_email: string; missing_varroa_count: number; }
+export interface ZeroInspectionHive { id: string; name: string; hive_type: string; apiary_id: string; apiary_name: string; owner_email: string; initialized_at: string; }
+export interface TokenStats { total_active_sessions: number; users_with_active_sessions: number; avg_sessions_per_user: number; }
+
+// ── Admin API ──────────────────────────────────────────────────────────────────
+export async function adminGetStats(preset = '30d'): Promise<PlatformStats> {
+  const res = await apiFetch(`/admin/stats?preset=${preset}`);
+  if (!res.ok) throw new Error('Failed to get stats');
+  return res.json();
+}
+
+export async function adminGetUsers(params: { q?: string; supporter?: boolean; page?: number; per_page?: number } = {}): Promise<Paginated<AdminUser>> {
+  const qs = new URLSearchParams();
+  if (params.q) qs.set('q', params.q);
+  if (params.supporter !== undefined) qs.set('supporter', String(params.supporter));
+  if (params.page) qs.set('page', String(params.page));
+  if (params.per_page) qs.set('per_page', String(params.per_page));
+  const res = await apiFetch(`/admin/users?${qs}`);
+  if (!res.ok) throw new Error('Failed to get users');
+  return res.json();
+}
+
+export async function adminSetSupporter(userId: string, isSupporter: boolean): Promise<AdminUser> {
+  const res = await apiFetch(`/admin/users/${userId}/supporter`, { method: 'PUT', body: JSON.stringify({ is_supporter: isSupporter }) });
+  if (!res.ok) throw new Error('Failed to update supporter status');
+  return res.json();
+}
+
+export async function adminDeleteUser(userId: string): Promise<void> {
+  const res = await apiFetch(`/admin/users/${userId}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Failed to delete user');
+}
+
+export async function adminRevokeTokens(userId: string): Promise<void> {
+  const res = await apiFetch(`/admin/users/${userId}/tokens`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Failed to revoke tokens');
+}
+
+export async function adminGetApiaries(params: { page?: number; per_page?: number } = {}): Promise<Paginated<AdminApiary>> {
+  const qs = new URLSearchParams();
+  if (params.page) qs.set('page', String(params.page));
+  if (params.per_page) qs.set('per_page', String(params.per_page));
+  const res = await apiFetch(`/admin/apiaries?${qs}`);
+  if (!res.ok) throw new Error('Failed to get apiaries');
+  return res.json();
+}
+
+export async function adminGetFlaggedApiaries(): Promise<AdminApiary[]> {
+  const res = await apiFetch('/admin/apiaries/flagged');
+  if (!res.ok) throw new Error('Failed to get flagged apiaries');
+  return res.json();
+}
+
+export async function adminSetPrivate(apiaryId: string): Promise<AdminApiary> {
+  const res = await apiFetch(`/admin/apiaries/${apiaryId}/set-private`, { method: 'PUT' });
+  if (!res.ok) throw new Error('Failed to set apiary private');
+  return res.json();
+}
+
+export async function adminGetHealthSummary(): Promise<HealthSummary> {
+  const res = await apiFetch('/admin/health/summary');
+  if (!res.ok) throw new Error('Failed to get health summary');
+  return res.json();
+}
+
+export async function adminGetInactiveUsers(params: { page?: number; per_page?: number } = {}): Promise<Paginated<InactiveUser>> {
+  const qs = new URLSearchParams();
+  if (params.page) qs.set('page', String(params.page));
+  if (params.per_page) qs.set('per_page', String(params.per_page));
+  const res = await apiFetch(`/admin/health/inactive-users?${qs}`);
+  if (!res.ok) throw new Error('Failed to get inactive users');
+  return res.json();
+}
+
+export async function adminGetNoVarroaApiaries(): Promise<NoVarroaApiary[]> {
+  const res = await apiFetch('/admin/health/no-varroa-inspections');
+  if (!res.ok) throw new Error('Failed to get no-varroa apiaries');
+  return res.json();
+}
+
+export async function adminGetZeroInspectionHives(): Promise<ZeroInspectionHive[]> {
+  const res = await apiFetch('/admin/health/zero-inspection-hives');
+  if (!res.ok) throw new Error('Failed to get zero-inspection hives');
+  return res.json();
+}
+
+export async function adminGetTokenStats(): Promise<TokenStats> {
+  const res = await apiFetch('/admin/tokens/stats');
+  if (!res.ok) throw new Error('Failed to get token stats');
+  return res.json();
+}
