@@ -59,6 +59,8 @@ class UserOut(BaseModel):
     email: str
     name: str
     locale: str
+    is_admin: bool
+    is_supporter: bool
     created_at: datetime
 
     model_config = {"from_attributes": True}

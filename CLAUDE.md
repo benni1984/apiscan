@@ -80,6 +80,14 @@ The source of truth for all endpoints, request/response shapes, and field enums 
 
 After pushing a branch, always open a PR immediately. Once all CI checks are green, merge it — no need to ask first.
 
+## Testing Rules
+
+- Every new backend endpoint must have a corresponding test in `backend/tests/`. Run `pytest` from `backend/` before declaring the work done.
+- Every new component, hook, page, or utility added to the web app must have a corresponding unit test in `__tests__/`. Run `npm test` before declaring the work done.
+- iOS: every new ViewModel method and significant UI flow must have a unit or UI test. Tests run in CI (`ios` job) on every PR touching `ios/`.
+- Android: every new ViewModel and Repository must have a unit test (`./gradlew test`); significant UI flows need an instrumented test (`./gradlew connectedAndroidTest`).
+- No PR is complete without tests for all new code introduced in that PR. If tests are not possible (e.g. a pure CSS change), state why explicitly.
+
 ## Session Discipline
 
 Always work in one component per session. Do not mix backend, iOS, and Android in the same context window. Start each session by stating which component you are working on.

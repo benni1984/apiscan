@@ -22,6 +22,8 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     name = Column(String, nullable=False)
     locale = Column(SAEnum("en", "fr", "de", name="locale_enum"), default="en")
+    is_admin = Column(Boolean, default=False, nullable=False)
+    is_supporter = Column(Boolean, default=False, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     refresh_tokens = relationship("RefreshToken", back_populates="user", cascade="all, delete-orphan")
