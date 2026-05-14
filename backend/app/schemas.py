@@ -92,6 +92,17 @@ class SupporterUpdate(BaseModel):
 # Admin — platform stats
 # ---------------------------------------------------------------------------
 
+class AdminApiaryOut(BaseModel):
+    id: str
+    name: str
+    owner_email: str
+    latitude: Optional[float]
+    longitude: Optional[float]
+    hive_count: int
+    is_public: bool
+    created_at: datetime
+
+
 class SignupDay(BaseModel):
     date: str
     count: int

@@ -3,12 +3,12 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query, status
-from sqlalchemy import func
+from sqlalchemy import func, or_, and_
 
 from app.deps import CurrentAdmin, DB
 from app.models import Apiary, Hive, Inspection, User
 from app.schemas import (
-    AdminPlatformStats, AdminUserDetail, PaginatedResponse,
+    AdminApiaryOut, AdminPlatformStats, AdminUserDetail, PaginatedResponse,
     SignupDay, SupporterUpdate, UserOut,
 )
 
@@ -148,6 +148,96 @@ def platform_stats(
         active_users_30d=active_users_30d,
         signups_by_day=signups_by_day,
     )
+
+
+# ---------------------------------------------------------------------------
+# Map moderation
+# ---------------------------------------------------------------------------
+
+def _hive_count_subquery(db):
+    return (
+        db.query(Hive.apiary_id, func.count(Hive.id).label("hc"))
+        .group_by(Hive.apiary_id)
+        .subquery()
+    )
+
+
+def _apiary_row_to_out(apiary, email, hive_count) -> AdminApiaryOut:
+    return AdminApiaryOut(
+        id=apiary.id,
+        name=apiary.name,
+        owner_email=email,
+        latitude=apiary.latitude,
+        longitude=apiary.longitude,
+        hive_count=hive_count,
+        is_public=apiary.is_public,
+        created_at=apiary.created_at,
+    )
+
+
+@router.get("/apiaries")
+def list_public_apiaries(
+    admin: CurrentAdmin,
+    db: DB,
+    page: int = Query(1, ge=1),
+    per_page: int = Query(20, ge=1, le=100),
+) -> PaginatedResponse:
+    hc_sq = _hive_count_subquery(db)
+    hc_col = func.coalesce(hc_sq.c.hc, 0)
+    base = (
+        db.query(Apiary, User.email, hc_col)
+        .join(User, Apiary.user_id == User.id)
+        .outerjoin(hc_sq, Apiary.id == hc_sq.c.apiary_id)
+        .filter(Apiary.is_public.is_(True))
+        .order_by(Apiary.created_at.desc())
+    )
+    total = db.query(func.count(Apiary.id)).filter(Apiary.is_public.is_(True)).scalar() or 0
+    rows = base.offset((page - 1) * per_page).limit(per_page).all()
+    return PaginatedResponse(
+        items=[_apiary_row_to_out(a, email, hc) for a, email, hc in rows],
+        total=total,
+        page=page,
+        per_page=per_page,
+        pages=math.ceil(total / per_page) if total else 1,
+    )
+
+
+@router.get("/apiaries/flagged")
+def flagged_apiaries(admin: CurrentAdmin, db: DB) -> list:
+    hc_sq = _hive_count_subquery(db)
+    hc_col = func.coalesce(hc_sq.c.hc, 0)
+    rows = (
+        db.query(Apiary, User.email, hc_col)
+        .join(User, Apiary.user_id == User.id)
+        .outerjoin(hc_sq, Apiary.id == hc_sq.c.apiary_id)
+        .filter(Apiary.is_public.is_(True))
+        .filter(or_(
+            hc_col > 500,
+            and_(Apiary.latitude.isnot(None), or_(Apiary.latitude < -90, Apiary.latitude > 90)),
+            and_(Apiary.longitude.isnot(None), or_(Apiary.longitude < -180, Apiary.longitude > 180)),
+        ))
+        .all()
+    )
+    return [_apiary_row_to_out(a, email, hc) for a, email, hc in rows]
+
+
+@router.put("/apiaries/{apiary_id}/set-private")
+def set_apiary_private(apiary_id: str, admin: CurrentAdmin, db: DB) -> AdminApiaryOut:
+    apiary = db.get(Apiary, apiary_id)
+    if apiary is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"code": "APIARY_NOT_FOUND", "message": "Apiary not found."},
+        )
+    apiary.is_public = False
+    apiary.city_name = None
+    apiary.city_latitude = None
+    apiary.city_longitude = None
+    db.commit()
+    db.refresh(apiary)
+    hive_count = db.query(func.count(Hive.id)).filter(Hive.apiary_id == apiary_id).scalar() or 0
+    owner = db.get(User, apiary.user_id)
+    return _apiary_row_to_out(apiary, owner.email, hive_count)
 
 
 @router.delete("/users/{user_id}", status_code=204)
