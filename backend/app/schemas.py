@@ -71,6 +71,23 @@ class UserUpdate(BaseModel):
     locale: Optional[str] = Field(default=None, pattern="^(en|fr|de)$")
 
 
+class AdminUserDetail(BaseModel):
+    id: str
+    email: str
+    name: str
+    locale: str
+    is_admin: bool
+    is_supporter: bool
+    created_at: datetime
+    apiary_count: int
+    hive_count: int
+    inspection_count: int
+
+
+class SupporterUpdate(BaseModel):
+    is_supporter: bool
+
+
 # ---------------------------------------------------------------------------
 # Field Definitions
 # ---------------------------------------------------------------------------
