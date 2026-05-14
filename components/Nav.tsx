@@ -71,6 +71,7 @@ export default function Nav({ locale, isHome = false }: { locale: string; isHome
           <li><Link href="/news"      onClick={() => setMenuOpen(false)}>{t('news')}</Link></li>
           <li><Link href="/contribute"onClick={() => setMenuOpen(false)}>{t('contribute')}</Link></li>
           <li><Link href="/members"   onClick={() => setMenuOpen(false)}>{t('members')}</Link></li>
+          <li><Link href="/dashboard" onClick={() => setMenuOpen(false)}>{t('dashboard')}</Link></li>
         </ul>
 
         <div className="lang-switcher" ref={ddRef}>

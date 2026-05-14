@@ -4,6 +4,7 @@
     "news": "News",
     "contribute": "Contribute",
     "members": "Members",
+    "dashboard": "My Hives",
     "download": "Download Free",
     "back": { "map": "← Live Map" }
   },
@@ -197,6 +198,54 @@
     "s7body": "Passwords are hashed with bcrypt and never stored in plain text. API access requires a signed JWT token. Data in transit is encrypted via TLS. We review security practices regularly.",
     "s8title": "8. Contact",
     "s8body": "Questions about this policy or your data? Email us at privacy@apiscan.app."
+  },
+  "dash": {
+    "login": {
+      "title": "Log in to ApiScan",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log in",
+      "noAccount": "No account?",
+      "register": "Register",
+      "errorGeneric": "Login failed. Please try again."
+    },
+    "register": {
+      "title": "Create your account",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password (min 8 characters)",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "login": "Log in",
+      "errorGeneric": "Registration failed. Please try again."
+    },
+    "nav": { "apiaries": "My Apiaries", "logout": "Log out" },
+    "apiaries": {
+      "title": "My Apiaries",
+      "empty": "No apiaries yet. Add your first apiary in the app.",
+      "hives": "hives",
+      "public": "Public",
+      "private": "Private"
+    },
+    "apiary": {
+      "hives": "Hives",
+      "inspections": "Inspections",
+      "avgVarroa": "Avg. Varroa",
+      "noHives": "No hives in this apiary yet."
+    },
+    "hive": {
+      "inspections": "Inspections",
+      "varroaTrend": "Varroa Trend (12 months)",
+      "noTrend": "No varroa data yet.",
+      "noInspections": "No inspections yet.",
+      "date": "Date",
+      "varroa": "Varroa",
+      "mood": "Mood",
+      "queen": "Queen seen",
+      "brood": "Brood frames",
+      "yes": "Yes",
+      "no": "No"
+    }
   },
   "members": {
     "tag": "Members Area",
