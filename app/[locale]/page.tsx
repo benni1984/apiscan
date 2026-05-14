@@ -168,7 +168,7 @@ export default function HomePage() {
               <p className="pricing-note">{t('price.donate.note')}</p>
               <div className="donation-buttons">
                 <a href="https://ko-fi.com/benjaminmuller64800" className="btn-donate btn-kofi" target="_blank" rel="noopener noreferrer" data-umami-event="donate_kofi"><i className="fas fa-coffee" /> {t('btn.kofi')}</a>
-                <a href="https://www.paypal.com/donate?hosted_button_id=PLACEHOLDER" className="btn-donate btn-paypal" target="_blank" rel="noopener noreferrer" data-umami-event="donate_paypal"><i className="fab fa-paypal" /> {t('btn.paypal')}</a>
+                <a href="https://www.paypal.com/donate/?hosted_button_id=H583STJ96AXT2" className="btn-donate btn-paypal" target="_blank" rel="noopener noreferrer" data-umami-event="donate_paypal"><i className="fab fa-paypal" /> {t('btn.paypal')}</a>
               </div>
             </div>
           </div>
