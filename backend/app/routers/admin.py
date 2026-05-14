@@ -1,4 +1,5 @@
 import math
+from datetime import datetime, timedelta
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query, status
@@ -6,7 +7,10 @@ from sqlalchemy import func
 
 from app.deps import CurrentAdmin, DB
 from app.models import Apiary, Hive, Inspection, User
-from app.schemas import AdminUserDetail, PaginatedResponse, SupporterUpdate, UserOut
+from app.schemas import (
+    AdminPlatformStats, AdminUserDetail, PaginatedResponse,
+    SignupDay, SupporterUpdate, UserOut,
+)
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -89,6 +93,61 @@ def set_supporter(user_id: str, body: SupporterUpdate, admin: CurrentAdmin, db: 
     db.commit()
     db.refresh(user)
     return UserOut.model_validate(user)
+
+
+@router.get("/stats")
+def platform_stats(
+    admin: CurrentAdmin,
+    db: DB,
+    preset: str = Query("30d", pattern="^(30d|90d|365d|all)$"),
+) -> AdminPlatformStats:
+    now = datetime.utcnow()
+    _days = {"30d": 30, "90d": 90, "365d": 365}
+    cutoff: Optional[datetime] = None if preset == "all" else now - timedelta(days=_days[preset])
+
+    total_users = db.query(func.count(User.id)).scalar() or 0
+    supporter_count = db.query(func.count(User.id)).filter(User.is_supporter.is_(True)).scalar() or 0
+
+    new_q = db.query(func.count(User.id))
+    if cutoff:
+        new_q = new_q.filter(User.created_at >= cutoff)
+    new_users_in_period = new_q.scalar() or 0
+
+    total_apiaries = db.query(func.count(Apiary.id)).scalar() or 0
+    public_apiaries = db.query(func.count(Apiary.id)).filter(Apiary.is_public.is_(True)).scalar() or 0
+    total_hives = db.query(func.count(Hive.id)).scalar() or 0
+    total_inspections = db.query(func.count(Inspection.id)).scalar() or 0
+
+    thirty_days_ago = now - timedelta(days=30)
+    active_users_30d = (
+        db.query(func.count(func.distinct(Hive.user_id)))
+        .join(Inspection, Inspection.hive_id == Hive.id)
+        .filter(Inspection.created_at >= thirty_days_ago)
+        .scalar() or 0
+    )
+
+    day_col = func.date(User.created_at)
+    signups_q = (
+        db.query(day_col.label("day"), func.count(User.id).label("cnt"))
+        .group_by(day_col)
+        .order_by(day_col)
+    )
+    if cutoff:
+        signups_q = signups_q.filter(User.created_at >= cutoff)
+    signups_by_day = [SignupDay(date=str(row.day), count=row.cnt) for row in signups_q.all()]
+
+    return AdminPlatformStats(
+        preset=preset,
+        total_users=total_users,
+        new_users_in_period=new_users_in_period,
+        supporter_count=supporter_count,
+        total_apiaries=total_apiaries,
+        public_apiaries=public_apiaries,
+        total_hives=total_hives,
+        total_inspections=total_inspections,
+        active_users_30d=active_users_30d,
+        signups_by_day=signups_by_day,
+    )
 
 
 @router.delete("/users/{user_id}", status_code=204)

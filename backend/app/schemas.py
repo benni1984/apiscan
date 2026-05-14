@@ -89,6 +89,28 @@ class SupporterUpdate(BaseModel):
 
 
 # ---------------------------------------------------------------------------
+# Admin — platform stats
+# ---------------------------------------------------------------------------
+
+class SignupDay(BaseModel):
+    date: str
+    count: int
+
+
+class AdminPlatformStats(BaseModel):
+    preset: str
+    total_users: int
+    new_users_in_period: int
+    supporter_count: int
+    total_apiaries: int
+    public_apiaries: int
+    total_hives: int
+    total_inspections: int
+    active_users_30d: int
+    signups_by_day: List[SignupDay]
+
+
+# ---------------------------------------------------------------------------
 # Field Definitions
 # ---------------------------------------------------------------------------
 
