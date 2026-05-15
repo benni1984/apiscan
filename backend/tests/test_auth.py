@@ -44,6 +44,14 @@ def test_refresh(client):
     assert "access_token" in r2.json()
 
 
+def test_register_es_locale(client):
+    r = client.post("/api/v1/auth/register", json={
+        "email": "es_user@example.com", "password": "password1", "name": "Usuario", "locale": "es"
+    })
+    assert r.status_code == 201
+    assert r.json()["user"]["locale"] == "es"
+
+
 def test_logout(client):
     r = client.post("/api/v1/auth/register", json={
         "email": "a@b.com", "password": "password1", "name": "Alice", "locale": "en"

@@ -24,7 +24,7 @@ class RegisterRequest(BaseModel):
     email: EmailStr
     password: str = Field(min_length=8)
     name: str = Field(min_length=1)
-    locale: str = Field(default="en", pattern="^(en|fr|de)$")
+    locale: str = Field(default="en", pattern="^(en|fr|de|es)$")
 
 
 class LoginRequest(BaseModel):
@@ -68,7 +68,7 @@ class UserOut(BaseModel):
 
 class UserUpdate(BaseModel):
     name: Optional[str] = None
-    locale: Optional[str] = Field(default=None, pattern="^(en|fr|de)$")
+    locale: Optional[str] = Field(default=None, pattern="^(en|fr|de|es)$")
 
 
 class AdminUserDetail(BaseModel):

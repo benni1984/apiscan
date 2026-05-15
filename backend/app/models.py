@@ -21,7 +21,7 @@ class User(Base):
     email = Column(String, unique=True, nullable=False, index=True)
     hashed_password = Column(String, nullable=False)
     name = Column(String, nullable=False)
-    locale = Column(SAEnum("en", "fr", "de", name="locale_enum"), default="en")
+    locale = Column(SAEnum("en", "fr", "de", "es", name="locale_enum"), default="en")
     is_admin = Column(Boolean, default=False, nullable=False)
     is_supporter = Column(Boolean, default=False, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
