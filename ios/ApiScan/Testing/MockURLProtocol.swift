@@ -73,7 +73,7 @@ extension MockURLProtocol {
     // MARK: - Canned JSON
 
     static let userJSON = """
-    {"id":"u-1","email":"tester@example.com","name":"Test User","locale":"en","created_at":"2024-01-01T00:00:00Z"}
+    {"id":"u-1","email":"tester@example.com","name":"Test User","locale":"en","created_at":"2024-01-01T00:00:00Z","is_admin":false,"is_supporter":false}
     """
 
     private static let accessTokenJSON = """
@@ -81,7 +81,7 @@ extension MockURLProtocol {
     """
 
     private static let tokenResponseJSON = """
-    {"access_token":"ui-test-token","refresh_token":"ui-test-refresh","user":{"id":"u-1","email":"tester@example.com","name":"Test User","locale":"en","created_at":"2024-01-01T00:00:00Z"}}
+    {"access_token":"ui-test-token","refresh_token":"ui-test-refresh","user":{"id":"u-1","email":"tester@example.com","name":"Test User","locale":"en","created_at":"2024-01-01T00:00:00Z","is_admin":false,"is_supporter":false}}
     """
 
     private static let emptyList = """

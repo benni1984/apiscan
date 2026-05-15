@@ -64,6 +64,14 @@ struct SettingsView: View {
                 }
             }
 
+            if authVM.currentUser?.isAdmin == true {
+                Section {
+                    NavigationLink(destination: AdminView()) {
+                        Label(NSLocalizedString("admin.title", comment: ""), systemImage: "shield.lefthalf.filled")
+                    }
+                }
+            }
+
             Section {
                 Button(role: .destructive) {
                     showLogoutConfirm = true

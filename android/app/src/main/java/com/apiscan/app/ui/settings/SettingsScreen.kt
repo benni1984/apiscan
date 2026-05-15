@@ -3,6 +3,7 @@ package com.apiscan.app.ui.settings
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -92,6 +93,7 @@ class SettingsViewModel @Inject constructor(
 fun SettingsScreen(
     onLogout: () -> Unit,
     onBack: () -> Unit,
+    onAdminClick: () -> Unit = {},
     vm: SettingsViewModel = hiltViewModel()
 ) {
     val state by vm.state.collectAsState()
@@ -186,6 +188,19 @@ fun SettingsScreen(
                                 onClick  = { vm.updateLocale(locale) },
                                 shape    = SegmentedButtonDefaults.itemShape(idx, locales.size)
                             ) { Text(localeLabels[idx]) }
+                        }
+                    }
+
+                    // Admin dashboard
+                    if (user.isAdmin) {
+                        Text(stringResource(R.string.section_admin), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                        OutlinedButton(
+                            onClick  = onAdminClick,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Icon(Icons.Default.Build, null, Modifier.size(18.dp))
+                            Spacer(Modifier.width(8.dp))
+                            Text(stringResource(R.string.action_admin_dashboard))
                         }
                     }
 

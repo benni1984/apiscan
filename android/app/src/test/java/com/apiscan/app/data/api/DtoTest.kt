@@ -45,6 +45,36 @@ class DtoTest {
         assertEquals(3, batch.linkedCount)
     }
 
+    @Test
+    fun `UserOut isAdmin defaults to false`() {
+        val user = UserOut("u1", "a@b.com", "Alice", "en", "2024-01-01")
+        assertFalse(user.isAdmin)
+        assertFalse(user.isSupporter)
+    }
+
+    @Test
+    fun `UserOut isAdmin can be set to true`() {
+        val user = UserOut("u1", "a@b.com", "Alice", "en", "2024-01-01", isAdmin = true, isSupporter = true)
+        assertTrue(user.isAdmin)
+        assertTrue(user.isSupporter)
+    }
+
+    @Test
+    fun `AdminUserOut holds expected values`() {
+        val user = AdminUserOut("u1", "a@b.com", "Alice", "2024-01-01", isSupporter = true, apiaryCount = 2, hiveCount = 5, inspectionCount = 10)
+        assertEquals("u1", user.id)
+        assertTrue(user.isSupporter)
+        assertEquals(5, user.hiveCount)
+    }
+
+    @Test
+    fun `HealthSummary holds all counts`() {
+        val summary = HealthSummary(inactiveUsersCount = 3, noVarroaApiariesCount = 2, zeroInspectionHivesCount = 1)
+        assertEquals(3, summary.inactiveUsersCount)
+        assertEquals(2, summary.noVarroaApiariesCount)
+        assertEquals(1, summary.zeroInspectionHivesCount)
+    }
+
     private fun hive() = HiveOut(
         id = "h1", qrToken = "tok", apiaryId = "a1", name = "Hive 1",
         hiveType = "langstroth", latitude = null, longitude = null,

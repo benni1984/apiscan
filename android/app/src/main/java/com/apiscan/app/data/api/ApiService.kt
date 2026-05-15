@@ -135,6 +135,63 @@ interface ApiService {
         @Query("format") format: String
     ): ResponseBody
 
+    // Admin
+    @GET("admin/stats")
+    suspend fun adminStats(@Query("preset") preset: String): PlatformStats
+
+    @GET("admin/tokens/stats")
+    suspend fun adminTokenStats(): AdminTokenStats
+
+    @GET("admin/users")
+    suspend fun adminUsers(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = 20,
+        @Query("search") search: String?,
+        @Query("is_supporter") isSupporter: Boolean?
+    ): PaginatedResponse<AdminUserOut>
+
+    @PUT("admin/users/{userId}/supporter")
+    suspend fun setSupporter(@Path("userId") userId: String, @Body body: SetSupporterRequest): AdminUserOut
+
+    @DELETE("admin/users/{userId}")
+    suspend fun deleteAdminUser(@Path("userId") userId: String): Response<Unit>
+
+    @DELETE("admin/users/{userId}/tokens")
+    suspend fun revokeUserTokens(@Path("userId") userId: String): Response<Unit>
+
+    @GET("admin/apiaries")
+    suspend fun adminApiaries(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = 20
+    ): PaginatedResponse<AdminApiary>
+
+    @GET("admin/apiaries/flagged")
+    suspend fun adminFlaggedApiaries(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = 20
+    ): PaginatedResponse<AdminApiary>
+
+    @PUT("admin/apiaries/{apiaryId}/set-private")
+    suspend fun setApiaryPrivate(@Path("apiaryId") apiaryId: String, @Body body: Map<String, Any>): AdminApiary
+
+    @GET("admin/health/summary")
+    suspend fun healthSummary(): HealthSummary
+
+    @GET("admin/health/inactive-users")
+    suspend fun inactiveUsers(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = 20
+    ): PaginatedResponse<InactiveUser>
+
+    @GET("admin/health/no-varroa-inspections")
+    suspend fun noVarroaApiaries(): List<NoVarroaApiary>
+
+    @GET("admin/health/zero-inspection-hives")
+    suspend fun zeroInspectionHives(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = 20
+    ): PaginatedResponse<ZeroInspectionHive>
+
     // Stats
     @GET("hives/{id}/stats")
     suspend fun hiveStats(

@@ -101,9 +101,13 @@ struct UserOut: Codable, Identifiable {
     let name: String
     let locale: String
     let createdAt: Date
+    let isAdmin: Bool
+    let isSupporter: Bool
     enum CodingKeys: String, CodingKey {
         case id, email, name, locale
-        case createdAt = "created_at"
+        case createdAt   = "created_at"
+        case isAdmin     = "is_admin"
+        case isSupporter = "is_supporter"
     }
 }
 
@@ -452,6 +456,134 @@ struct OverviewStats: Codable {
         case hiveCount        = "hive_count"
         case inspectionsTotal = "inspections_total"
     }
+}
+
+// MARK: - Admin
+struct AdminUserOut: Codable, Identifiable {
+    let id: String
+    let email: String
+    let name: String
+    let createdAt: Date
+    let isSupporter: Bool
+    let apiaryCount: Int
+    let hiveCount: Int
+    let inspectionCount: Int
+    enum CodingKeys: String, CodingKey {
+        case id, email, name
+        case createdAt       = "created_at"
+        case isSupporter     = "is_supporter"
+        case apiaryCount     = "apiary_count"
+        case hiveCount       = "hive_count"
+        case inspectionCount = "inspection_count"
+    }
+}
+
+struct SignupDay: Codable, Identifiable {
+    let date: String
+    let count: Int
+    var id: String { date }
+}
+
+struct PlatformStats: Codable {
+    let totalUsers: Int
+    let newUsersInPeriod: Int
+    let supporterCount: Int
+    let totalApiaries: Int
+    let publicApiaries: Int
+    let totalHives: Int
+    let totalInspections: Int
+    let activeUsers30d: Int
+    let signupsByDay: [SignupDay]
+    enum CodingKeys: String, CodingKey {
+        case totalUsers          = "total_users"
+        case newUsersInPeriod    = "new_users_in_period"
+        case supporterCount      = "supporter_count"
+        case totalApiaries       = "total_apiaries"
+        case publicApiaries      = "public_apiaries"
+        case totalHives          = "total_hives"
+        case totalInspections    = "total_inspections"
+        case activeUsers30d      = "active_users_30d"
+        case signupsByDay        = "signups_by_day"
+    }
+}
+
+struct AdminTokenStats: Codable {
+    let totalActiveSessions: Int
+    let usersWithActiveSessions: Int
+    let avgSessionsPerUser: Double
+    enum CodingKeys: String, CodingKey {
+        case totalActiveSessions      = "total_active_sessions"
+        case usersWithActiveSessions  = "users_with_active_sessions"
+        case avgSessionsPerUser       = "avg_sessions_per_user"
+    }
+}
+
+struct AdminApiary: Codable, Identifiable {
+    let id: String
+    let name: String
+    let ownerEmail: String
+    let latitude: Double?
+    let longitude: Double?
+    let hiveCount: Int
+    enum CodingKeys: String, CodingKey {
+        case id, name, latitude, longitude
+        case ownerEmail = "owner_email"
+        case hiveCount  = "hive_count"
+    }
+}
+
+struct HealthSummary: Codable {
+    let inactiveUsersCount: Int
+    let noVarroaApiariesCount: Int
+    let zeroInspectionHivesCount: Int
+    enum CodingKeys: String, CodingKey {
+        case inactiveUsersCount       = "inactive_users_count"
+        case noVarroaApiariesCount    = "no_varroa_apiaries_count"
+        case zeroInspectionHivesCount = "zero_inspection_hives_count"
+    }
+}
+
+struct InactiveUser: Codable, Identifiable {
+    let id: String
+    let email: String
+    let createdAt: Date
+    let daysSinceRegistration: Int
+    enum CodingKeys: String, CodingKey {
+        case id, email
+        case createdAt             = "created_at"
+        case daysSinceRegistration = "days_since_registration"
+    }
+}
+
+struct NoVarroaApiary: Codable, Identifiable {
+    let apiaryId: String
+    let apiaryName: String
+    let count: Int
+    var id: String { apiaryId }
+    enum CodingKeys: String, CodingKey {
+        case count
+        case apiaryId   = "apiary_id"
+        case apiaryName = "apiary_name"
+    }
+}
+
+struct ZeroInspectionHive: Codable, Identifiable {
+    let hiveId: String
+    let hiveName: String
+    let apiaryName: String
+    let initializedAt: Date
+    var id: String { hiveId }
+    enum CodingKeys: String, CodingKey {
+        case hiveName    = "hive_name"
+        case apiaryName  = "apiary_name"
+        case hiveId      = "hive_id"
+        case initializedAt = "initialized_at"
+    }
+}
+
+struct SetSupporterRequest: Encodable {
+    let isSupporter: Bool
+    enum CodingKeys: String, CodingKey { case isSupporter = "is_supporter" }
 }
 
 // MARK: - Error

@@ -70,7 +70,7 @@ final class DTOTests: XCTestCase {
     // MARK: - UserOut
 
     func test_userOut_decodesSnakeCaseCreatedAt() throws {
-        let json = #"{"id":"u-1","email":"a@b.com","name":"Alice","locale":"en","created_at":"2024-01-01T00:00:00Z"}"#.data(using: .utf8)!
+        let json = #"{"id":"u-1","email":"a@b.com","name":"Alice","locale":"en","created_at":"2024-01-01T00:00:00Z","is_admin":false,"is_supporter":false}"#.data(using: .utf8)!
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let user = try decoder.decode(UserOut.self, from: json)
