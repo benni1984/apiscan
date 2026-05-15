@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.apiscan.app.data.api.*
 import com.apiscan.app.data.repository.AdminRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,9 +31,9 @@ class AdminStatsViewModel @Inject constructor(
     fun load() = viewModelScope.launch {
         _state.update { it.copy(isLoading = true, error = null) }
         runCatching {
-            val s = async { repo.getStats(state.value.preset) }
-            val t = async { repo.getTokenStats() }
-            Pair(s.await(), t.await())
+            val s = repo.getStats(state.value.preset)
+            val t = repo.getTokenStats()
+            Pair(s, t)
         }.onSuccess { (s, t) ->
             _state.update { it.copy(isLoading = false, stats = s, tokenStats = t) }
         }.onFailure { e ->
