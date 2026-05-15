@@ -21,7 +21,9 @@ data class UserOut(
     val email: String,
     val name: String,
     val locale: String,
-    @SerializedName("created_at") val createdAt: String
+    @SerializedName("created_at")  val createdAt: String,
+    @SerializedName("is_admin")    val isAdmin: Boolean = false,
+    @SerializedName("is_supporter") val isSupporter: Boolean = false
 )
 data class UserUpdateRequest(val name: String?, val locale: String?)
 
@@ -202,3 +204,72 @@ data class PaginatedResponse<T>(val items: List<T>, val total: Int, val page: In
 data class ApiError(val error: ErrorDetail) {
     data class ErrorDetail(val code: String, val message: String)
 }
+
+// MARK: - Admin
+data class AdminUserOut(
+    val id: String,
+    val email: String,
+    val name: String,
+    @SerializedName("created_at")       val createdAt: String,
+    @SerializedName("is_supporter")     val isSupporter: Boolean,
+    @SerializedName("apiary_count")     val apiaryCount: Int,
+    @SerializedName("hive_count")       val hiveCount: Int,
+    @SerializedName("inspection_count") val inspectionCount: Int
+)
+
+data class SignupDay(val date: String, val count: Int)
+
+data class PlatformStats(
+    @SerializedName("total_users")         val totalUsers: Int,
+    @SerializedName("new_users_in_period") val newUsersInPeriod: Int,
+    @SerializedName("supporter_count")     val supporterCount: Int,
+    @SerializedName("total_apiaries")      val totalApiaries: Int,
+    @SerializedName("public_apiaries")     val publicApiaries: Int,
+    @SerializedName("total_hives")         val totalHives: Int,
+    @SerializedName("total_inspections")   val totalInspections: Int,
+    @SerializedName("active_users_30d")    val activeUsers30d: Int,
+    @SerializedName("signups_by_day")      val signupsByDay: List<SignupDay>
+)
+
+data class AdminTokenStats(
+    @SerializedName("total_active_sessions")     val totalActiveSessions: Int,
+    @SerializedName("users_with_active_sessions") val usersWithActiveSessions: Int,
+    @SerializedName("avg_sessions_per_user")     val avgSessionsPerUser: Double
+)
+
+data class AdminApiary(
+    val id: String,
+    val name: String,
+    @SerializedName("owner_email") val ownerEmail: String,
+    val latitude: Double?,
+    val longitude: Double?,
+    @SerializedName("hive_count") val hiveCount: Int
+)
+
+data class HealthSummary(
+    @SerializedName("inactive_users_count")        val inactiveUsersCount: Int,
+    @SerializedName("no_varroa_apiaries_count")    val noVarroaApiariesCount: Int,
+    @SerializedName("zero_inspection_hives_count") val zeroInspectionHivesCount: Int
+)
+
+data class InactiveUser(
+    val id: String,
+    val email: String,
+    @SerializedName("created_at")             val createdAt: String,
+    @SerializedName("days_since_registration") val daysSinceRegistration: Int
+)
+
+data class NoVarroaApiary(
+    @SerializedName("apiary_id")   val apiaryId: String,
+    @SerializedName("apiary_name") val apiaryName: String,
+    val count: Int
+)
+
+data class ZeroInspectionHive(
+    @SerializedName("hive_id")       val hiveId: String,
+    @SerializedName("hive_name")     val hiveName: String,
+    @SerializedName("apiary_name")   val apiaryName: String,
+    @SerializedName("initialized_at") val initializedAt: String
+)
+
+data class SetSupporterRequest(@SerializedName("is_supporter") val isSupporter: Boolean)

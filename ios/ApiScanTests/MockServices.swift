@@ -3,8 +3,8 @@ import Foundation
 
 // MARK: - Test helpers
 
-func makeUser(id: String = "u-1", name: String = "Test User") -> UserOut {
-    UserOut(id: id, email: "test@example.com", name: name, locale: "en", createdAt: Date())
+func makeUser(id: String = "u-1", name: String = "Test User", isAdmin: Bool = false, isSupporter: Bool = false) -> UserOut {
+    UserOut(id: id, email: "test@example.com", name: name, locale: "en", createdAt: Date(), isAdmin: isAdmin, isSupporter: isSupporter)
 }
 
 func makeApiary(id: String = "a-1", name: String = "Test Apiary") -> ApiaryOut {
@@ -88,6 +88,63 @@ final class MockHiveService: HiveServiceProtocol {
     func delete(_ id: String) async throws { if let err = deleteError { throw err } }
     func resolveQR(token: String) async throws -> QRScanResult { resolveResult }
     func qrImageURL(hiveId: String) -> URL { URL(string: "https://example.com/hives/\(hiveId)/qr")! }
+}
+
+// MARK: - Admin helpers
+
+func makeAdminUser(id: String = "u-1", email: String = "test@example.com", isSupporter: Bool = false) -> AdminUserOut {
+    AdminUserOut(id: id, email: email, name: "Test User", createdAt: Date(),
+                 isSupporter: isSupporter, apiaryCount: 1, hiveCount: 2, inspectionCount: 5)
+}
+
+func makePlatformStats() -> PlatformStats {
+    PlatformStats(totalUsers: 10, newUsersInPeriod: 2, supporterCount: 1,
+                  totalApiaries: 5, publicApiaries: 3, totalHives: 20,
+                  totalInspections: 100, activeUsers30d: 4, signupsByDay: [])
+}
+
+func makeAdminTokenStats() -> AdminTokenStats {
+    AdminTokenStats(totalActiveSessions: 8, usersWithActiveSessions: 4, avgSessionsPerUser: 2.0)
+}
+
+func makeHealthSummary() -> HealthSummary {
+    HealthSummary(inactiveUsersCount: 3, noVarroaApiariesCount: 2, zeroInspectionHivesCount: 1)
+}
+
+func makeAdminApiary(id: String = "ap-1") -> AdminApiary {
+    AdminApiary(id: id, name: "Test Apiary", ownerEmail: "owner@example.com",
+                latitude: 48.8, longitude: 2.3, hiveCount: 5)
+}
+
+// MARK: - MockAdminService
+
+final class MockAdminService: AdminServiceProtocol {
+    var statsResult: Result<PlatformStats, Error> = .success(makePlatformStats())
+    var tokenStatsResult: Result<AdminTokenStats, Error> = .success(makeAdminTokenStats())
+    var usersResult: Result<PaginatedResponse<AdminUserOut>, Error> = .success(makePage([makeAdminUser()]))
+    var setSupporterResult: Result<AdminUserOut, Error> = .success(makeAdminUser(isSupporter: true))
+    var deleteError: Error? = nil
+    var revokeError: Error? = nil
+    var apiariedResult: Result<PaginatedResponse<AdminApiary>, Error> = .success(makePage([makeAdminApiary()]))
+    var setPrivateError: Error? = nil
+    var healthSummaryResult: Result<HealthSummary, Error> = .success(makeHealthSummary())
+    var inactiveUsersResult: Result<PaginatedResponse<InactiveUser>, Error> = .success(makePage([]))
+    var noVarroaResult: Result<[NoVarroaApiary], Error> = .success([])
+    var zeroHivesResult: Result<PaginatedResponse<ZeroInspectionHive>, Error> = .success(makePage([]))
+
+    func getStats(preset: String) async throws -> PlatformStats { try statsResult.get() }
+    func getTokenStats() async throws -> AdminTokenStats { try tokenStatsResult.get() }
+    func getUsers(page: Int, search: String?, isSupporter: Bool?) async throws -> PaginatedResponse<AdminUserOut> { try usersResult.get() }
+    func setSupporter(userId: String, isSupporter: Bool) async throws -> AdminUserOut { try setSupporterResult.get() }
+    func deleteUser(userId: String) async throws { if let e = deleteError { throw e } }
+    func revokeTokens(userId: String) async throws { if let e = revokeError { throw e } }
+    func getApiaries(page: Int) async throws -> PaginatedResponse<AdminApiary> { try apiariedResult.get() }
+    func getFlaggedApiaries(page: Int) async throws -> PaginatedResponse<AdminApiary> { try apiariedResult.get() }
+    func setPrivate(apiaryId: String) async throws { if let e = setPrivateError { throw e } }
+    func getHealthSummary() async throws -> HealthSummary { try healthSummaryResult.get() }
+    func getInactiveUsers(page: Int) async throws -> PaginatedResponse<InactiveUser> { try inactiveUsersResult.get() }
+    func getNoVarroaApiaries() async throws -> [NoVarroaApiary] { try noVarroaResult.get() }
+    func getZeroInspectionHives(page: Int) async throws -> PaginatedResponse<ZeroInspectionHive> { try zeroHivesResult.get() }
 }
 
 // MARK: - MockInspectionService

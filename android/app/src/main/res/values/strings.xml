@@ -128,4 +128,50 @@
     <!-- Auth -->
     <string name="login_subtitle">Sign in to manage your hives</string>
     <string name="permission_camera_rationale">Camera access is required to scan QR codes on your hives.</string>
+
+    <!-- Admin -->
+    <string name="screen_admin">Admin Dashboard</string>
+    <string name="section_admin">Administration</string>
+    <string name="action_admin_dashboard">Admin Dashboard</string>
+    <string name="admin_stats">Platform Stats</string>
+    <string name="admin_users">Users</string>
+    <string name="admin_map">Apiaries</string>
+    <string name="admin_health">Data Health</string>
+
+    <string name="admin_stats_users">Users</string>
+    <string name="admin_stats_platform">Platform</string>
+    <string name="admin_stats_sessions">Sessions</string>
+    <string name="admin_stats_signups">Signups by Day</string>
+    <string name="admin_stats_total_users">Total Users</string>
+    <string name="admin_stats_new_users">New in Period</string>
+    <string name="admin_stats_supporters">Supporters</string>
+    <string name="admin_stats_active_30d">Active (30d)</string>
+    <string name="admin_stats_apiaries">Apiaries</string>
+    <string name="admin_stats_public_apiaries">Public Apiaries</string>
+    <string name="admin_stats_hives">Hives</string>
+    <string name="admin_stats_inspections">Inspections</string>
+    <string name="admin_stats_active_sessions">Active Sessions</string>
+    <string name="admin_stats_users_online">Users Online</string>
+    <string name="admin_stats_avg_sessions">Avg Sessions / User</string>
+
+    <string name="admin_users_search">Search users…</string>
+    <string name="admin_users_supporter">Supporter</string>
+    <string name="admin_users_make_supporter">Make Supporter</string>
+    <string name="admin_users_remove_supporter">Remove Supporter</string>
+    <string name="admin_users_revoke_tokens">Revoke Tokens</string>
+    <string name="admin_users_delete_confirm">Delete user "%1$s"? This cannot be undone.</string>
+
+    <string name="admin_map_all">All</string>
+    <string name="admin_map_flagged">Flagged</string>
+    <string name="admin_map_set_private">Set Private</string>
+    <string name="admin_map_set_private_confirm">Set apiary "%1$s" to private? It will be removed from the public map.</string>
+
+    <string name="admin_health_inactive">Inactive Users</string>
+    <string name="admin_health_no_varroa">No Varroa Inspections</string>
+    <string name="admin_health_zero_hives">Zero-Inspection Hives</string>
+    <string name="admin_health_days_since">%1$d days since registration</string>
+
+    <string name="action_prev">Previous</string>
+    <string name="action_next">Next</string>
+    <string name="action_load_more">Load more</string>
 </resources>

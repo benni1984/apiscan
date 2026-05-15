@@ -10,6 +10,7 @@ import com.apiscan.app.ui.auth.*
 import com.apiscan.app.ui.hives.*
 import com.apiscan.app.ui.inspections.*
 import com.apiscan.app.ui.qr.*
+import com.apiscan.app.ui.admin.*
 import com.apiscan.app.ui.settings.SettingsScreen
 import com.apiscan.app.ui.stats.HiveStatsScreen
 import javax.inject.Inject
@@ -29,6 +30,11 @@ object Routes {
     const val QR_BATCH_LIST      = "qr_batch_list"
     const val QR_BATCH_DETAIL    = "qr_batch_detail/{batchId}"
     const val SETTINGS           = "settings"
+    const val ADMIN              = "admin"
+    const val ADMIN_STATS        = "admin_stats"
+    const val ADMIN_USERS        = "admin_users"
+    const val ADMIN_MAP          = "admin_map"
+    const val ADMIN_HEALTH       = "admin_health"
 }
 
 @Composable
@@ -143,9 +149,31 @@ fun ApiScanNavGraph(tokenStore: TokenStore = dagger.hilt.android.EntryPointAcces
         }
         composable(Routes.SETTINGS) {
             SettingsScreen(
-                onLogout = { navController.navigate(Routes.LOGIN) { popUpTo(0) { inclusive = true } } },
-                onBack   = { navController.popBackStack() }
+                onLogout     = { navController.navigate(Routes.LOGIN) { popUpTo(0) { inclusive = true } } },
+                onBack       = { navController.popBackStack() },
+                onAdminClick = { navController.navigate(Routes.ADMIN) }
             )
+        }
+        composable(Routes.ADMIN) {
+            AdminMenuScreen(
+                onStatsClick  = { navController.navigate(Routes.ADMIN_STATS) },
+                onUsersClick  = { navController.navigate(Routes.ADMIN_USERS) },
+                onMapClick    = { navController.navigate(Routes.ADMIN_MAP) },
+                onHealthClick = { navController.navigate(Routes.ADMIN_HEALTH) },
+                onBack        = { navController.popBackStack() }
+            )
+        }
+        composable(Routes.ADMIN_STATS) {
+            AdminStatsScreen(onBack = { navController.popBackStack() })
+        }
+        composable(Routes.ADMIN_USERS) {
+            AdminUsersScreen(onBack = { navController.popBackStack() })
+        }
+        composable(Routes.ADMIN_MAP) {
+            AdminMapScreen(onBack = { navController.popBackStack() })
+        }
+        composable(Routes.ADMIN_HEALTH) {
+            AdminHealthScreen(onBack = { navController.popBackStack() })
         }
     }
 }
