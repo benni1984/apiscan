@@ -53,17 +53,22 @@ def register(
     db: Session = Depends(get_db),
     accept_language: Optional[str] = Header(default=None),
 ):
+    import traceback
+    from fastapi.responses import JSONResponse
     if db.query(User).filter(User.email == body.email).first():
         raise HTTPException(409, detail=error("EMAIL_ALREADY_REGISTERED", accept_language))
-    user = User(
-        email=body.email,
-        hashed_password=_hash(body.password),
-        name=body.name,
-        locale=body.locale,
-    )
-    db.add(user)
-    db.commit()
-    db.refresh(user)
+    try:
+        user = User(
+            email=body.email,
+            hashed_password=_hash(body.password),
+            name=body.name,
+            locale=body.locale,
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+    except Exception as exc:
+        return JSONResponse(status_code=200, content={"debug_error": str(exc), "tb": traceback.format_exc()})
     return TokenResponse(
         access_token=_make_access_token(user.id),
         refresh_token=_make_refresh_token(user.id, db),
