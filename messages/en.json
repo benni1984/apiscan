@@ -219,7 +219,7 @@
       "login": "Log in",
       "errorGeneric": "Registration failed. Please try again."
     },
-    "nav": { "apiaries": "My Apiaries", "profile": "Profile", "logout": "Log out" },
+    "nav": { "apiaries": "My Apiaries", "qrBatches": "QR Batches", "profile": "Profile", "logout": "Log out" },
     "profile": {
       "title": "Profile",
       "editTitle": "Edit Profile",
@@ -331,6 +331,27 @@
       "moodNervous": "Nervous",
       "moodAggressive": "Aggressive",
       "queenNotRecorded": "Not recorded"
+    },
+    "qrBatches": {
+      "title": "QR Code Batches",
+      "empty": "No QR batches yet.",
+      "new": "New Batch",
+      "createTitle": "Generate QR Batch",
+      "count": "Number of codes (1–50)",
+      "createBtn": "Generate",
+      "cancel": "Cancel",
+      "createSuccess": "Batch created.",
+      "errorGeneric": "Something went wrong.",
+      "date": "Created",
+      "total": "Codes",
+      "linked": "Linked",
+      "view": "View",
+      "detailTitle": "QR Batch",
+      "backToList": "← All Batches",
+      "downloadPdf": "Download PDF",
+      "tokens": "QR Codes",
+      "linkedBadge": "Linked",
+      "unlinkedBadge": "Unlinked"
     }
   },
   "members": {

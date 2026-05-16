@@ -226,6 +226,33 @@ export async function deleteInspection(id: string): Promise<void> {
   if (!res.ok) throw new Error('Delete failed');
 }
 
+export async function getQrBatches(page = 1): Promise<Paginated<QrBatchSummary>> {
+  const res = await apiFetch(`/qr-batches?page=${page}&per_page=20`);
+  if (!res.ok) throw new Error('Failed to get QR batches');
+  return res.json();
+}
+
+export async function createQrBatch(count: number): Promise<QrBatchOut> {
+  const res = await apiFetch('/qr-batches', { method: 'POST', body: JSON.stringify({ count }) });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail ?? 'Create failed');
+  }
+  return res.json();
+}
+
+export async function getQrBatch(id: string): Promise<QrBatchOut> {
+  const res = await apiFetch(`/qr-batches/${id}`);
+  if (!res.ok) throw new Error('Failed to get QR batch');
+  return res.json();
+}
+
+export async function downloadQrBatchPdf(id: string): Promise<Blob> {
+  const res = await apiFetch(`/qr-batches/${id}/pdf`);
+  if (!res.ok) throw new Error('Failed to download PDF');
+  return res.blob();
+}
+
 // ── Types ──────────────────────────────────────────────────────────────────────
 export interface User { id: string; email: string; name: string; locale: string; created_at: string; is_admin: boolean; is_supporter: boolean; }
 export interface Apiary { id: string; name: string; hive_count: number; is_public: boolean; description?: string; address?: string; latitude?: number; longitude?: number; created_at: string; }
@@ -241,6 +268,9 @@ export interface InspectionInput {
   queen_seen?: boolean | null;
   brood_frames?: number | null;
 }
+export interface QrToken { token: string; linked_hive_id: string | null; }
+export interface QrBatchSummary { id: string; count: number; created_at: string; linked_count: number; }
+export interface QrBatchOut { id: string; count: number; created_at: string; tokens: QrToken[]; }
 export interface HiveStats {
   inspection_count: number;
   varroa_trend: { date: string; value: number }[];

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { login, register, logout, getMe, updateMe, deleteMe, getApiaries, createApiary, updateApiary, deleteApiary, createHive, updateHive, deleteHive, getHive, clearTokens, createInspection, updateInspection, deleteInspection } from '@/lib/api';
+import { login, register, logout, getMe, updateMe, deleteMe, getApiaries, createApiary, updateApiary, deleteApiary, createHive, updateHive, deleteHive, getHive, clearTokens, createInspection, updateInspection, deleteInspection, getQrBatches, createQrBatch, getQrBatch, downloadQrBatchPdf } from '@/lib/api';
 
 const mockUser = { id: '1', email: 'a@b.com', name: 'Test', locale: 'en', created_at: '2024-01-01' };
 const mockTokens = { access_token: 'access-123', refresh_token: 'refresh-456', user: mockUser };
@@ -334,5 +334,63 @@ describe('deleteInspection', () => {
     localStorage.setItem('access_token', 'tok');
     vi.mocked(fetch).mockResolvedValueOnce(ok({}, 500));
     await expect(deleteInspection('i-1')).rejects.toThrow('Delete failed');
+  });
+});
+
+describe('getQrBatches', () => {
+  it('requests /qr-batches with page param', async () => {
+    localStorage.setItem('access_token', 'tok');
+    const data = { items: [], total: 0, page: 1, per_page: 20, pages: 1 };
+    vi.mocked(fetch).mockResolvedValueOnce(ok(data));
+    const result = await getQrBatches(1);
+    expect(result).toEqual(data);
+    expect(String(vi.mocked(fetch).mock.calls[0][0])).toContain('/qr-batches');
+  });
+});
+
+describe('createQrBatch', () => {
+  it('sends POST /qr-batches with count and returns batch', async () => {
+    localStorage.setItem('access_token', 'tok');
+    const batch = { id: 'b-1', count: 10, created_at: '2024-06-01', tokens: [] };
+    vi.mocked(fetch).mockResolvedValueOnce(ok(batch, 201));
+    const result = await createQrBatch(10);
+    expect(result).toEqual(batch);
+    const call = vi.mocked(fetch).mock.calls[0];
+    expect((call[1] as RequestInit).method).toBe('POST');
+    expect(JSON.parse((call[1] as RequestInit).body as string)).toMatchObject({ count: 10 });
+  });
+
+  it('throws with server message on failure', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({ detail: 'Count out of range' }, 422));
+    await expect(createQrBatch(99)).rejects.toThrow('Count out of range');
+  });
+});
+
+describe('getQrBatch', () => {
+  it('requests /qr-batches/{id} and returns batch', async () => {
+    localStorage.setItem('access_token', 'tok');
+    const batch = { id: 'b-1', count: 5, created_at: '2024-06-01', tokens: [] };
+    vi.mocked(fetch).mockResolvedValueOnce(ok(batch));
+    const result = await getQrBatch('b-1');
+    expect(result).toEqual(batch);
+    expect(String(vi.mocked(fetch).mock.calls[0][0])).toContain('/qr-batches/b-1');
+  });
+});
+
+describe('downloadQrBatchPdf', () => {
+  it('requests /qr-batches/{id}/pdf and returns blob', async () => {
+    localStorage.setItem('access_token', 'tok');
+    const pdfBlob = new Blob(['%PDF'], { type: 'application/pdf' });
+    vi.mocked(fetch).mockResolvedValueOnce(new Response(pdfBlob, { status: 200 }));
+    const result = await downloadQrBatchPdf('b-1');
+    expect(result.size).toBeGreaterThan(0);
+    expect(String(vi.mocked(fetch).mock.calls[0][0])).toContain('/qr-batches/b-1/pdf');
+  });
+
+  it('throws on server error', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({}, 500));
+    await expect(downloadQrBatchPdf('b-1')).rejects.toThrow('Failed to download PDF');
   });
 });
