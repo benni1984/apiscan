@@ -8,6 +8,7 @@ const mockGetHives = vi.hoisted(() => vi.fn());
 const mockGetApiaryStats = vi.hoisted(() => vi.fn());
 const mockUpdateApiary = vi.hoisted(() => vi.fn());
 const mockDeleteApiary = vi.hoisted(() => vi.fn());
+const mockCreateHive = vi.hoisted(() => vi.fn());
 
 vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
@@ -33,6 +34,7 @@ vi.mock('@/lib/api', () => ({
   getApiaryStats: mockGetApiaryStats,
   updateApiary: mockUpdateApiary,
   deleteApiary: mockDeleteApiary,
+  createHive: mockCreateHive,
 }));
 
 const paginated = <T,>(items: T[]) => ({ items, total: items.length, page: 1, per_page: 100 });
@@ -44,6 +46,7 @@ describe('ApiaryPage', () => {
     mockGetApiaryStats.mockClear();
     mockUpdateApiary.mockClear();
     mockDeleteApiary.mockClear();
+    mockCreateHive.mockClear();
   });
 
   function setupMocks({
@@ -170,6 +173,65 @@ describe('ApiaryPage', () => {
     fireEvent.click(screen.getByText('apiary.deleteBtn'));
     fireEvent.click(screen.getByText('apiary.deleteConfirmBtn'));
     await waitFor(() => expect(mockDeleteApiary).toHaveBeenCalledWith('apiary-1'));
+  });
+
+  it('shows New Hive button', async () => {
+    setupMocks();
+    render(<ApiaryPage />);
+    await waitFor(() => screen.getByText('My Apiary'));
+    expect(screen.getByText('apiary.newHive')).toBeInTheDocument();
+  });
+
+  it('clicking New Hive opens the create form', async () => {
+    setupMocks();
+    render(<ApiaryPage />);
+    await waitFor(() => screen.getByText('My Apiary'));
+    fireEvent.click(screen.getByText('apiary.newHive'));
+    expect(screen.getByText('apiary.createHiveTitle')).toBeInTheDocument();
+  });
+
+  it('cancel hides the create hive form', async () => {
+    setupMocks();
+    render(<ApiaryPage />);
+    await waitFor(() => screen.getByText('My Apiary'));
+    fireEvent.click(screen.getByText('apiary.newHive'));
+    fireEvent.click(screen.getByText('apiaries.cancel'));
+    expect(screen.queryByText('apiary.createHiveTitle')).not.toBeInTheDocument();
+  });
+
+  it('submitting create hive calls createHive and appends new card', async () => {
+    setupMocks();
+    const newHive = { id: 'h-new', name: 'My Hive', hive_type: 'langstroth', apiary_id: 'apiary-1' };
+    mockCreateHive.mockResolvedValueOnce(newHive);
+    render(<ApiaryPage />);
+    await waitFor(() => screen.getByText('My Apiary'));
+
+    fireEvent.click(screen.getByText('apiary.newHive'));
+    // Name is the last text input in the create form
+    const nameInput = screen.getByDisplayValue('');
+    fireEvent.change(nameInput, { target: { value: 'My Hive' } });
+    fireEvent.submit(screen.getByText('apiary.createHiveBtn').closest('form')!);
+
+    await waitFor(() => expect(mockCreateHive).toHaveBeenCalledWith(
+      'apiary-1',
+      expect.objectContaining({ name: 'My Hive', hive_type: 'langstroth' })
+    ));
+    await waitFor(() => expect(screen.getByText('My Hive')).toBeInTheDocument());
+    expect(screen.queryByText('apiary.createHiveTitle')).not.toBeInTheDocument();
+  });
+
+  it('shows error banner when createHive fails', async () => {
+    setupMocks();
+    mockCreateHive.mockRejectedValueOnce(new Error('Create failed'));
+    render(<ApiaryPage />);
+    await waitFor(() => screen.getByText('My Apiary'));
+
+    fireEvent.click(screen.getByText('apiary.newHive'));
+    const nameInput = screen.getByDisplayValue('');
+    fireEvent.change(nameInput, { target: { value: 'Bad Hive' } });
+    fireEvent.submit(screen.getByText('apiary.createHiveBtn').closest('form')!);
+
+    await waitFor(() => expect(screen.getByText('Create failed')).toBeInTheDocument());
   });
 
   it('shows has-hives error on 409 without redirecting', async () => {

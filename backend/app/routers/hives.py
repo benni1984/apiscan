@@ -8,8 +8,8 @@ from fastapi.responses import StreamingResponse
 
 from app.deps import CurrentUser, DB
 from app.i18n import error
-from app.models import Apiary, Hive, QrToken
-from app.schemas import HiveInitialize, HiveOut, HiveUpdate, PaginatedResponse, QrScanUnlinked
+from app.models import Apiary, Hive, QrBatch, QrToken
+from app.schemas import HiveCreate, HiveInitialize, HiveOut, HiveUpdate, PaginatedResponse, QrScanUnlinked
 
 router = APIRouter(tags=["hives"])
 
@@ -62,6 +62,41 @@ def list_hives(
         per_page=per_page,
         pages=math.ceil(total / per_page) if total else 0,
     )
+
+
+@router.post("/apiaries/{apiary_id}/hives", response_model=HiveOut, status_code=201)
+def create_hive(
+    apiary_id: str,
+    body: HiveCreate,
+    current_user: CurrentUser,
+    db: DB,
+    accept_language: Optional[str] = Header(default=None),
+):
+    apiary = db.get(Apiary, apiary_id)
+    if not apiary or apiary.user_id != current_user.id:
+        raise HTTPException(404, detail=error("APIARY_NOT_FOUND", accept_language))
+
+    batch = QrBatch(user_id=current_user.id, count=1)
+    db.add(batch)
+    db.flush()
+
+    token = QrToken(user_id=current_user.id, batch_id=batch.id)
+    db.add(token)
+    db.flush()
+
+    hive = Hive(
+        user_id=current_user.id,
+        qr_token=token.token,
+        apiary_id=apiary_id,
+        name=body.name,
+        hive_type=body.hive_type,
+        acquisition_date=body.acquisition_date,
+        notes=body.notes,
+    )
+    db.add(hive)
+    db.commit()
+    db.refresh(hive)
+    return _hive_out(hive)
 
 
 @router.post("/hives/initialize", response_model=HiveOut, status_code=201)

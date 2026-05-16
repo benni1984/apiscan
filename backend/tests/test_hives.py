@@ -57,6 +57,37 @@ def test_double_initialize_fails(auth_client, apiary, qr_token):
     assert r.json()["detail"]["code"] == "QR_TOKEN_ALREADY_LINKED"
 
 
+def test_create_hive_via_apiary(auth_client, apiary):
+    r = auth_client.post(f"/api/v1/apiaries/{apiary['id']}/hives", json={
+        "name": "Web Hive", "hive_type": "dadant"
+    })
+    assert r.status_code == 201
+    data = r.json()
+    assert data["name"] == "Web Hive"
+    assert data["hive_type"] == "dadant"
+    assert data["apiary_id"] == apiary["id"]
+    assert data["qr_token"] is not None
+
+
+def test_create_hive_via_apiary_defaults(auth_client, apiary):
+    r = auth_client.post(f"/api/v1/apiaries/{apiary['id']}/hives", json={"name": "Default Hive"})
+    assert r.status_code == 201
+    assert r.json()["hive_type"] == "langstroth"
+
+
+def test_create_hive_wrong_apiary(auth_client):
+    r = auth_client.post("/api/v1/apiaries/does-not-exist/hives", json={"name": "H"})
+    assert r.status_code == 404
+    assert r.json()["detail"]["code"] == "APIARY_NOT_FOUND"
+
+
+def test_create_hive_invalid_type(auth_client, apiary):
+    r = auth_client.post(f"/api/v1/apiaries/{apiary['id']}/hives", json={
+        "name": "Bad", "hive_type": "flowerhive"
+    })
+    assert r.status_code == 422
+
+
 def test_list_hives(auth_client, apiary, qr_token):
     auth_client.post("/api/v1/hives/initialize", json={
         "qr_token": qr_token, "apiary_id": apiary["id"], "name": "H1", "hive_type": "langstroth"

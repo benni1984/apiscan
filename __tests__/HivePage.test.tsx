@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import React from 'react';
 import HivePage from '@/app/[locale]/dashboard/hive/[id]/page';
@@ -6,6 +6,8 @@ import HivePage from '@/app/[locale]/dashboard/hive/[id]/page';
 const mockGetHive = vi.hoisted(() => vi.fn());
 const mockGetHiveStats = vi.hoisted(() => vi.fn());
 const mockGetInspections = vi.hoisted(() => vi.fn());
+const mockUpdateHive = vi.hoisted(() => vi.fn());
+const mockDeleteHive = vi.hoisted(() => vi.fn());
 
 vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
@@ -14,6 +16,7 @@ vi.mock('next-intl', () => ({
 vi.mock('@/i18n/navigation', () => ({
   Link: ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) =>
     <a href={href} className={className}>{children}</a>,
+  useRouter: () => ({ replace: vi.fn() }),
 }));
 
 vi.mock('next/navigation', () => ({
@@ -33,6 +36,8 @@ vi.mock('@/lib/api', () => ({
   getHive: mockGetHive,
   getHiveStats: mockGetHiveStats,
   getInspections: mockGetInspections,
+  updateHive: mockUpdateHive,
+  deleteHive: mockDeleteHive,
 }));
 
 const paginated = <T,>(items: T[]) => ({ items, total: items.length, page: 1, per_page: 50 });
@@ -42,6 +47,8 @@ describe('HivePage', () => {
     mockGetHive.mockClear();
     mockGetHiveStats.mockClear();
     mockGetInspections.mockClear();
+    mockUpdateHive.mockClear();
+    mockDeleteHive.mockClear();
   });
 
   function setupMocks({
@@ -100,5 +107,95 @@ describe('HivePage', () => {
     render(<HivePage />);
     await waitFor(() => screen.getByText('Hive Alpha'));
     expect(screen.getByRole('link', { name: /Hive Alpha/i })).toHaveAttribute('href', '/dashboard/apiary/apiary-1');
+  });
+
+  it('shows Edit Hive button after load', async () => {
+    setupMocks();
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    expect(screen.getByText('hive.editBtn')).toBeInTheDocument();
+  });
+
+  it('clicking Edit Hive shows the form pre-filled with hive name', async () => {
+    setupMocks();
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    fireEvent.click(screen.getByText('hive.editBtn'));
+    expect(screen.getByText('hive.editTitle')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Hive Alpha')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('langstroth')).toBeInTheDocument();
+  });
+
+  it('cancel closes the edit form', async () => {
+    setupMocks();
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    fireEvent.click(screen.getByText('hive.editBtn'));
+    expect(screen.getByText('hive.editTitle')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('apiaries.cancel'));
+    expect(screen.queryByText('hive.editTitle')).not.toBeInTheDocument();
+  });
+
+  it('saving edit calls updateHive and reflects new name', async () => {
+    setupMocks();
+    mockUpdateHive.mockResolvedValueOnce({
+      id: 'hive-1', name: 'Renamed Hive', hive_type: 'dadant', apiary_id: 'apiary-1',
+    });
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+
+    fireEvent.click(screen.getByText('hive.editBtn'));
+    const nameInput = screen.getByDisplayValue('Hive Alpha');
+    fireEvent.change(nameInput, { target: { value: 'Renamed Hive' } });
+    fireEvent.submit(screen.getByText('hive.saveBtn').closest('form')!);
+
+    await waitFor(() => expect(mockUpdateHive).toHaveBeenCalledWith(
+      'hive-1',
+      expect.objectContaining({ name: 'Renamed Hive' })
+    ));
+    await waitFor(() => expect(screen.getByText('Renamed Hive')).toBeInTheDocument());
+    expect(screen.queryByText('hive.editTitle')).not.toBeInTheDocument();
+    expect(screen.getByText('hive.saveSuccess')).toBeInTheDocument();
+  });
+
+  it('shows error banner when updateHive fails', async () => {
+    setupMocks();
+    mockUpdateHive.mockRejectedValueOnce(new Error('Update failed'));
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    fireEvent.click(screen.getByText('hive.editBtn'));
+    fireEvent.submit(screen.getByText('hive.saveBtn').closest('form')!);
+    await waitFor(() => expect(screen.getByText('Update failed')).toBeInTheDocument());
+  });
+
+  it('shows Delete Hive button and confirmation step', async () => {
+    setupMocks();
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    expect(screen.getByText('hive.deleteBtn')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('hive.deleteBtn'));
+    expect(screen.getByText('hive.deleteConfirmBtn')).toBeInTheDocument();
+    expect(screen.getByText('hive.deleteConfirmText')).toBeInTheDocument();
+  });
+
+  it('confirming delete calls deleteHive', async () => {
+    setupMocks();
+    mockDeleteHive.mockResolvedValueOnce(undefined);
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    fireEvent.click(screen.getByText('hive.deleteBtn'));
+    fireEvent.click(screen.getByText('hive.deleteConfirmBtn'));
+    await waitFor(() => expect(mockDeleteHive).toHaveBeenCalledWith('hive-1'));
+  });
+
+  it('shows error message when deleteHive fails', async () => {
+    setupMocks();
+    mockDeleteHive.mockRejectedValueOnce(new Error('Delete failed'));
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    fireEvent.click(screen.getByText('hive.deleteBtn'));
+    fireEvent.click(screen.getByText('hive.deleteConfirmBtn'));
+    await waitFor(() => expect(screen.getByText('Delete failed')).toBeInTheDocument());
+    expect(screen.getByText('hive.deleteBtn')).toBeInTheDocument();
   });
 });
