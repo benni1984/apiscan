@@ -284,9 +284,11 @@
     "title": "Community Insights",
     "sub": "Supporters unlock deeper statistics, global trends, and research-grade data that help you become a better beekeeper — and help science understand our bees.",
     "snap": { "title": "Global Community Snapshot", "sub": "These numbers are available to everyone. Supporters see much more." },
-    "teaser": { "title": "Advanced Global Statistics", "sub": "Supporter-only — unlock in the app" },
+    "teaser": { "title": "Advanced Global Statistics", "sub": "Supporter-only — unlock in the app", "subUnlocked": "Supporter content — web dashboard coming soon" },
     "gate": {
       "title": "Unlock the full picture",
+      "unlockedBadge": "Supporter",
+      "unlockedNote": "Live global statistics will appear here when the web dashboard launches. All features are available now in the app.",
       "desc": "Supporters see regional varroa trends, seasonal hive health curves, queen replacement rates, and cross-referenced weather & bloom data — all in the ApiScan app.",
       "cta": "Get the App",
       "note": "Upgrade to Supporter (€2.99 / month) inside the app after signing up."
