@@ -1,10 +1,10 @@
 {
-  "functions": {
-    "api/index.py": {
-      "includeFiles": "backend/**"
-    }
-  },
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/index" }
+  "version": 2,
+  "builds": [
+    { "src": "api/index.py", "use": "@vercel/python", "config": { "includeFiles": ["backend/**"] } },
+    { "src": "package.json", "use": "@vercel/next" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/index.py" }
   ]
 }
