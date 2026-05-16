@@ -11,28 +11,27 @@ from app.routers import admin
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Only auto-create tables in dev (SQLite). Production uses Alembic migrations.
     if settings.database_url.startswith("sqlite"):
         Base.metadata.create_all(bind=engine)
-
-    # Bootstrap first admin user from ADMIN_EMAIL env var.
-    if settings.admin_email:
-        from app.models import User
-        db = SessionLocal()
-        try:
-            user = db.query(User).filter(User.email == settings.admin_email).first()
-            if user and not user.is_admin:
-                user.is_admin = True
-                db.commit()
-        except Exception:
-            pass
-        finally:
-            db.close()
-
     yield
 
 
 app = FastAPI(title="ApiScan", version="1.0.0", lifespan=lifespan)
+
+# Promote ADMIN_EMAIL to admin at module import time so it runs on every cold
+# start in serverless environments where ASGI lifespan may not fire.
+if settings.admin_email:
+    from app.models import User
+    _db = SessionLocal()
+    try:
+        _user = _db.query(User).filter(User.email == settings.admin_email).first()
+        if _user and not _user.is_admin:
+            _user.is_admin = True
+            _db.commit()
+    except Exception:
+        pass
+    finally:
+        _db.close()
 
 app.add_middleware(
     CORSMiddleware,
