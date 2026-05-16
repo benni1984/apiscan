@@ -131,3 +131,47 @@
 "action.download" = "Télécharger";
 "label.selectApiary" = "Sélectionner un rucher";
 "label.selectFormat" = "Format de fichier";
+
+/* Generic actions */
+"action.delete" = "Supprimer";
+"action.prev" = "Précédent";
+"action.next" = "Suivant";
+"action.loadMore" = "Charger plus";
+
+/* Admin */
+"admin.title" = "Admin";
+"admin.stats" = "Statistiques";
+"admin.users" = "Utilisateurs";
+"admin.map" = "Carte";
+"admin.health" = "Santé";
+
+"admin.stats.preset" = "Période";
+"admin.stats.users" = "Utilisateurs";
+"admin.stats.totalUsers" = "Total utilisateurs";
+"admin.stats.newUsers" = "Nouveaux dans la période";
+"admin.stats.supporters" = "Soutiens";
+"admin.stats.active30d" = "Actifs (30 j)";
+"admin.stats.platform" = "Plateforme";
+"admin.stats.apiaries" = "Ruchers";
+"admin.stats.publicApiaries" = "Ruchers publics";
+"admin.stats.hives" = "Ruches";
+"admin.stats.inspections" = "Inspections";
+"admin.stats.sessions" = "Sessions";
+"admin.stats.activeSessions" = "Sessions actives";
+"admin.stats.usersOnline" = "Utilisateurs en ligne";
+"admin.stats.avgSessions" = "Moy. sessions/utilisateur";
+"admin.stats.signups" = "Inscriptions (14 derniers jours)";
+
+"admin.users.search" = "Rechercher par nom ou e-mail";
+"admin.users.supporter" = "Soutien";
+"admin.users.makeSupporter" = "Marquer comme soutien";
+"admin.users.removeSupporter" = "Retirer le statut soutien";
+"admin.users.revokeTokens" = "Révoquer les sessions";
+
+"admin.map.all" = "Tous";
+"admin.map.flagged" = "Signalés";
+"admin.map.setPrivate" = "Rendre privé";
+
+"admin.health.inactive" = "Utilisateurs inactifs";
+"admin.health.noVarroa" = "Pas de données varroa";
+"admin.health.zeroHives" = "Ruches sans inspection";

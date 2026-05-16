@@ -131,3 +131,47 @@
 "action.download" = "Herunterladen";
 "label.selectApiary" = "Bienenstand auswählen";
 "label.selectFormat" = "Dateiformat";
+
+/* Generic actions */
+"action.delete" = "Löschen";
+"action.prev" = "Zurück";
+"action.next" = "Weiter";
+"action.loadMore" = "Mehr laden";
+
+/* Admin */
+"admin.title" = "Admin";
+"admin.stats" = "Statistiken";
+"admin.users" = "Benutzer";
+"admin.map" = "Karte";
+"admin.health" = "Gesundheit";
+
+"admin.stats.preset" = "Zeitraum";
+"admin.stats.users" = "Benutzer";
+"admin.stats.totalUsers" = "Benutzer gesamt";
+"admin.stats.newUsers" = "Neu im Zeitraum";
+"admin.stats.supporters" = "Unterstützer";
+"admin.stats.active30d" = "Aktiv (30 T)";
+"admin.stats.platform" = "Plattform";
+"admin.stats.apiaries" = "Bienenstände";
+"admin.stats.publicApiaries" = "Öffentliche Bienenstände";
+"admin.stats.hives" = "Bienenstöcke";
+"admin.stats.inspections" = "Begehungen";
+"admin.stats.sessions" = "Sitzungen";
+"admin.stats.activeSessions" = "Aktive Sitzungen";
+"admin.stats.usersOnline" = "Benutzer online";
+"admin.stats.avgSessions" = "Ø Sitzungen/Benutzer";
+"admin.stats.signups" = "Registrierungen (letzte 14 Tage)";
+
+"admin.users.search" = "Nach Name oder E-Mail suchen";
+"admin.users.supporter" = "Unterstützer";
+"admin.users.makeSupporter" = "Als Unterstützer markieren";
+"admin.users.removeSupporter" = "Unterstützer entfernen";
+"admin.users.revokeTokens" = "Sitzungen widerrufen";
+
+"admin.map.all" = "Alle";
+"admin.map.flagged" = "Markierte";
+"admin.map.setPrivate" = "Privat setzen";
+
+"admin.health.inactive" = "Inaktive Benutzer";
+"admin.health.noVarroa" = "Keine Varroa-Daten";
+"admin.health.zeroHives" = "Stockwerke ohne Begehungen";
