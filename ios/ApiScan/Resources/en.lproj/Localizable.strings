@@ -131,3 +131,47 @@
 "action.download" = "Download";
 "label.selectApiary" = "Select apiary";
 "label.selectFormat" = "File format";
+
+/* Generic actions */
+"action.delete" = "Delete";
+"action.prev" = "Previous";
+"action.next" = "Next";
+"action.loadMore" = "Load more";
+
+/* Admin */
+"admin.title" = "Admin";
+"admin.stats" = "Stats";
+"admin.users" = "Users";
+"admin.map" = "Map";
+"admin.health" = "Health";
+
+"admin.stats.preset" = "Period";
+"admin.stats.users" = "Users";
+"admin.stats.totalUsers" = "Total users";
+"admin.stats.newUsers" = "New in period";
+"admin.stats.supporters" = "Supporters";
+"admin.stats.active30d" = "Active (30 d)";
+"admin.stats.platform" = "Platform";
+"admin.stats.apiaries" = "Apiaries";
+"admin.stats.publicApiaries" = "Public apiaries";
+"admin.stats.hives" = "Hives";
+"admin.stats.inspections" = "Inspections";
+"admin.stats.sessions" = "Sessions";
+"admin.stats.activeSessions" = "Active sessions";
+"admin.stats.usersOnline" = "Users online";
+"admin.stats.avgSessions" = "Avg sessions/user";
+"admin.stats.signups" = "Sign-ups (last 14 days)";
+
+"admin.users.search" = "Search by name or email";
+"admin.users.supporter" = "Supporter";
+"admin.users.makeSupporter" = "Make Supporter";
+"admin.users.removeSupporter" = "Remove Supporter";
+"admin.users.revokeTokens" = "Revoke Sessions";
+
+"admin.map.all" = "All";
+"admin.map.flagged" = "Flagged";
+"admin.map.setPrivate" = "Set Private";
+
+"admin.health.inactive" = "Inactive users";
+"admin.health.noVarroa" = "No varroa data";
+"admin.health.zeroHives" = "Zero-inspection hives";

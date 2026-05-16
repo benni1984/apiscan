@@ -4,7 +4,9 @@ import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
 import DashboardShell from '@/components/DashboardShell';
-import { getApiary, getHives, getApiaryStats, updateApiary, deleteApiary, type Apiary, type Hive, type ApiaryStats } from '@/lib/api';
+import { getApiary, getHives, getApiaryStats, updateApiary, deleteApiary, createHive, type Apiary, type Hive, type ApiaryStats } from '@/lib/api';
+
+const HIVE_TYPES = ['langstroth', 'dadant', 'top_bar', 'warre', 'other'] as const;
 
 export default function ApiaryPage() {
   const { id } = useParams<{ id: string }>();
@@ -24,6 +26,11 @@ export default function ApiaryPage() {
   const [deleteStage, setDeleteStage] = useState<'idle' | 'confirm'>('idle');
   const [deleting, setDeleting] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
+
+  const [showCreateHive, setShowCreateHive] = useState(false);
+  const [creatingHive, setCreatingHive] = useState(false);
+  const [hiveForm, setHiveForm] = useState({ name: '', hive_type: 'langstroth' });
+  const [hiveMessage, setHiveMessage] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
 
   useEffect(() => {
     Promise.all([getApiary(id), getHives(id), getApiaryStats(id)])
@@ -82,6 +89,28 @@ export default function ApiaryPage() {
     }
   }
 
+  function openCreateHive() {
+    setHiveForm({ name: '', hive_type: 'langstroth' });
+    setHiveMessage(null);
+    setShowCreateHive(true);
+  }
+
+  async function handleCreateHive(e: React.FormEvent) {
+    e.preventDefault();
+    setCreatingHive(true);
+    setHiveMessage(null);
+    try {
+      const hive = await createHive(id, { name: hiveForm.name, hive_type: hiveForm.hive_type });
+      setHives(prev => [...prev, hive]);
+      setShowCreateHive(false);
+      setHiveMessage({ type: 'ok', text: t('apiary.createHiveSuccess') });
+    } catch (err) {
+      setHiveMessage({ type: 'err', text: err instanceof Error ? err.message : t('apiary.errorGeneric') });
+    } finally {
+      setCreatingHive(false);
+    }
+  }
+
   return (
     <DashboardShell>
       <Link href="/dashboard" className="dash-back">← {t('nav.apiaries')}</Link>
@@ -108,8 +137,59 @@ export default function ApiaryPage() {
             </div>
           )}
 
-          <h2 className="dash-section-title">{t('apiary.hives')}</h2>
-          {hives.length === 0
+          {/* ── Hive list + create ───────────────────────────────── */}
+          <div className="dash-page-header" style={{ marginTop: 8 }}>
+            <h2 className="dash-section-title" style={{ margin: 0 }}>{t('apiary.hives')}</h2>
+            {!showCreateHive && (
+              <button className="dash-new-btn" onClick={openCreateHive}>{t('apiary.newHive')}</button>
+            )}
+          </div>
+
+          {hiveMessage && (
+            <div className={hiveMessage.type === 'ok' ? 'dash-success-banner' : 'dash-error-banner'}>
+              {hiveMessage.text}
+            </div>
+          )}
+
+          {showCreateHive && (
+            <div className="dash-inline-form">
+              <h2>{t('apiary.createHiveTitle')}</h2>
+              <form onSubmit={handleCreateHive}>
+                <div className="dash-form-group">
+                  <label>{t('hive.hiveType')}</label>
+                  <select
+                    className="dash-profile-select"
+                    value={hiveForm.hive_type}
+                    onChange={e => setHiveForm(f => ({ ...f, hive_type: e.target.value }))}
+                  >
+                    {HIVE_TYPES.map(ht => (
+                      <option key={ht} value={ht}>{ht}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="dash-form-group">
+                  <label>{t('apiaries.name')}</label>
+                  <input
+                    type="text"
+                    value={hiveForm.name}
+                    onChange={e => setHiveForm(f => ({ ...f, name: e.target.value }))}
+                    required
+                    autoFocus
+                  />
+                </div>
+                <div className="dash-form-actions">
+                  <button className="dash-submit-btn" type="submit" disabled={creatingHive}>
+                    {creatingHive ? '…' : t('apiary.createHiveBtn')}
+                  </button>
+                  <button className="dash-cancel-btn" type="button" onClick={() => setShowCreateHive(false)}>
+                    {t('apiaries.cancel')}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {hives.length === 0 && !showCreateHive
             ? <p className="dash-empty">{t('apiary.noHives')}</p>
             : (
               <div className="dash-hive-list">

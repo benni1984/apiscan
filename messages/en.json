@@ -274,6 +274,10 @@
       "inspections": "Inspections",
       "avgVarroa": "Avg. Varroa",
       "noHives": "No hives in this apiary yet.",
+      "newHive": "New Hive",
+      "createHiveTitle": "Add New Hive",
+      "createHiveBtn": "Add Hive",
+      "createHiveSuccess": "Hive added.",
       "editBtn": "Edit Apiary",
       "editTitle": "Edit Apiary",
       "saveBtn": "Save Changes",
@@ -297,7 +301,20 @@
       "queen": "Queen seen",
       "brood": "Brood frames",
       "yes": "Yes",
-      "no": "No"
+      "no": "No",
+      "hiveType": "Hive Type",
+      "acquisitionDate": "Acquisition Date",
+      "notes": "Notes",
+      "editBtn": "Edit Hive",
+      "editTitle": "Edit Hive",
+      "saveBtn": "Save Changes",
+      "saveSuccess": "Hive saved.",
+      "dangerTitle": "Danger Zone",
+      "deleteBtn": "Delete Hive",
+      "deleteConfirmText": "This will permanently delete the hive and all its inspections.",
+      "deleteConfirmBtn": "Confirm Delete",
+      "deleteSuccess": "Hive deleted.",
+      "errorGeneric": "Something went wrong."
     }
   },
   "members": {

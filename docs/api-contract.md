@@ -333,7 +333,8 @@ HTTP 404, error code `QR_TOKEN_NOT_FOUND`.
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | `/apiaries/{id}/hives` | List hives in an apiary |
-| POST | `/hives/initialize` | Link a QR token to a new hive |
+| POST | `/apiaries/{id}/hives` | Create a hive (auto-generates QR token) |
+| POST | `/hives/initialize` | Link an existing QR token to a new hive (mobile) |
 | GET | `/hives/{id}` | Get hive detail |
 | PUT | `/hives/{id}` | Update hive |
 | DELETE | `/hives/{id}` | Delete hive and all inspections |
@@ -360,6 +361,23 @@ HTTP 404, error code `QR_TOKEN_NOT_FOUND`.
   "created_at": "datetime"
 }
 ```
+
+### POST `/apiaries/{id}/hives` — Request body
+
+Creates a hive without a pre-printed QR token. A QR token UUID is auto-generated and attached. Used by the web dashboard.
+
+```json
+{
+  "name": "Hive 3",
+  "hive_type": "langstroth",
+  "acquisition_date": "2026-04-01",
+  "notes": "string | null"
+}
+```
+
+**Response 201** — full Hive object.
+
+---
 
 ### POST `/hives/initialize` — Request body
 

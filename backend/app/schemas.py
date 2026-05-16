@@ -281,6 +281,13 @@ class QrBatchSummary(BaseModel):
 # Hives
 # ---------------------------------------------------------------------------
 
+class HiveCreate(BaseModel):
+    name: str = Field(min_length=1)
+    hive_type: str = Field(default="langstroth", pattern="^(langstroth|dadant|top_bar|warre|other)$")
+    acquisition_date: Optional[date] = None
+    notes: Optional[str] = None
+
+
 class HiveInitialize(BaseModel):
     qr_token: str
     apiary_id: str

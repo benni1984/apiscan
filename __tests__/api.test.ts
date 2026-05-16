@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { login, register, logout, getMe, updateMe, deleteMe, getApiaries, createApiary, updateApiary, deleteApiary, getHive, clearTokens } from '@/lib/api';
+import { login, register, logout, getMe, updateMe, deleteMe, getApiaries, createApiary, updateApiary, deleteApiary, createHive, updateHive, deleteHive, getHive, clearTokens } from '@/lib/api';
 
 const mockUser = { id: '1', email: 'a@b.com', name: 'Test', locale: 'en', created_at: '2024-01-01' };
 const mockTokens = { access_token: 'access-123', refresh_token: 'refresh-456', user: mockUser };
@@ -215,6 +215,60 @@ describe('deleteApiary', () => {
     localStorage.setItem('access_token', 'tok');
     vi.mocked(fetch).mockResolvedValueOnce(ok({}, 500));
     await expect(deleteApiary('a-1')).rejects.toThrow('Delete failed');
+  });
+});
+
+describe('createHive', () => {
+  it('sends POST /apiaries/{id}/hives with body and returns new hive', async () => {
+    localStorage.setItem('access_token', 'tok');
+    const hive = { id: 'h-1', name: 'New Hive', hive_type: 'langstroth', apiary_id: 'a-1' };
+    vi.mocked(fetch).mockResolvedValueOnce(ok(hive, 201));
+    const result = await createHive('a-1', { name: 'New Hive', hive_type: 'langstroth' });
+    expect(result).toEqual(hive);
+    const call = vi.mocked(fetch).mock.calls[0];
+    expect((call[1] as RequestInit).method).toBe('POST');
+    expect(String(call[0])).toContain('/apiaries/a-1/hives');
+    expect(JSON.parse((call[1] as RequestInit).body as string)).toMatchObject({ name: 'New Hive', hive_type: 'langstroth' });
+  });
+
+  it('throws with server message on failure', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({ detail: 'APIARY_NOT_FOUND' }, 404));
+    await expect(createHive('bad', { name: 'X', hive_type: 'langstroth' })).rejects.toThrow('APIARY_NOT_FOUND');
+  });
+});
+
+describe('updateHive', () => {
+  it('sends PUT /hives/{id} with body and returns updated hive', async () => {
+    localStorage.setItem('access_token', 'tok');
+    const hive = { id: 'h-1', name: 'Renamed', hive_type: 'dadant', apiary_id: 'a-1' };
+    vi.mocked(fetch).mockResolvedValueOnce(ok(hive));
+    const result = await updateHive('h-1', { name: 'Renamed', hive_type: 'dadant' });
+    expect(result).toEqual(hive);
+    const call = vi.mocked(fetch).mock.calls[0];
+    expect((call[1] as RequestInit).method).toBe('PUT');
+    expect(String(call[0])).toContain('/hives/h-1');
+  });
+
+  it('throws with server message on failure', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({ detail: 'Not found' }, 404));
+    await expect(updateHive('bad-id', { name: 'X' })).rejects.toThrow('Not found');
+  });
+});
+
+describe('deleteHive', () => {
+  it('sends DELETE /hives/{id} and resolves on 204', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(new Response(null, { status: 204 }));
+    await expect(deleteHive('h-1')).resolves.toBeUndefined();
+    expect(String(vi.mocked(fetch).mock.calls[0][0])).toContain('/hives/h-1');
+  });
+
+  it('throws on server error', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({}, 500));
+    await expect(deleteHive('h-1')).rejects.toThrow('Delete failed');
   });
 });
 
