@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { login, register, logout, getMe, getApiaries, getHive, clearTokens } from '@/lib/api';
+import { login, register, logout, getMe, updateMe, deleteMe, getApiaries, createApiary, updateApiary, deleteApiary, getHive, clearTokens } from '@/lib/api';
 
 const mockUser = { id: '1', email: 'a@b.com', name: 'Test', locale: 'en', created_at: '2024-01-01' };
 const mockTokens = { access_token: 'access-123', refresh_token: 'refresh-456', user: mockUser };
@@ -110,6 +110,43 @@ describe('getMe', () => {
   });
 });
 
+describe('updateMe', () => {
+  it('sends PUT /users/me with body and returns updated user', async () => {
+    localStorage.setItem('access_token', 'tok');
+    const updated = { ...mockUser, name: 'New Name' };
+    vi.mocked(fetch).mockResolvedValueOnce(ok(updated));
+    const result = await updateMe({ name: 'New Name' });
+    expect(result).toEqual(updated);
+    const call = vi.mocked(fetch).mock.calls[0];
+    expect((call[1] as RequestInit).method).toBe('PUT');
+    expect(String(call[0])).toContain('/users/me');
+  });
+
+  it('throws with server message on failure', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({ detail: 'Current password is incorrect' }, 400));
+    await expect(updateMe({ password: 'new', current_password: 'wrong' })).rejects.toThrow('Current password is incorrect');
+  });
+});
+
+describe('deleteMe', () => {
+  it('sends DELETE /users/me and clears tokens on success', async () => {
+    localStorage.setItem('access_token', 'tok');
+    localStorage.setItem('refresh_token', 'ref');
+    vi.mocked(fetch).mockResolvedValueOnce(new Response(null, { status: 204 }));
+    await deleteMe();
+    expect(localStorage.getItem('access_token')).toBeNull();
+    expect(localStorage.getItem('refresh_token')).toBeNull();
+    expect(String(vi.mocked(fetch).mock.calls[0][0])).toContain('/users/me');
+  });
+
+  it('throws on server error', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({}, 500));
+    await expect(deleteMe()).rejects.toThrow('Delete failed');
+  });
+});
+
 describe('getApiaries', () => {
   it('requests /apiaries?per_page=100 with auth header', async () => {
     localStorage.setItem('access_token', 'tok');
@@ -118,6 +155,66 @@ describe('getApiaries', () => {
     const result = await getApiaries();
     expect(result).toEqual(data);
     expect(String(vi.mocked(fetch).mock.calls[0][0])).toContain('/apiaries?per_page=100');
+  });
+});
+
+describe('createApiary', () => {
+  it('sends POST /apiaries with body and returns new apiary', async () => {
+    localStorage.setItem('access_token', 'tok');
+    const apiary = { id: 'a-1', name: 'New Apiary', hive_count: 0, is_public: false, created_at: '2025-01-01T00:00:00Z' };
+    vi.mocked(fetch).mockResolvedValueOnce(ok(apiary, 201));
+    const result = await createApiary({ name: 'New Apiary', is_public: false });
+    expect(result).toEqual(apiary);
+    const call = vi.mocked(fetch).mock.calls[0];
+    expect((call[1] as RequestInit).method).toBe('POST');
+    expect(String(call[0])).toContain('/apiaries');
+    expect(JSON.parse((call[1] as RequestInit).body as string)).toMatchObject({ name: 'New Apiary', is_public: false });
+  });
+
+  it('throws with server message on failure', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({ detail: 'Validation error' }, 422));
+    await expect(createApiary({ name: '', is_public: false })).rejects.toThrow('Validation error');
+  });
+});
+
+describe('updateApiary', () => {
+  it('sends PUT /apiaries/{id} with body and returns updated apiary', async () => {
+    localStorage.setItem('access_token', 'tok');
+    const apiary = { id: 'a-1', name: 'Renamed', hive_count: 2, is_public: true, created_at: '2025-01-01T00:00:00Z' };
+    vi.mocked(fetch).mockResolvedValueOnce(ok(apiary));
+    const result = await updateApiary('a-1', { name: 'Renamed', is_public: true });
+    expect(result).toEqual(apiary);
+    const call = vi.mocked(fetch).mock.calls[0];
+    expect((call[1] as RequestInit).method).toBe('PUT');
+    expect(String(call[0])).toContain('/apiaries/a-1');
+  });
+
+  it('throws with server message on failure', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({ detail: 'Not found' }, 404));
+    await expect(updateApiary('bad-id', { name: 'X' })).rejects.toThrow('Not found');
+  });
+});
+
+describe('deleteApiary', () => {
+  it('sends DELETE /apiaries/{id} and resolves on 204', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(new Response(null, { status: 204 }));
+    await expect(deleteApiary('a-1')).resolves.toBeUndefined();
+    expect(String(vi.mocked(fetch).mock.calls[0][0])).toContain('/apiaries/a-1');
+  });
+
+  it('throws "has_hives" on 409', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(new Response(null, { status: 409 }));
+    await expect(deleteApiary('a-1')).rejects.toThrow('has_hives');
+  });
+
+  it('throws on other server errors', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({}, 500));
+    await expect(deleteApiary('a-1')).rejects.toThrow('Delete failed');
   });
 });
 
