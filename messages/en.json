@@ -314,7 +314,23 @@
       "deleteConfirmText": "This will permanently delete the hive and all its inspections.",
       "deleteConfirmBtn": "Confirm Delete",
       "deleteSuccess": "Hive deleted.",
-      "errorGeneric": "Something went wrong."
+      "errorGeneric": "Something went wrong.",
+      "newInspectionBtn": "New Inspection",
+      "addInspectionTitle": "Log Inspection",
+      "editInspectionTitle": "Edit Inspection",
+      "inspectionSaveBtn": "Save Inspection",
+      "inspectionUpdateBtn": "Update Inspection",
+      "inspectionSaveSuccess": "Inspection logged.",
+      "inspectionUpdateSuccess": "Inspection updated.",
+      "inspectionEditBtn": "Edit",
+      "inspectionDeleteBtn": "Delete",
+      "inspectionConfirmDeleteText": "Delete this inspection?",
+      "inspectionConfirmDeleteBtn": "Confirm",
+      "actions": "Actions",
+      "moodCalm": "Calm",
+      "moodNervous": "Nervous",
+      "moodAggressive": "Aggressive",
+      "queenNotRecorded": "Not recorded"
     }
   },
   "members": {

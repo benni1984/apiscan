@@ -203,6 +203,29 @@ export async function getInspections(hiveId: string): Promise<Paginated<Inspecti
   return res.json();
 }
 
+export async function createInspection(hiveId: string, data: InspectionInput): Promise<Inspection> {
+  const res = await apiFetch(`/hives/${hiveId}/inspections`, { method: 'POST', body: JSON.stringify(data) });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail ?? 'Create failed');
+  }
+  return res.json();
+}
+
+export async function updateInspection(id: string, data: InspectionInput): Promise<Inspection> {
+  const res = await apiFetch(`/inspections/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail ?? 'Update failed');
+  }
+  return res.json();
+}
+
+export async function deleteInspection(id: string): Promise<void> {
+  const res = await apiFetch(`/inspections/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Delete failed');
+}
+
 // ── Types ──────────────────────────────────────────────────────────────────────
 export interface User { id: string; email: string; name: string; locale: string; created_at: string; is_admin: boolean; is_supporter: boolean; }
 export interface Apiary { id: string; name: string; hive_count: number; is_public: boolean; description?: string; address?: string; latitude?: number; longitude?: number; created_at: string; }
@@ -210,6 +233,13 @@ export interface Hive { id: string; name: string; hive_type: string; apiary_id: 
 export interface Inspection {
   id: string; date: string; varroa_count?: number; mood?: string;
   queen_seen?: boolean; brood_frames?: number; honey_frames?: number;
+}
+export interface InspectionInput {
+  date: string;
+  varroa_count?: number | null;
+  mood?: string | null;
+  queen_seen?: boolean | null;
+  brood_frames?: number | null;
 }
 export interface HiveStats {
   inspection_count: number;

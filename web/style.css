@@ -922,3 +922,8 @@ tr:last-child td { border-bottom: none; }
 .dash-danger-zone h3 { color: #dc2626; font-size: .95rem; font-weight: 600; margin: 0 0 8px; }
 .dash-danger-zone p { font-size: .875rem; color: var(--muted); margin: 0 0 12px; }
 .dash-danger-zone .dash-danger-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.dash-row-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.dash-row-btn { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 3px 10px; font-size: .78rem; cursor: pointer; color: var(--text); white-space: nowrap; }
+.dash-row-btn:hover { background: var(--border); }
+.dash-row-btn-danger { border-color: #fca5a5; color: #dc2626; }
+.dash-row-btn-danger:hover { background: #fee2e2; }

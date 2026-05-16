@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { login, register, logout, getMe, updateMe, deleteMe, getApiaries, createApiary, updateApiary, deleteApiary, createHive, updateHive, deleteHive, getHive, clearTokens } from '@/lib/api';
+import { login, register, logout, getMe, updateMe, deleteMe, getApiaries, createApiary, updateApiary, deleteApiary, createHive, updateHive, deleteHive, getHive, clearTokens, createInspection, updateInspection, deleteInspection } from '@/lib/api';
 
 const mockUser = { id: '1', email: 'a@b.com', name: 'Test', locale: 'en', created_at: '2024-01-01' };
 const mockTokens = { access_token: 'access-123', refresh_token: 'refresh-456', user: mockUser };
@@ -280,5 +280,59 @@ describe('getHive', () => {
     const result = await getHive('h-1');
     expect(result).toEqual(hive);
     expect(String(vi.mocked(fetch).mock.calls[0][0])).toContain('/hives/h-1');
+  });
+});
+
+describe('createInspection', () => {
+  it('sends POST /hives/{id}/inspections and returns new inspection', async () => {
+    localStorage.setItem('access_token', 'tok');
+    const inspection = { id: 'i-1', date: '2024-06-01', varroa_count: 3, mood: 'calm', queen_seen: true, brood_frames: 5 };
+    vi.mocked(fetch).mockResolvedValueOnce(ok(inspection, 201));
+    const result = await createInspection('h-1', { date: '2024-06-01', varroa_count: 3, mood: 'calm', queen_seen: true, brood_frames: 5 });
+    expect(result).toEqual(inspection);
+    const call = vi.mocked(fetch).mock.calls[0];
+    expect((call[1] as RequestInit).method).toBe('POST');
+    expect(String(call[0])).toContain('/hives/h-1/inspections');
+    expect(JSON.parse((call[1] as RequestInit).body as string)).toMatchObject({ date: '2024-06-01', varroa_count: 3 });
+  });
+
+  it('throws with server message on failure', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({ detail: 'Validation error' }, 422));
+    await expect(createInspection('h-1', { date: '2024-06-01' })).rejects.toThrow('Validation error');
+  });
+});
+
+describe('updateInspection', () => {
+  it('sends PUT /inspections/{id} and returns updated inspection', async () => {
+    localStorage.setItem('access_token', 'tok');
+    const inspection = { id: 'i-1', date: '2024-06-01', varroa_count: 5, mood: 'nervous', queen_seen: false, brood_frames: 3 };
+    vi.mocked(fetch).mockResolvedValueOnce(ok(inspection));
+    const result = await updateInspection('i-1', { date: '2024-06-01', varroa_count: 5, mood: 'nervous' });
+    expect(result).toEqual(inspection);
+    const call = vi.mocked(fetch).mock.calls[0];
+    expect((call[1] as RequestInit).method).toBe('PUT');
+    expect(String(call[0])).toContain('/inspections/i-1');
+  });
+
+  it('throws with server message on failure', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({ detail: 'Not found' }, 404));
+    await expect(updateInspection('bad-id', { date: '2024-06-01' })).rejects.toThrow('Not found');
+  });
+});
+
+describe('deleteInspection', () => {
+  it('sends DELETE /inspections/{id} and resolves on 204', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(new Response(null, { status: 204 }));
+    await expect(deleteInspection('i-1')).resolves.toBeUndefined();
+    expect(String(vi.mocked(fetch).mock.calls[0][0])).toContain('/inspections/i-1');
+  });
+
+  it('throws on server error', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({}, 500));
+    await expect(deleteInspection('i-1')).rejects.toThrow('Delete failed');
   });
 });

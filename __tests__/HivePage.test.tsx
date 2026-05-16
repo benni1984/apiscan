@@ -8,6 +8,9 @@ const mockGetHiveStats = vi.hoisted(() => vi.fn());
 const mockGetInspections = vi.hoisted(() => vi.fn());
 const mockUpdateHive = vi.hoisted(() => vi.fn());
 const mockDeleteHive = vi.hoisted(() => vi.fn());
+const mockCreateInspection = vi.hoisted(() => vi.fn());
+const mockUpdateInspection = vi.hoisted(() => vi.fn());
+const mockDeleteInspection = vi.hoisted(() => vi.fn());
 
 vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
@@ -38,6 +41,9 @@ vi.mock('@/lib/api', () => ({
   getInspections: mockGetInspections,
   updateHive: mockUpdateHive,
   deleteHive: mockDeleteHive,
+  createInspection: mockCreateInspection,
+  updateInspection: mockUpdateInspection,
+  deleteInspection: mockDeleteInspection,
 }));
 
 const paginated = <T,>(items: T[]) => ({ items, total: items.length, page: 1, per_page: 50 });
@@ -49,6 +55,9 @@ describe('HivePage', () => {
     mockGetInspections.mockClear();
     mockUpdateHive.mockClear();
     mockDeleteHive.mockClear();
+    mockCreateInspection.mockClear();
+    mockUpdateInspection.mockClear();
+    mockDeleteInspection.mockClear();
   });
 
   function setupMocks({
@@ -197,5 +206,132 @@ describe('HivePage', () => {
     fireEvent.click(screen.getByText('hive.deleteConfirmBtn'));
     await waitFor(() => expect(screen.getByText('Delete failed')).toBeInTheDocument());
     expect(screen.getByText('hive.deleteBtn')).toBeInTheDocument();
+  });
+
+  // ── Inspection CRUD ────────────────────────────────────────────────────────
+
+  it('shows New Inspection button after load', async () => {
+    setupMocks();
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    expect(screen.getByText('hive.newInspectionBtn')).toBeInTheDocument();
+  });
+
+  it('clicking New Inspection shows the create form', async () => {
+    setupMocks();
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    fireEvent.click(screen.getByText('hive.newInspectionBtn'));
+    expect(screen.getByText('hive.addInspectionTitle')).toBeInTheDocument();
+    expect(screen.getByText('hive.inspectionSaveBtn')).toBeInTheDocument();
+  });
+
+  it('cancel hides the inspection form', async () => {
+    setupMocks();
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    fireEvent.click(screen.getByText('hive.newInspectionBtn'));
+    fireEvent.click(screen.getByText('apiaries.cancel'));
+    expect(screen.queryByText('hive.addInspectionTitle')).not.toBeInTheDocument();
+  });
+
+  it('submitting create form calls createInspection and prepends the new row', async () => {
+    setupMocks();
+    const newInspection = { id: 'i-new', date: '2024-08-01', varroa_count: 2, mood: 'calm', queen_seen: true, brood_frames: 4 };
+    mockCreateInspection.mockResolvedValueOnce(newInspection);
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+
+    fireEvent.click(screen.getByText('hive.newInspectionBtn'));
+    fireEvent.submit(screen.getByText('hive.inspectionSaveBtn').closest('form')!);
+
+    await waitFor(() => expect(mockCreateInspection).toHaveBeenCalledWith(
+      'hive-1', expect.objectContaining({ date: expect.any(String) })
+    ));
+    await waitFor(() => expect(screen.getByText('2')).toBeInTheDocument());
+    expect(screen.queryByText('hive.addInspectionTitle')).not.toBeInTheDocument();
+    expect(screen.getByText('hive.inspectionSaveSuccess')).toBeInTheDocument();
+  });
+
+  it('shows error banner when createInspection fails', async () => {
+    setupMocks();
+    mockCreateInspection.mockRejectedValueOnce(new Error('Create failed'));
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    fireEvent.click(screen.getByText('hive.newInspectionBtn'));
+    fireEvent.submit(screen.getByText('hive.inspectionSaveBtn').closest('form')!);
+    await waitFor(() => expect(screen.getByText('Create failed')).toBeInTheDocument());
+  });
+
+  it('Edit button on inspection row opens edit form pre-filled', async () => {
+    setupMocks({
+      inspections: [{ id: 'i-1', date: '2024-06-01', varroa_count: 3, mood: 'calm', queen_seen: true, brood_frames: 5 }],
+    });
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('3'));
+    fireEvent.click(screen.getByText('hive.inspectionEditBtn'));
+    expect(screen.getByText('hive.editInspectionTitle')).toBeInTheDocument();
+    expect(screen.getByText('hive.inspectionUpdateBtn')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('2024-06-01')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('3')).toBeInTheDocument();
+  });
+
+  it('submitting edit form calls updateInspection and updates the row', async () => {
+    setupMocks({
+      inspections: [{ id: 'i-1', date: '2024-06-01', varroa_count: 3, mood: 'calm', queen_seen: true, brood_frames: 5 }],
+    });
+    const updated = { id: 'i-1', date: '2024-06-01', varroa_count: 7, mood: 'nervous', queen_seen: false, brood_frames: 5 };
+    mockUpdateInspection.mockResolvedValueOnce(updated);
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('3'));
+
+    fireEvent.click(screen.getByText('hive.inspectionEditBtn'));
+    const varroaInput = screen.getByDisplayValue('3');
+    fireEvent.change(varroaInput, { target: { value: '7' } });
+    fireEvent.submit(screen.getByText('hive.inspectionUpdateBtn').closest('form')!);
+
+    await waitFor(() => expect(mockUpdateInspection).toHaveBeenCalledWith(
+      'i-1', expect.objectContaining({ varroa_count: 7 })
+    ));
+    await waitFor(() => expect(screen.getByText('7')).toBeInTheDocument());
+    expect(screen.queryByText('hive.editInspectionTitle')).not.toBeInTheDocument();
+    expect(screen.getByText('hive.inspectionUpdateSuccess')).toBeInTheDocument();
+  });
+
+  it('Delete button shows confirmation step', async () => {
+    setupMocks({
+      inspections: [{ id: 'i-1', date: '2024-06-01', varroa_count: 3, mood: 'calm', queen_seen: true, brood_frames: 5 }],
+    });
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('3'));
+    fireEvent.click(screen.getByText('hive.inspectionDeleteBtn'));
+    expect(screen.getByText('hive.inspectionConfirmDeleteText')).toBeInTheDocument();
+    expect(screen.getByText('hive.inspectionConfirmDeleteBtn')).toBeInTheDocument();
+  });
+
+  it('confirming delete calls deleteInspection and removes the row', async () => {
+    setupMocks({
+      inspections: [{ id: 'i-1', date: '2024-06-01', varroa_count: 3, mood: 'calm', queen_seen: true, brood_frames: 5 }],
+    });
+    mockDeleteInspection.mockResolvedValueOnce(undefined);
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('3'));
+    fireEvent.click(screen.getByText('hive.inspectionDeleteBtn'));
+    fireEvent.click(screen.getByText('hive.inspectionConfirmDeleteBtn'));
+    await waitFor(() => expect(mockDeleteInspection).toHaveBeenCalledWith('i-1'));
+    expect(screen.queryByText('3')).not.toBeInTheDocument();
+  });
+
+  it('shows error when deleteInspection fails and row stays', async () => {
+    setupMocks({
+      inspections: [{ id: 'i-1', date: '2024-06-01', varroa_count: 3, mood: 'calm', queen_seen: true, brood_frames: 5 }],
+    });
+    mockDeleteInspection.mockRejectedValueOnce(new Error('Delete failed'));
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('3'));
+    fireEvent.click(screen.getByText('hive.inspectionDeleteBtn'));
+    fireEvent.click(screen.getByText('hive.inspectionConfirmDeleteBtn'));
+    await waitFor(() => expect(screen.getByText('Delete failed')).toBeInTheDocument());
+    expect(screen.getByText('3')).toBeInTheDocument();
   });
 });

@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
 import dynamic from 'next/dynamic';
 import DashboardShell from '@/components/DashboardShell';
-import { getHive, getHiveStats, getInspections, updateHive, deleteHive, type Hive, type HiveStats, type Inspection } from '@/lib/api';
+import { getHive, getHiveStats, getInspections, updateHive, deleteHive, createInspection, updateInspection, deleteInspection, type Hive, type HiveStats, type Inspection, type InspectionInput } from '@/lib/api';
 
 const VarroaChart = dynamic(() => import('@/components/VarroaChart'), { ssr: false });
 
@@ -29,6 +29,15 @@ export default function HivePage() {
   const [deleteStage, setDeleteStage] = useState<'idle' | 'confirm'>('idle');
   const [deleting, setDeleting] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState<string | null>(null);
+
+  const [showInspectionForm, setShowInspectionForm] = useState(false);
+  const [inspectionFormMode, setInspectionFormMode] = useState<'create' | 'edit'>('create');
+  const [editingInspectionId, setEditingInspectionId] = useState<string | null>(null);
+  const [inspectionForm, setInspectionForm] = useState({ date: '', varroa_count: '', mood: '', queen_seen: '', brood_frames: '' });
+  const [savingInspection, setSavingInspection] = useState(false);
+  const [inspectionMessage, setInspectionMessage] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [deletingInspectionId, setDeletingInspectionId] = useState<string | null>(null);
 
   useEffect(() => {
     Promise.all([getHive(id), getHiveStats(id), getInspections(id)])
@@ -76,6 +85,71 @@ export default function HivePage() {
     }
   }
 
+  function openCreateInspection() {
+    setInspectionFormMode('create');
+    setEditingInspectionId(null);
+    setInspectionForm({ date: new Date().toISOString().split('T')[0], varroa_count: '', mood: '', queen_seen: '', brood_frames: '' });
+    setInspectionMessage(null);
+    setShowInspectionForm(true);
+  }
+
+  function openEditInspection(ins: Inspection) {
+    setInspectionFormMode('edit');
+    setEditingInspectionId(ins.id);
+    setInspectionForm({
+      date: ins.date,
+      varroa_count: ins.varroa_count != null ? String(ins.varroa_count) : '',
+      mood: ins.mood ?? '',
+      queen_seen: ins.queen_seen == null ? '' : ins.queen_seen ? 'true' : 'false',
+      brood_frames: ins.brood_frames != null ? String(ins.brood_frames) : '',
+    });
+    setInspectionMessage(null);
+    setShowInspectionForm(true);
+  }
+
+  async function handleSaveInspection(e: React.FormEvent) {
+    e.preventDefault();
+    setSavingInspection(true);
+    setInspectionMessage(null);
+    const data: InspectionInput = {
+      date: inspectionForm.date,
+      varroa_count: inspectionForm.varroa_count !== '' ? parseInt(inspectionForm.varroa_count) : null,
+      mood: inspectionForm.mood || null,
+      queen_seen: inspectionForm.queen_seen === '' ? null : inspectionForm.queen_seen === 'true',
+      brood_frames: inspectionForm.brood_frames !== '' ? parseInt(inspectionForm.brood_frames) : null,
+    };
+    try {
+      if (inspectionFormMode === 'create') {
+        const created = await createInspection(id, data);
+        setInspections(prev => [created, ...prev]);
+        setShowInspectionForm(false);
+        setInspectionMessage({ type: 'ok', text: t('hive.inspectionSaveSuccess') });
+      } else if (editingInspectionId) {
+        const updated = await updateInspection(editingInspectionId, data);
+        setInspections(prev => prev.map(ins => ins.id === editingInspectionId ? updated : ins));
+        setShowInspectionForm(false);
+        setInspectionMessage({ type: 'ok', text: t('hive.inspectionUpdateSuccess') });
+      }
+    } catch (err) {
+      setInspectionMessage({ type: 'err', text: err instanceof Error ? err.message : t('hive.errorGeneric') });
+    } finally {
+      setSavingInspection(false);
+    }
+  }
+
+  async function handleDeleteInspection(insId: string) {
+    setDeletingInspectionId(insId);
+    try {
+      await deleteInspection(insId);
+      setInspections(prev => prev.filter(ins => ins.id !== insId));
+      setDeleteConfirmId(null);
+    } catch (err) {
+      setInspectionMessage({ type: 'err', text: err instanceof Error ? err.message : t('hive.errorGeneric') });
+    } finally {
+      setDeletingInspectionId(null);
+    }
+  }
+
   async function handleDelete() {
     setDeleting(true);
     setDeleteMessage(null);
@@ -109,10 +183,72 @@ export default function HivePage() {
           </div>
 
           {/* Inspection table */}
-          <h2 className="dash-section-title">{t('hive.inspections')}</h2>
-          {inspections.length === 0
+          <div className="dash-page-header" style={{ marginTop: 24 }}>
+            <h2 className="dash-section-title" style={{ margin: 0 }}>{t('hive.inspections')}</h2>
+            {!showInspectionForm && (
+              <button className="dash-new-btn" onClick={openCreateInspection}>{t('hive.newInspectionBtn')}</button>
+            )}
+          </div>
+
+          {inspectionMessage && (
+            <div className={inspectionMessage.type === 'ok' ? 'dash-success-banner' : 'dash-error-banner'}>
+              {inspectionMessage.text}
+            </div>
+          )}
+
+          {showInspectionForm && (
+            <div className="dash-inline-form">
+              <h2>{inspectionFormMode === 'create' ? t('hive.addInspectionTitle') : t('hive.editInspectionTitle')}</h2>
+              <form onSubmit={handleSaveInspection}>
+                <div className="dash-form-group">
+                  <label>{t('hive.date')}</label>
+                  <input type="date" value={inspectionForm.date} required
+                    onChange={e => setInspectionForm(f => ({ ...f, date: e.target.value }))} />
+                </div>
+                <div className="dash-form-group">
+                  <label>{t('hive.varroa')}</label>
+                  <input type="number" min="0" value={inspectionForm.varroa_count}
+                    onChange={e => setInspectionForm(f => ({ ...f, varroa_count: e.target.value }))} />
+                </div>
+                <div className="dash-form-group">
+                  <label>{t('hive.mood')}</label>
+                  <select className="dash-profile-select" value={inspectionForm.mood}
+                    onChange={e => setInspectionForm(f => ({ ...f, mood: e.target.value }))}>
+                    <option value="">—</option>
+                    <option value="calm">{t('hive.moodCalm')}</option>
+                    <option value="nervous">{t('hive.moodNervous')}</option>
+                    <option value="aggressive">{t('hive.moodAggressive')}</option>
+                  </select>
+                </div>
+                <div className="dash-form-group">
+                  <label>{t('hive.queen')}</label>
+                  <select className="dash-profile-select" value={inspectionForm.queen_seen}
+                    onChange={e => setInspectionForm(f => ({ ...f, queen_seen: e.target.value }))}>
+                    <option value="">{t('hive.queenNotRecorded')}</option>
+                    <option value="true">{t('hive.yes')}</option>
+                    <option value="false">{t('hive.no')}</option>
+                  </select>
+                </div>
+                <div className="dash-form-group">
+                  <label>{t('hive.brood')}</label>
+                  <input type="number" min="0" max="10" value={inspectionForm.brood_frames}
+                    onChange={e => setInspectionForm(f => ({ ...f, brood_frames: e.target.value }))} />
+                </div>
+                <div className="dash-form-actions">
+                  <button className="dash-submit-btn" type="submit" disabled={savingInspection}>
+                    {savingInspection ? '…' : inspectionFormMode === 'create' ? t('hive.inspectionSaveBtn') : t('hive.inspectionUpdateBtn')}
+                  </button>
+                  <button className="dash-cancel-btn" type="button" onClick={() => setShowInspectionForm(false)}>
+                    {t('apiaries.cancel')}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {inspections.length === 0 && !showInspectionForm
             ? <p className="dash-empty">{t('hive.noInspections')}</p>
-            : (
+            : inspections.length > 0 && (
               <div style={{ overflowX: 'auto' }}>
                 <table className="dash-inspection-table">
                   <thead>
@@ -122,6 +258,7 @@ export default function HivePage() {
                       <th>{t('hive.mood')}</th>
                       <th>{t('hive.queen')}</th>
                       <th>{t('hive.brood')}</th>
+                      <th>{t('hive.actions')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -132,6 +269,30 @@ export default function HivePage() {
                         <td>{ins.mood ?? '—'}</td>
                         <td>{ins.queen_seen == null ? '—' : ins.queen_seen ? t('hive.yes') : t('hive.no')}</td>
                         <td>{ins.brood_frames ?? '—'}</td>
+                        <td>
+                          {deleteConfirmId === ins.id ? (
+                            <span className="dash-row-actions">
+                              <span style={{ fontSize: '.8rem', color: 'var(--muted)' }}>{t('hive.inspectionConfirmDeleteText')}</span>
+                              <button className="dash-row-btn dash-row-btn-danger"
+                                onClick={() => handleDeleteInspection(ins.id)}
+                                disabled={deletingInspectionId === ins.id}>
+                                {deletingInspectionId === ins.id ? '…' : t('hive.inspectionConfirmDeleteBtn')}
+                              </button>
+                              <button className="dash-row-btn" onClick={() => setDeleteConfirmId(null)}>
+                                {t('apiaries.cancel')}
+                              </button>
+                            </span>
+                          ) : (
+                            <span className="dash-row-actions">
+                              <button className="dash-row-btn" onClick={() => openEditInspection(ins)}>
+                                {t('hive.inspectionEditBtn')}
+                              </button>
+                              <button className="dash-row-btn dash-row-btn-danger" onClick={() => setDeleteConfirmId(ins.id)}>
+                                {t('hive.inspectionDeleteBtn')}
+                              </button>
+                            </span>
+                          )}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
