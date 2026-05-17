@@ -811,6 +811,7 @@ tr:last-child td { border-bottom: none; }
 .dash-hive-date { margin-left: auto; font-size: .78rem; color: var(--muted); }
 .dash-hive-type-label { font-size: .85rem; color: var(--muted); text-transform: capitalize; margin-bottom: 16px; margin-top: -16px; }
 .dash-chart-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 8px; }
+.dash-inspection-count { font-size: .8rem; color: var(--muted); margin: 4px 0 8px; }
 .dash-inspection-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
 .dash-inspection-table th {
   text-align: left; padding: 8px 12px;

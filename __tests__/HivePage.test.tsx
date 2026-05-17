@@ -50,7 +50,9 @@ vi.mock('@/lib/api', () => ({
   getApiaryFieldDefs: mockGetApiaryFieldDefs,
 }));
 
-const paginated = <T,>(items: T[]) => ({ items, total: items.length, page: 1, per_page: 50 });
+const paginated = <T,>(items: T[], total?: number, pages?: number) => ({
+  items, total: total ?? items.length, page: 1, per_page: 10, pages: pages ?? 1,
+});
 
 describe('HivePage', () => {
   beforeEach(() => {
@@ -442,5 +444,37 @@ describe('HivePage', () => {
     await waitFor(() => expect(screen.getByText('Treatment')).toBeInTheDocument());
     expect(screen.getByText('Apivar')).toBeInTheDocument();
     expect(screen.getByText('Oxalic acid')).toBeInTheDocument();
+  });
+
+  // ── Pagination ─────────────────────────────────────────────────────────────
+
+  it('shows Load More button when multiple pages exist and appends next page on click', async () => {
+    const page1 = [{ id: 'i-1', date: '2024-06-01', varroa_count: 3, mood: 'calm', queen_seen: true, brood_frames: 5 }];
+    const page2 = [{ id: 'i-2', date: '2024-07-01', varroa_count: 9, mood: 'nervous', queen_seen: false, brood_frames: 2 }];
+    mockGetHive.mockResolvedValueOnce({ id: 'hive-1', name: 'Hive Alpha', hive_type: 'langstroth', apiary_id: 'apiary-1' });
+    mockGetHiveStats.mockResolvedValueOnce({ inspection_count: 2, varroa_trend: [], mood_distribution: { calm: 0, nervous: 0, aggressive: 0 } });
+    mockGetInspections.mockResolvedValueOnce({ items: page1, total: 2, page: 1, per_page: 1, pages: 2 });
+    mockGetInspections.mockResolvedValueOnce({ items: page2, total: 2, page: 2, per_page: 1, pages: 2 });
+
+    render(<HivePage />);
+    await waitFor(() => expect(screen.getByText('hive.inspectionLoadMore')).toBeInTheDocument());
+    expect(screen.getByText('3')).toBeInTheDocument();
+    expect(screen.queryByText('9')).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByText('hive.inspectionLoadMore'));
+
+    await waitFor(() => expect(mockGetInspections).toHaveBeenCalledWith('hive-1', 2));
+    await waitFor(() => expect(screen.getByText('9')).toBeInTheDocument());
+    expect(screen.getByText('3')).toBeInTheDocument();
+    expect(screen.queryByText('hive.inspectionLoadMore')).not.toBeInTheDocument();
+  });
+
+  it('hides Load More button when on last page', async () => {
+    setupMocks({
+      inspections: [{ id: 'i-1', date: '2024-06-01', varroa_count: 3, mood: 'calm', queen_seen: true, brood_frames: 5 }],
+    });
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    expect(screen.queryByText('hive.inspectionLoadMore')).not.toBeInTheDocument();
   });
 });
