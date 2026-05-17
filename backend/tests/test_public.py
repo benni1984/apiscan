@@ -116,6 +116,31 @@ def test_public_hides_user_data(client, seeded):
         assert "user_id" not in hive
 
 
+def test_global_stats_aggregates(client, seeded):
+    data = client.get("/api/v1/public/stats").json()
+    # seeded: 3 inspections all with varroa_count=3, mood="calm", no brood_frames set
+    assert data["avg_varroa_count"] == 3.0
+    assert data["mood_distribution"]["calm"] == 3
+    assert data["avg_brood_frames"] is None
+    # No hive has >= 2 inspections, so interval is None
+    assert data["avg_inspection_interval_days"] is None
+
+
+def test_global_stats_interval_computed(auth_client, client):
+    token = auth_client.post("/api/v1/qr-batches", json={"count": 1}).json()["tokens"][0]["token"]
+    apiary = auth_client.post("/api/v1/apiaries", json={
+        "name": "Interval Test", "latitude": 50.0, "longitude": 10.0, "is_public": True
+    }).json()
+    hive = auth_client.post("/api/v1/hives/initialize", json={
+        "qr_token": token, "apiary_id": apiary["id"], "name": "H", "hive_type": "langstroth"
+    }).json()
+    auth_client.post(f"/api/v1/hives/{hive['id']}/inspections", json={"date": "2026-04-01"})
+    auth_client.post(f"/api/v1/hives/{hive['id']}/inspections", json={"date": "2026-04-15"})
+    data = client.get("/api/v1/public/stats").json()
+    # Two inspections 14 days apart → avg interval = 14.0
+    assert data["avg_inspection_interval_days"] == 14.0
+
+
 def test_global_stats_empty_db(client):
     r = client.get("/api/v1/public/stats")
     assert r.status_code == 200
@@ -123,6 +148,10 @@ def test_global_stats_empty_db(client):
     assert data["apiary_count"] == 0
     assert data["hive_count"] == 0
     assert data["inspection_count"] == 0
+    assert data["avg_varroa_count"] is None
+    assert data["mood_distribution"] == {}
+    assert data["avg_brood_frames"] is None
+    assert data["avg_inspection_interval_days"] is None
     assert data["apiaries"] == []
 
 

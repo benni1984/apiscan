@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { login, register, logout, getMe, updateMe, deleteMe, getApiaries, createApiary, updateApiary, deleteApiary, createHive, updateHive, deleteHive, getHive, clearTokens, createInspection, updateInspection, deleteInspection, getQrBatches, createQrBatch, getQrBatch, downloadQrBatchPdf } from '@/lib/api';
+import { login, register, logout, getMe, updateMe, deleteMe, getApiaries, createApiary, updateApiary, deleteApiary, createHive, updateHive, deleteHive, getHive, clearTokens, createInspection, updateInspection, deleteInspection, getQrBatches, createQrBatch, getQrBatch, downloadQrBatchPdf, getPublicStats } from '@/lib/api';
 
 const mockUser = { id: '1', email: 'a@b.com', name: 'Test', locale: 'en', created_at: '2024-01-01' };
 const mockTokens = { access_token: 'access-123', refresh_token: 'refresh-456', user: mockUser };
@@ -392,5 +392,30 @@ describe('downloadQrBatchPdf', () => {
     localStorage.setItem('access_token', 'tok');
     vi.mocked(fetch).mockResolvedValueOnce(ok({}, 500));
     await expect(downloadQrBatchPdf('b-1')).rejects.toThrow('Failed to download PDF');
+  });
+});
+
+const mockPublicStats = {
+  apiary_count: 12, hive_count: 87, inspection_count: 634,
+  avg_varroa_count: 2.8, mood_distribution: { calm: 410, nervous: 89, aggressive: 23 },
+  avg_brood_frames: 5.2, avg_inspection_interval_days: 14.3, apiaries: [],
+};
+
+describe('getPublicStats', () => {
+  it('fetches /public/stats without auth and returns stats', async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(ok(mockPublicStats));
+    const stats = await getPublicStats();
+    expect(stats.apiary_count).toBe(12);
+    expect(stats.avg_varroa_count).toBe(2.8);
+    expect(stats.mood_distribution.calm).toBe(410);
+    expect(stats.avg_brood_frames).toBe(5.2);
+    expect(stats.avg_inspection_interval_days).toBe(14.3);
+    const call = vi.mocked(fetch).mock.calls[0];
+    expect(call[0]).toContain('/public/stats');
+  });
+
+  it('throws on server error', async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(ok({}, 500));
+    await expect(getPublicStats()).rejects.toThrow('Failed to fetch public stats');
   });
 });

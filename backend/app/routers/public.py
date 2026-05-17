@@ -1,5 +1,6 @@
 from collections import defaultdict
 from typing import Any, Dict, List, Optional
+from datetime import date as date_type
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -29,6 +30,10 @@ class GlobalStats(BaseModel):
     apiary_count: int
     hive_count: int
     inspection_count: int
+    avg_varroa_count: Optional[float]
+    mood_distribution: dict
+    avg_brood_frames: Optional[float]
+    avg_inspection_interval_days: Optional[float]
     apiaries: List[PublicApiaryPin]
 
 
@@ -59,13 +64,29 @@ class PublicApiaryDetail(BaseModel):
 @router.get("/stats", response_model=GlobalStats)
 def global_stats(db: DB):
     public_apiaries = db.query(Apiary).filter(Apiary.is_public.is_(True)).all()
-    hive_ids = {h.id for a in public_apiaries for h in a.hives}
-    inspection_count = (
-        db.query(Inspection)
-        .filter(Inspection.hive_id.in_(hive_ids))
-        .count()
-        if hive_ids else 0
-    )
+    all_hives: list[Hive] = [h for a in public_apiaries for h in a.hives]
+    all_inspections: list[Inspection] = [i for h in all_hives for i in h.inspections]
+
+    inspection_count = len(all_inspections)
+
+    varroa_values = [i.varroa_count for i in all_inspections if i.varroa_count is not None]
+    avg_varroa = round(sum(varroa_values) / len(varroa_values), 2) if varroa_values else None
+
+    mood_dist: dict = defaultdict(int)
+    for i in all_inspections:
+        if i.mood:
+            mood_dist[i.mood] += 1
+
+    brood_values = [i.brood_frames for i in all_inspections if i.brood_frames is not None]
+    avg_brood = round(sum(brood_values) / len(brood_values), 2) if brood_values else None
+
+    interval_avgs: list[float] = []
+    for hive in all_hives:
+        dates = sorted(i.date for i in hive.inspections)
+        if len(dates) >= 2:
+            gaps = [(dates[j] - dates[j - 1]).days for j in range(1, len(dates))]
+            interval_avgs.append(sum(gaps) / len(gaps))
+    avg_interval = round(sum(interval_avgs) / len(interval_avgs), 1) if interval_avgs else None
 
     pins = [
         PublicApiaryPin(
@@ -82,8 +103,12 @@ def global_stats(db: DB):
 
     return GlobalStats(
         apiary_count=len(public_apiaries),
-        hive_count=sum(len(a.hives) for a in public_apiaries),
+        hive_count=len(all_hives),
         inspection_count=inspection_count,
+        avg_varroa_count=avg_varroa,
+        mood_distribution=dict(mood_dist),
+        avg_brood_frames=avg_brood,
+        avg_inspection_interval_days=avg_interval,
         apiaries=pins,
     )
 

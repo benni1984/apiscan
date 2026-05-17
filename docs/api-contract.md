@@ -674,6 +674,10 @@ Returns platform-wide aggregate numbers and the coordinates of every apiary that
   "apiary_count": 12,
   "hive_count": 87,
   "inspection_count": 634,
+  "avg_varroa_count": 2.8,
+  "mood_distribution": { "calm": 410, "nervous": 89, "aggressive": 23 },
+  "avg_brood_frames": 5.2,
+  "avg_inspection_interval_days": 14.3,
   "apiaries": [
     {
       "id": "uuid",
@@ -687,6 +691,12 @@ Returns platform-wide aggregate numbers and the coordinates of every apiary that
 ```
 
 All counts (`apiary_count`, `hive_count`, `inspection_count`) and the `apiaries` pin list include **only** apiaries where `is_public = true AND latitude != null AND longitude != null`.
+
+Aggregate fields (computed over **all public apiaries**, not just those with GPS):
+- `avg_varroa_count` — mean `varroa_count` across public inspections that recorded it; `null` if none
+- `mood_distribution` — raw counts per mood value for public inspections that recorded mood
+- `avg_brood_frames` — mean `brood_frames` across public inspections that recorded it; `null` if none
+- `avg_inspection_interval_days` — mean days between consecutive inspections, averaged per hive then across all hives with ≥ 2 inspections; `null` if no hive qualifies
 
 ---
 
