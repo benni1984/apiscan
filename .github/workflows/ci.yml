@@ -284,6 +284,8 @@ jobs:
         with:
           node-version: '22'
 
+      - uses: astral-sh/setup-uv@v5
+
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
@@ -328,6 +330,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+
+      - uses: astral-sh/setup-uv@v5
 
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
