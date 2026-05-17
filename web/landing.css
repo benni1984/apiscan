@@ -48,6 +48,11 @@
   color: var(--green-mid);
   border: 1px solid #bbf7d0;
 }
+.roadmap-status.shipped {
+  background: #ede9fe;
+  color: #6d28d9;
+  border: 1px solid #c4b5fd;
+}
 
 .roadmap-card h3 {
   font-size: .98rem;

@@ -126,8 +126,8 @@ export default function HomePage() {
           <div className="roadmap-grid" data-aos="fade-up" data-aos-delay="60">
             <div className="roadmap-card"><span className="roadmap-status planned">{t('road.label.planned')}</span><h3>{t('road.remind.title')}</h3><p>{t('road.remind.desc')}</p></div>
             <div className="roadmap-card"><span className="roadmap-status planned">{t('road.label.planned')}</span><h3>{t('road.export.title')}</h3><p>{t('road.export.desc')}</p></div>
-            <div className="roadmap-card"><span className="roadmap-status progress">{t('road.label.progress')}</span><h3>{t('road.fields.title')}</h3><p>{t('road.fields.desc')}</p></div>
-            <div className="roadmap-card"><span className="roadmap-status planned">{t('road.label.planned')}</span><h3>{t('road.heat.title')}</h3><p>{t('road.heat.desc')}</p></div>
+            <div className="roadmap-card"><span className="roadmap-status shipped">{t('road.label.shipped')}</span><h3>{t('road.fields.title')}</h3><p>{t('road.fields.desc')}</p></div>
+            <div className="roadmap-card"><span className="roadmap-status progress">{t('road.label.progress')}</span><h3>{t('road.heat.title')}</h3><p>{t('road.heat.desc')}</p></div>
           </div>
         </div>
       </section>

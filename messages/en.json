@@ -74,9 +74,9 @@
     "sub": "We're honest about what's shipped and what's planned. Here's where we're heading.",
     "remind": { "title": "Inspection Reminders", "desc": "Push notifications when a hive is overdue for inspection." },
     "export": { "title": "Data Export (CSV / JSON)", "desc": "Download your complete inspection history for your own analysis or records." },
-    "fields": { "title": "Custom Fields in Forms", "desc": "Full UI for your custom inspection field definitions — backend is already done." },
+    "fields": { "title": "Custom Fields in Forms", "desc": "Define your own inspection fields and have them appear in every inspection form — now live in the web dashboard." },
     "heat": { "title": "Regional Heatmaps", "desc": "Varroa risk overlays and disease cluster maps updated weekly from community data." },
-    "label": { "planned": "Planned", "progress": "In Progress" }
+    "label": { "planned": "Planned", "progress": "In Progress", "shipped": "Shipped ✓" }
   },
   "support": {
     "tag": "Support the Mission",
