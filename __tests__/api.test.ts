@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { login, register, logout, getMe, updateMe, deleteMe, getApiaries, createApiary, updateApiary, deleteApiary, createHive, updateHive, deleteHive, getHive, clearTokens, createInspection, updateInspection, deleteInspection, getQrBatches, createQrBatch, getQrBatch, downloadQrBatchPdf, getPublicStats } from '@/lib/api';
+import { login, register, logout, getMe, updateMe, deleteMe, getApiaries, createApiary, updateApiary, deleteApiary, createHive, updateHive, deleteHive, getHive, clearTokens, createInspection, updateInspection, deleteInspection, getQrBatches, createQrBatch, getQrBatch, downloadQrBatchPdf, getPublicStats, exportHiveInspections, exportApiaryInspections } from '@/lib/api';
 
 const mockUser = { id: '1', email: 'a@b.com', name: 'Test', locale: 'en', created_at: '2024-01-01' };
 const mockTokens = { access_token: 'access-123', refresh_token: 'refresh-456', user: mockUser };
@@ -417,5 +417,39 @@ describe('getPublicStats', () => {
   it('throws on server error', async () => {
     vi.mocked(fetch).mockResolvedValueOnce(ok({}, 500));
     await expect(getPublicStats()).rejects.toThrow('Failed to fetch public stats');
+  });
+});
+
+describe('exportHiveInspections', () => {
+  it('fetches /hives/{id}/inspections/export with auth and returns blob', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(new Response('date,varroa\n', { status: 200 }));
+    const blob = await exportHiveInspections('hive-1', 'csv');
+    expect(blob.size).toBeGreaterThan(0);
+    const call = vi.mocked(fetch).mock.calls[0];
+    expect(call[0]).toContain('/hives/hive-1/inspections/export?format=csv');
+  });
+
+  it('throws on server error', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({}, 500));
+    await expect(exportHiveInspections('hive-1', 'json')).rejects.toThrow('Export failed');
+  });
+});
+
+describe('exportApiaryInspections', () => {
+  it('fetches /apiaries/{id}/inspections/export with auth and returns blob', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(new Response('[]', { status: 200 }));
+    const blob = await exportApiaryInspections('apiary-1', 'json');
+    expect(blob.size).toBeGreaterThan(0);
+    const call = vi.mocked(fetch).mock.calls[0];
+    expect(call[0]).toContain('/apiaries/apiary-1/inspections/export?format=json');
+  });
+
+  it('throws on server error', async () => {
+    localStorage.setItem('access_token', 'tok');
+    vi.mocked(fetch).mockResolvedValueOnce(ok({}, 403));
+    await expect(exportApiaryInspections('apiary-1', 'csv')).rejects.toThrow('Export failed');
   });
 });

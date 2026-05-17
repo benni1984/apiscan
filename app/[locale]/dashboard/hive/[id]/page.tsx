@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
 import dynamic from 'next/dynamic';
 import DashboardShell from '@/components/DashboardShell';
-import { getHive, getHiveStats, getInspections, updateHive, deleteHive, createInspection, updateInspection, deleteInspection, getUserFieldDefs, getApiaryFieldDefs, type Hive, type HiveStats, type Inspection, type InspectionInput, type FieldDefinition } from '@/lib/api';
+import { getHive, getHiveStats, getInspections, updateHive, deleteHive, createInspection, updateInspection, deleteInspection, getUserFieldDefs, getApiaryFieldDefs, exportHiveInspections, type Hive, type HiveStats, type Inspection, type InspectionInput, type FieldDefinition } from '@/lib/api';
 
 function moodPct(dist: { calm: number; nervous: number; aggressive: number }) {
   const total = dist.calm + dist.nervous + dist.aggressive;
@@ -202,6 +202,18 @@ export default function HivePage() {
     }
   }
 
+  async function handleExport(format: 'json' | 'csv') {
+    try {
+      const blob = await exportHiveInspections(id, format);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `hive_${id}_inspections.${format}`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {}
+  }
+
   async function loadMoreInspections() {
     setLoadingMore(true);
     try {
@@ -285,9 +297,17 @@ export default function HivePage() {
           {/* Inspection table */}
           <div className="dash-page-header" style={{ marginTop: 24 }}>
             <h2 className="dash-section-title" style={{ margin: 0 }}>{t('hive.inspections')}</h2>
-            {!showInspectionForm && (
-              <button className="dash-new-btn" onClick={openCreateInspection}>{t('hive.newInspectionBtn')}</button>
-            )}
+            <span className="dash-row-actions">
+              {inspections.length > 0 && (
+                <>
+                  <button className="dash-row-btn" onClick={() => handleExport('csv')}>{t('hive.exportCsv')}</button>
+                  <button className="dash-row-btn" onClick={() => handleExport('json')}>{t('hive.exportJson')}</button>
+                </>
+              )}
+              {!showInspectionForm && (
+                <button className="dash-new-btn" onClick={openCreateInspection}>{t('hive.newInspectionBtn')}</button>
+              )}
+            </span>
           </div>
 
           {inspectionMessage && (

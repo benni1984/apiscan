@@ -13,6 +13,7 @@ const mockUpdateInspection = vi.hoisted(() => vi.fn());
 const mockDeleteInspection = vi.hoisted(() => vi.fn());
 const mockGetUserFieldDefs = vi.hoisted(() => vi.fn());
 const mockGetApiaryFieldDefs = vi.hoisted(() => vi.fn());
+const mockExportHiveInspections = vi.hoisted(() => vi.fn());
 
 vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
@@ -48,6 +49,7 @@ vi.mock('@/lib/api', () => ({
   deleteInspection: mockDeleteInspection,
   getUserFieldDefs: mockGetUserFieldDefs,
   getApiaryFieldDefs: mockGetApiaryFieldDefs,
+  exportHiveInspections: mockExportHiveInspections,
 }));
 
 const paginated = <T,>(items: T[], total?: number, pages?: number) => ({
@@ -467,6 +469,41 @@ describe('HivePage', () => {
     await waitFor(() => expect(screen.getByText('9')).toBeInTheDocument());
     expect(screen.getByText('3')).toBeInTheDocument();
     expect(screen.queryByText('hive.inspectionLoadMore')).not.toBeInTheDocument();
+  });
+
+  // ── Export ─────────────────────────────────────────────────────────────────
+
+  it('shows Export CSV and Export JSON buttons when inspections exist', async () => {
+    setupMocks({
+      inspections: [{ id: 'i-1', date: '2024-06-01', varroa_count: 3, mood: 'calm', queen_seen: true, brood_frames: 5 }],
+    });
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('3'));
+    expect(screen.getByText('hive.exportCsv')).toBeInTheDocument();
+    expect(screen.getByText('hive.exportJson')).toBeInTheDocument();
+  });
+
+  it('does not show export buttons when there are no inspections', async () => {
+    setupMocks();
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('Hive Alpha'));
+    expect(screen.queryByText('hive.exportCsv')).not.toBeInTheDocument();
+    expect(screen.queryByText('hive.exportJson')).not.toBeInTheDocument();
+  });
+
+  it('calls exportHiveInspections with csv format when Export CSV is clicked', async () => {
+    setupMocks({
+      inspections: [{ id: 'i-1', date: '2024-06-01', varroa_count: 3, mood: 'calm', queen_seen: true, brood_frames: 5 }],
+    });
+    mockExportHiveInspections.mockResolvedValueOnce(new Blob(['date,varroa\n2024-06-01,3'], { type: 'text/csv' }));
+    const createObjectURL = vi.fn(() => 'blob:fake');
+    const revokeObjectURL = vi.fn();
+    vi.stubGlobal('URL', { createObjectURL, revokeObjectURL });
+
+    render(<HivePage />);
+    await waitFor(() => screen.getByText('hive.exportCsv'));
+    fireEvent.click(screen.getByText('hive.exportCsv'));
+    await waitFor(() => expect(mockExportHiveInspections).toHaveBeenCalledWith('hive-1', 'csv'));
   });
 
   it('hides Load More button when on last page', async () => {

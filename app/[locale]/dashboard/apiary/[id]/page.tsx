@@ -7,6 +7,7 @@ import DashboardShell from '@/components/DashboardShell';
 import {
   getApiary, getHives, getApiaryStats, updateApiary, deleteApiary, createHive,
   getApiaryFieldDefs, createApiaryFieldDef, updateApiaryFieldDef, deleteApiaryFieldDef,
+  exportApiaryInspections,
   type Apiary, type Hive, type ApiaryStats, type FieldDefinition, type FieldType, type FieldTarget,
 } from '@/lib/api';
 
@@ -185,6 +186,18 @@ export default function ApiaryPage() {
     }
   }
 
+  async function handleExport(format: 'json' | 'csv') {
+    try {
+      const blob = await exportApiaryInspections(id, format);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `apiary_${id}_inspections.${format}`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {}
+  }
+
   async function handleCreateHive(e: React.FormEvent) {
     e.preventDefault();
     setCreatingHive(true);
@@ -256,9 +269,17 @@ export default function ApiaryPage() {
           {/* ── Hive list + create ───────────────────────────────── */}
           <div className="dash-page-header" style={{ marginTop: 8 }}>
             <h2 className="dash-section-title" style={{ margin: 0 }}>{t('apiary.hives')}</h2>
-            {!showCreateHive && (
-              <button className="dash-new-btn" onClick={openCreateHive}>{t('apiary.newHive')}</button>
-            )}
+            <span className="dash-row-actions">
+              {stats && stats.inspections_total > 0 && (
+                <>
+                  <button className="dash-row-btn" onClick={() => handleExport('csv')}>{t('hive.exportCsv')}</button>
+                  <button className="dash-row-btn" onClick={() => handleExport('json')}>{t('hive.exportJson')}</button>
+                </>
+              )}
+              {!showCreateHive && (
+                <button className="dash-new-btn" onClick={openCreateHive}>{t('apiary.newHive')}</button>
+              )}
+            </span>
           </div>
 
           {hiveMessage && (

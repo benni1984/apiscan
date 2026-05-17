@@ -311,6 +311,18 @@ export async function deleteApiaryFieldDef(apiaryId: string, fid: string): Promi
   if (!res.ok) throw new Error('Delete failed');
 }
 
+export async function exportHiveInspections(hiveId: string, format: 'json' | 'csv'): Promise<Blob> {
+  const res = await apiFetch(`/hives/${hiveId}/inspections/export?format=${format}`);
+  if (!res.ok) throw new Error('Export failed');
+  return res.blob();
+}
+
+export async function exportApiaryInspections(apiaryId: string, format: 'json' | 'csv'): Promise<Blob> {
+  const res = await apiFetch(`/apiaries/${apiaryId}/inspections/export?format=${format}`);
+  if (!res.ok) throw new Error('Export failed');
+  return res.blob();
+}
+
 export async function getPublicStats(): Promise<PublicStats> {
   const res = await fetch(`${BASE}/public/stats`);
   if (!res.ok) throw new Error('Failed to fetch public stats');

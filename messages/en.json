@@ -331,6 +331,8 @@
       "inspectionLoadMore": "Load more",
       "inspectionLoadingMore": "Loading…",
       "inspectionShowing": "Showing {shown} of {total}",
+      "exportCsv": "Export CSV",
+      "exportJson": "Export JSON",
       "actions": "Actions",
       "moodCalm": "Calm",
       "moodNervous": "Nervous",

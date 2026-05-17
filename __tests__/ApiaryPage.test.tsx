@@ -10,6 +10,7 @@ const mockUpdateApiary = vi.hoisted(() => vi.fn());
 const mockDeleteApiary = vi.hoisted(() => vi.fn());
 const mockCreateHive = vi.hoisted(() => vi.fn());
 const mockGetApiaryFieldDefs = vi.hoisted(() => vi.fn());
+const mockExportApiaryInspections = vi.hoisted(() => vi.fn());
 
 vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
@@ -40,6 +41,7 @@ vi.mock('@/lib/api', () => ({
   createApiaryFieldDef: vi.fn(),
   updateApiaryFieldDef: vi.fn(),
   deleteApiaryFieldDef: vi.fn(),
+  exportApiaryInspections: mockExportApiaryInspections,
 }));
 
 const paginated = <T,>(items: T[]) => ({ items, total: items.length, page: 1, per_page: 100 });
@@ -275,5 +277,38 @@ describe('ApiaryPage', () => {
     render(<ApiaryPage />);
     await waitFor(() => screen.getByText('My Apiary'));
     expect(screen.getByText('apiary.noMoodData')).toBeInTheDocument();
+  });
+
+  // ── Export ─────────────────────────────────────────────────────────────────
+
+  it('shows Export CSV and JSON buttons when apiary has inspections', async () => {
+    setupMocks();
+    render(<ApiaryPage />);
+    await waitFor(() => screen.getByText('My Apiary'));
+    expect(screen.getByText('hive.exportCsv')).toBeInTheDocument();
+    expect(screen.getByText('hive.exportJson')).toBeInTheDocument();
+  });
+
+  it('hides export buttons when apiary has no inspections', async () => {
+    mockGetApiary.mockResolvedValueOnce({ id: 'apiary-1', name: 'My Apiary', hive_count: 0, is_public: false, created_at: '2025-01-01T00:00:00Z' });
+    mockGetHives.mockResolvedValueOnce(paginated([]));
+    mockGetApiaryStats.mockResolvedValueOnce({ hive_count: 0, inspections_total: 0, mood_distribution: { calm: 0, nervous: 0, aggressive: 0 } });
+    render(<ApiaryPage />);
+    await waitFor(() => screen.getByText('My Apiary'));
+    expect(screen.queryByText('hive.exportCsv')).not.toBeInTheDocument();
+    expect(screen.queryByText('hive.exportJson')).not.toBeInTheDocument();
+  });
+
+  it('calls exportApiaryInspections with json format when Export JSON is clicked', async () => {
+    setupMocks();
+    mockExportApiaryInspections.mockResolvedValueOnce(new Blob(['[]'], { type: 'application/json' }));
+    const createObjectURL = vi.fn(() => 'blob:fake');
+    const revokeObjectURL = vi.fn();
+    vi.stubGlobal('URL', { createObjectURL, revokeObjectURL });
+
+    render(<ApiaryPage />);
+    await waitFor(() => screen.getByText('hive.exportJson'));
+    fireEvent.click(screen.getByText('hive.exportJson'));
+    await waitFor(() => expect(mockExportApiaryInspections).toHaveBeenCalledWith('apiary-1', 'json'));
   });
 });
