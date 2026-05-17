@@ -197,8 +197,8 @@ export async function getApiaryStats(id: string): Promise<ApiaryStats> {
   return res.json();
 }
 
-export async function getInspections(hiveId: string): Promise<Paginated<Inspection>> {
-  const res = await apiFetch(`/hives/${hiveId}/inspections?per_page=50`);
+export async function getInspections(hiveId: string, page = 1, perPage = 10): Promise<Paginated<Inspection>> {
+  const res = await apiFetch(`/hives/${hiveId}/inspections?page=${page}&per_page=${perPage}`);
   if (!res.ok) throw new Error('Failed to get inspections');
   return res.json();
 }

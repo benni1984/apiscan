@@ -41,6 +41,11 @@ export default function HivePage() {
   const [deleting, setDeleting] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState<string | null>(null);
 
+  const [inspPage, setInspPage] = useState(1);
+  const [inspTotal, setInspTotal] = useState(0);
+  const [inspPages, setInspPages] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
+
   const [showInspectionForm, setShowInspectionForm] = useState(false);
   const [inspectionFormMode, setInspectionFormMode] = useState<'create' | 'edit'>('create');
   const [editingInspectionId, setEditingInspectionId] = useState<string | null>(null);
@@ -53,11 +58,13 @@ export default function HivePage() {
   const [deletingInspectionId, setDeletingInspectionId] = useState<string | null>(null);
 
   useEffect(() => {
-    Promise.all([getHive(id), getHiveStats(id), getInspections(id)])
+    Promise.all([getHive(id), getHiveStats(id), getInspections(id, 1)])
       .then(([h, s, i]) => {
         setHive(h);
         setStats(s);
         setInspections(i.items);
+        setInspTotal(i.total);
+        setInspPages(i.pages);
         setEditForm({
           name: h.name,
           hive_type: h.hive_type,
@@ -193,6 +200,18 @@ export default function HivePage() {
     } finally {
       setDeletingInspectionId(null);
     }
+  }
+
+  async function loadMoreInspections() {
+    setLoadingMore(true);
+    try {
+      const next = await getInspections(id, inspPage + 1);
+      setInspections(prev => [...prev, ...next.items]);
+      setInspPage(next.page);
+      setInspTotal(next.total);
+      setInspPages(next.pages);
+    } catch {}
+    setLoadingMore(false);
   }
 
   async function handleDelete() {
@@ -369,6 +388,10 @@ export default function HivePage() {
           {inspections.length === 0 && !showInspectionForm
             ? <p className="dash-empty">{t('hive.noInspections')}</p>
             : inspections.length > 0 && (
+              <>
+              <p className="dash-inspection-count">
+                {t('hive.inspectionShowing', { shown: inspections.length, total: inspTotal })}
+              </p>
               <div style={{ overflowX: 'auto' }}>
                 <table className="dash-inspection-table">
                   <thead>
@@ -418,6 +441,14 @@ export default function HivePage() {
                   </tbody>
                 </table>
               </div>
+              {inspPage < inspPages && (
+                <div style={{ textAlign: 'center', marginTop: 12 }}>
+                  <button className="dash-admin-btn" onClick={loadMoreInspections} disabled={loadingMore}>
+                    {loadingMore ? t('hive.inspectionLoadingMore') : t('hive.inspectionLoadMore')}
+                  </button>
+                </div>
+              )}
+              </>
             )}
 
           {/* ── Edit hive ────────────────────────────────────────────── */}
