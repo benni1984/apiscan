@@ -3,7 +3,6 @@
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import '@/web/landing.css';
 
 const LiveStats = dynamic(() => import('@/components/LiveStats'), { ssr: false });
 
