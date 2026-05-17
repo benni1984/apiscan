@@ -73,9 +73,9 @@
     "title": "On the Roadmap",
     "sub": "We're honest about what's shipped and what's planned. Here's where we're heading.",
     "remind": { "title": "Inspection Reminders", "desc": "Push notifications when a hive is overdue for inspection." },
-    "export": { "title": "Data Export (CSV / JSON)", "desc": "Download your complete inspection history for your own analysis or records." },
+    "export": { "title": "Data Export (CSV / JSON)", "desc": "Download your complete inspection history as CSV or JSON — now live in the web dashboard." },
     "fields": { "title": "Custom Fields in Forms", "desc": "Define your own inspection fields and have them appear in every inspection form — now live in the web dashboard." },
-    "heat": { "title": "Regional Heatmaps", "desc": "Varroa risk overlays and disease cluster maps updated weekly from community data." },
+    "heat": { "title": "Regional Heatmaps", "desc": "Varroa risk overlays on the public live map, colour-coded by mite pressure — now live." },
     "label": { "planned": "Planned", "progress": "In Progress", "shipped": "Shipped ✓" }
   },
   "support": {
