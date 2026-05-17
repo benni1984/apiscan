@@ -24,8 +24,9 @@ export default function MembersTeaser() {
 
   const calmPct = stats
     ? (() => {
-        const total = Object.values(stats.mood_distribution).reduce((a, b) => a + b, 0);
-        return total > 0 ? Math.round(((stats.mood_distribution['calm'] ?? 0) / total) * 100) : null;
+        const dist = stats.mood_distribution ?? {};
+        const total = Object.values(dist).reduce((a, b) => a + b, 0);
+        return total > 0 ? Math.round(((dist['calm'] ?? 0) / total) * 100) : null;
       })()
     : null;
 

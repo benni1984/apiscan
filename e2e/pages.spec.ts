@@ -4,6 +4,10 @@ const STATS_MOCK = {
   apiary_count: 42,
   hive_count: 250,
   inspection_count: 1500,
+  avg_varroa_count: 2.8,
+  mood_distribution: { calm: 100, nervous: 20, aggressive: 5 },
+  avg_brood_frames: 5.2,
+  avg_inspection_interval_days: 14.3,
   apiaries: [],
 };
 
