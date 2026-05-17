@@ -9,6 +9,7 @@ import Footer from '@/components/Footer';
 import AosInit from '@/components/AosInit';
 import 'aos/dist/aos.css';
 import '@/web/style.css';
+import '@/web/landing.css';
 
 export const metadata: Metadata = {
   title: 'ApiScan — Protecting Pollinators Together',
