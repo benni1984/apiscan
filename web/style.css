@@ -747,10 +747,10 @@ tr:last-child td { border-bottom: none; }
   background: #fee2e2; border: 1px solid #fca5a5; border-radius: 8px;
   color: #991b1b; padding: 10px 14px; font-size: .875rem; margin-bottom: 16px;
 }
-.dash-shell { display: flex; min-height: 100vh; }
+.dash-shell { display: flex; min-height: 100vh; padding-top: 64px; }
 .dash-sidebar {
   width: 240px;
-  min-height: 100vh;
+  min-height: calc(100vh - 64px);
   background: var(--green);
   color: #fff;
   padding: 24px 16px;
@@ -758,8 +758,8 @@ tr:last-child td { border-bottom: none; }
   flex-direction: column;
   flex-shrink: 0;
   position: sticky;
-  top: 0;
-  height: 100vh;
+  top: 64px;
+  height: calc(100vh - 64px);
   overflow-y: auto;
 }
 .dash-logo { font-size: 1.15rem; color: var(--amber); text-decoration: none; margin-bottom: 28px; display: block; }
