@@ -4,7 +4,11 @@ import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
 import DashboardShell from '@/components/DashboardShell';
-import { getApiary, getHives, getApiaryStats, updateApiary, deleteApiary, createHive, type Apiary, type Hive, type ApiaryStats } from '@/lib/api';
+import {
+  getApiary, getHives, getApiaryStats, updateApiary, deleteApiary, createHive,
+  getApiaryFieldDefs, createApiaryFieldDef, updateApiaryFieldDef, deleteApiaryFieldDef,
+  type Apiary, type Hive, type ApiaryStats, type FieldDefinition, type FieldType, type FieldTarget,
+} from '@/lib/api';
 
 function moodPct(dist: { calm: number; nervous: number; aggressive: number }) {
   const total = dist.calm + dist.nervous + dist.aggressive;
@@ -43,12 +47,25 @@ export default function ApiaryPage() {
   const [hiveForm, setHiveForm] = useState({ name: '', hive_type: 'langstroth' });
   const [hiveMessage, setHiveMessage] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
 
+  const [apiaryFields, setApiaryFields] = useState<FieldDefinition[]>([]);
+  const [showCreateField, setShowCreateField] = useState(false);
+  const [creatingField, setCreatingField] = useState(false);
+  const [createFieldForm, setCreateFieldForm] = useState({ name: '', target: 'inspection' as FieldTarget, type: 'text' as FieldType, options: '', required: false });
+  const [createFieldMsg, setCreateFieldMsg] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
+  const [editingFieldId, setEditingFieldId] = useState<string | null>(null);
+  const [savingField, setSavingField] = useState(false);
+  const [editFieldForm, setEditFieldForm] = useState({ name: '', options: '', required: false });
+  const [editFieldMsg, setEditFieldMsg] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
+  const [deleteFieldConfirmId, setDeleteFieldConfirmId] = useState<string | null>(null);
+  const [deletingField, setDeletingField] = useState(false);
+
   useEffect(() => {
-    Promise.all([getApiary(id), getHives(id), getApiaryStats(id)])
-      .then(([a, h, s]) => {
+    Promise.all([getApiary(id), getHives(id), getApiaryStats(id), getApiaryFieldDefs(id)])
+      .then(([a, h, s, fds]) => {
         setApiary(a);
         setHives(h.items);
         setStats(s);
+        setApiaryFields(fds);
         setEditForm({ name: a.name, description: a.description ?? '', address: a.address ?? '', isPublic: a.is_public });
       })
       .catch(() => {})
@@ -104,6 +121,68 @@ export default function ApiaryPage() {
     setHiveForm({ name: '', hive_type: 'langstroth' });
     setHiveMessage(null);
     setShowCreateHive(true);
+  }
+
+  const fieldTargetLabel: Record<FieldTarget, string> = { hive: t('fieldDefs.targetHive'), inspection: t('fieldDefs.targetInspection') };
+  const fieldTypeLabel: Record<FieldType, string> = { text: t('fieldDefs.typeText'), number: t('fieldDefs.typeNumber'), boolean: t('fieldDefs.typeBoolean'), date: t('fieldDefs.typeDate'), select: t('fieldDefs.typeSelect') };
+
+  async function handleCreateField(e: React.FormEvent) {
+    e.preventDefault();
+    setCreatingField(true);
+    setCreateFieldMsg(null);
+    try {
+      const options = createFieldForm.type === 'select'
+        ? createFieldForm.options.split('\n').map(s => s.trim()).filter(Boolean)
+        : undefined;
+      const fd = await createApiaryFieldDef(id, {
+        name: createFieldForm.name, target: createFieldForm.target, type: createFieldForm.type,
+        ...(options ? { options } : {}), required: createFieldForm.required,
+      });
+      setApiaryFields(prev => [...prev, fd]);
+      setShowCreateField(false);
+      setCreateFieldForm({ name: '', target: 'inspection', type: 'text', options: '', required: false });
+      setCreateFieldMsg({ type: 'ok', text: t('fieldDefs.createSuccess') });
+    } catch (err) {
+      setCreateFieldMsg({ type: 'err', text: err instanceof Error ? err.message : t('fieldDefs.errorGeneric') });
+    } finally {
+      setCreatingField(false);
+    }
+  }
+
+  async function handleSaveField(e: React.FormEvent) {
+    e.preventDefault();
+    if (!editingFieldId) return;
+    setSavingField(true);
+    setEditFieldMsg(null);
+    const fd = apiaryFields.find(f => f.id === editingFieldId);
+    try {
+      const options = fd?.type === 'select'
+        ? editFieldForm.options.split('\n').map(s => s.trim()).filter(Boolean)
+        : undefined;
+      const updated = await updateApiaryFieldDef(id, editingFieldId, {
+        name: editFieldForm.name, ...(options !== undefined ? { options } : {}), required: editFieldForm.required,
+      });
+      setApiaryFields(prev => prev.map(f => f.id === editingFieldId ? updated : f));
+      setEditingFieldId(null);
+      setEditFieldMsg({ type: 'ok', text: t('fieldDefs.saveSuccess') });
+    } catch (err) {
+      setEditFieldMsg({ type: 'err', text: err instanceof Error ? err.message : t('fieldDefs.errorGeneric') });
+    } finally {
+      setSavingField(false);
+    }
+  }
+
+  async function handleDeleteField(fid: string) {
+    setDeletingField(true);
+    try {
+      await deleteApiaryFieldDef(id, fid);
+      setApiaryFields(prev => prev.filter(f => f.id !== fid));
+      setDeleteFieldConfirmId(null);
+    } catch {
+      setDeleteFieldConfirmId(null);
+    } finally {
+      setDeletingField(false);
+    }
   }
 
   async function handleCreateHive(e: React.FormEvent) {
@@ -335,6 +414,149 @@ export default function ApiaryPage() {
                   >
                     {t('apiaries.cancel')}
                   </button>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* ── Apiary-scoped custom fields ──────────────────────────── */}
+          <div style={{ marginTop: 32 }}>
+            <div className="dash-page-header">
+              <h2 className="dash-section-title" style={{ margin: 0 }}>{t('fieldDefs.apiaryTitle')}</h2>
+              {!showCreateField && (
+                <button className="dash-new-btn" onClick={() => { setShowCreateField(true); setCreateFieldMsg(null); }}>
+                  {t('fieldDefs.new')}
+                </button>
+              )}
+            </div>
+            <p style={{ fontSize: '.85rem', color: 'var(--muted)', margin: '4px 0 16px' }}>{t('fieldDefs.apiarySubtitle')}</p>
+
+            {createFieldMsg && (
+              <div className={createFieldMsg.type === 'ok' ? 'dash-success-banner' : 'dash-error-banner'}>
+                {createFieldMsg.text}
+              </div>
+            )}
+
+            {showCreateField && (
+              <div className="dash-inline-form">
+                <h2>{t('fieldDefs.createTitle')}</h2>
+                <form onSubmit={handleCreateField}>
+                  <div className="dash-form-group">
+                    <label>{t('fieldDefs.name')}</label>
+                    <input type="text" value={createFieldForm.name} onChange={e => setCreateFieldForm(f => ({ ...f, name: e.target.value }))} required autoFocus />
+                  </div>
+                  <div className="dash-form-row">
+                    <div className="dash-form-group">
+                      <label>{t('fieldDefs.target')}</label>
+                      <select className="dash-profile-select" value={createFieldForm.target} onChange={e => setCreateFieldForm(f => ({ ...f, target: e.target.value as FieldTarget }))}>
+                        <option value="inspection">{t('fieldDefs.targetInspection')}</option>
+                        <option value="hive">{t('fieldDefs.targetHive')}</option>
+                      </select>
+                    </div>
+                    <div className="dash-form-group">
+                      <label>{t('fieldDefs.type')}</label>
+                      <select className="dash-profile-select" value={createFieldForm.type} onChange={e => setCreateFieldForm(f => ({ ...f, type: e.target.value as FieldType }))}>
+                        <option value="text">{t('fieldDefs.typeText')}</option>
+                        <option value="number">{t('fieldDefs.typeNumber')}</option>
+                        <option value="boolean">{t('fieldDefs.typeBoolean')}</option>
+                        <option value="date">{t('fieldDefs.typeDate')}</option>
+                        <option value="select">{t('fieldDefs.typeSelect')}</option>
+                      </select>
+                    </div>
+                  </div>
+                  {createFieldForm.type === 'select' && (
+                    <div className="dash-form-group">
+                      <label>{t('fieldDefs.options')}</label>
+                      <textarea value={createFieldForm.options} onChange={e => setCreateFieldForm(f => ({ ...f, options: e.target.value }))} placeholder={'Option 1\nOption 2'} />
+                    </div>
+                  )}
+                  <label className="dash-inline-checkbox">
+                    <input type="checkbox" checked={createFieldForm.required} onChange={e => setCreateFieldForm(f => ({ ...f, required: e.target.checked }))} />
+                    {t('fieldDefs.required')}
+                  </label>
+                  <div className="dash-form-actions">
+                    <button className="dash-submit-btn" type="submit" disabled={creatingField}>{creatingField ? '…' : t('fieldDefs.createBtn')}</button>
+                    <button className="dash-cancel-btn" type="button" onClick={() => setShowCreateField(false)}>{t('fieldDefs.cancel')}</button>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {apiaryFields.length === 0 && !showCreateField && (
+              <p className="dash-empty">{t('fieldDefs.empty')}</p>
+            )}
+            {apiaryFields.length > 0 && (
+              <>
+                {editFieldMsg && (
+                  <div className={editFieldMsg.type === 'ok' ? 'dash-success-banner' : 'dash-error-banner'}>{editFieldMsg.text}</div>
+                )}
+                <div className="dash-profile-card">
+                  <table className="dash-inspection-table">
+                    <thead>
+                      <tr>
+                        <th>{t('fieldDefs.colName')}</th>
+                        <th>{t('fieldDefs.colTarget')}</th>
+                        <th>{t('fieldDefs.colType')}</th>
+                        <th>{t('fieldDefs.colRequired')}</th>
+                        <th>{t('fieldDefs.colActions')}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {apiaryFields.map(fd =>
+                        deleteFieldConfirmId === fd.id ? (
+                          <tr key={fd.id} className="dash-confirm-row">
+                            <td colSpan={5}>
+                              <div className="dash-confirm-inline">
+                                <span className="dash-confirm-text">{t('fieldDefs.deleteConfirmText')}</span>
+                                <span className="dash-confirm-actions">
+                                  <button className="dash-row-btn dash-row-btn-danger" onClick={() => handleDeleteField(fd.id)} disabled={deletingField}>{deletingField ? '…' : t('fieldDefs.deleteConfirmBtn')}</button>
+                                  <button className="dash-row-btn" onClick={() => setDeleteFieldConfirmId(null)} disabled={deletingField}>{t('fieldDefs.cancel')}</button>
+                                </span>
+                              </div>
+                            </td>
+                          </tr>
+                        ) : editingFieldId === fd.id ? (
+                          <tr key={fd.id} className="dash-edit-row">
+                            <td colSpan={5}>
+                              <form onSubmit={handleSaveField} className="dash-row-edit-form">
+                                <div className="dash-form-group">
+                                  <label>{t('fieldDefs.name')}</label>
+                                  <input type="text" value={editFieldForm.name} onChange={e => setEditFieldForm(f => ({ ...f, name: e.target.value }))} required autoFocus />
+                                </div>
+                                {fd.type === 'select' && (
+                                  <div className="dash-form-group">
+                                    <label>{t('fieldDefs.options')}</label>
+                                    <textarea value={editFieldForm.options} onChange={e => setEditFieldForm(f => ({ ...f, options: e.target.value }))} style={{ minHeight: 56 }} />
+                                  </div>
+                                )}
+                                <label className="dash-inline-checkbox">
+                                  <input type="checkbox" checked={editFieldForm.required} onChange={e => setEditFieldForm(f => ({ ...f, required: e.target.checked }))} />
+                                  {t('fieldDefs.required')}
+                                </label>
+                                <div className="dash-form-actions">
+                                  <button className="dash-submit-btn" type="submit" disabled={savingField}>{savingField ? '…' : t('fieldDefs.saveBtn')}</button>
+                                  <button className="dash-cancel-btn" type="button" onClick={() => setEditingFieldId(null)}>{t('fieldDefs.cancel')}</button>
+                                </div>
+                              </form>
+                            </td>
+                          </tr>
+                        ) : (
+                          <tr key={fd.id}>
+                            <td>{fd.name}</td>
+                            <td><span className={`dash-type-badge dash-target-${fd.target}`}>{fieldTargetLabel[fd.target]}</span></td>
+                            <td><span className={`dash-type-badge dash-ftype-${fd.type}`}>{fieldTypeLabel[fd.type]}</span></td>
+                            <td>{fd.required ? '✓' : '–'}</td>
+                            <td>
+                              <span className="dash-row-actions">
+                                <button className="dash-row-btn" onClick={() => { setEditingFieldId(fd.id); setEditFieldForm({ name: fd.name, options: fd.options.join('\n'), required: fd.required }); setEditFieldMsg(null); }}>{t('hive.inspectionEditBtn')}</button>
+                                <button className="dash-row-btn dash-row-btn-danger" onClick={() => setDeleteFieldConfirmId(fd.id)}>{t('fieldDefs.deleteBtn')}</button>
+                              </span>
+                            </td>
+                          </tr>
+                        )
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               </>
             )}

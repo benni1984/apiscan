@@ -9,6 +9,7 @@ const mockGetApiaryStats = vi.hoisted(() => vi.fn());
 const mockUpdateApiary = vi.hoisted(() => vi.fn());
 const mockDeleteApiary = vi.hoisted(() => vi.fn());
 const mockCreateHive = vi.hoisted(() => vi.fn());
+const mockGetApiaryFieldDefs = vi.hoisted(() => vi.fn());
 
 vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
@@ -35,6 +36,10 @@ vi.mock('@/lib/api', () => ({
   updateApiary: mockUpdateApiary,
   deleteApiary: mockDeleteApiary,
   createHive: mockCreateHive,
+  getApiaryFieldDefs: mockGetApiaryFieldDefs,
+  createApiaryFieldDef: vi.fn(),
+  updateApiaryFieldDef: vi.fn(),
+  deleteApiaryFieldDef: vi.fn(),
 }));
 
 const paginated = <T,>(items: T[]) => ({ items, total: items.length, page: 1, per_page: 100 });
@@ -47,6 +52,8 @@ describe('ApiaryPage', () => {
     mockUpdateApiary.mockClear();
     mockDeleteApiary.mockClear();
     mockCreateHive.mockClear();
+    mockGetApiaryFieldDefs.mockClear();
+    mockGetApiaryFieldDefs.mockResolvedValue([]);
   });
 
   function setupMocks({

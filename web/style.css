@@ -940,3 +940,20 @@ tr:last-child td { border-bottom: none; }
 .dash-mood-aggressive { background: #dc2626; }
 .dash-mood-legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: .8rem; color: var(--muted); }
 .dash-mood-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+.dash-form-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.dash-form-row .dash-form-group { flex: 1 1 160px; }
+.dash-type-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: .75rem; font-weight: 600; }
+.dash-target-hive { background: #dbeafe; color: #1d4ed8; }
+.dash-target-inspection { background: #ede9fe; color: #6d28d9; }
+.dash-ftype-text { background: #f1f5f9; color: #475569; }
+.dash-ftype-number { background: #dcfce7; color: #15803d; }
+.dash-ftype-boolean { background: #fff7ed; color: #c2410c; }
+.dash-ftype-date { background: #fce7f3; color: #be185d; }
+.dash-ftype-select { background: #e0f2fe; color: #0369a1; }
+.dash-confirm-row td { background: #fef2f2; }
+.dash-confirm-inline { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 4px 0; }
+.dash-confirm-text { font-size: .85rem; color: #dc2626; }
+.dash-confirm-actions { display: flex; gap: 6px; }
+.dash-edit-row td { background: var(--surface); }
+.dash-row-edit-form { padding: 4px 0; }
+.dash-row-actions { display: flex; gap: 6px; }

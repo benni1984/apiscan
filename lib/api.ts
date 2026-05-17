@@ -253,6 +253,64 @@ export async function downloadQrBatchPdf(id: string): Promise<Blob> {
   return res.blob();
 }
 
+export async function getUserFieldDefs(): Promise<FieldDefinition[]> {
+  const res = await apiFetch('/field-definitions');
+  if (!res.ok) throw new Error('Failed to get field definitions');
+  return res.json();
+}
+
+export async function createUserFieldDef(data: FieldDefinitionCreate): Promise<FieldDefinition> {
+  const res = await apiFetch('/field-definitions', { method: 'POST', body: JSON.stringify(data) });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail ?? 'Create failed');
+  }
+  return res.json();
+}
+
+export async function updateUserFieldDef(id: string, data: FieldDefinitionUpdate): Promise<FieldDefinition> {
+  const res = await apiFetch(`/field-definitions/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail ?? 'Update failed');
+  }
+  return res.json();
+}
+
+export async function deleteUserFieldDef(id: string): Promise<void> {
+  const res = await apiFetch(`/field-definitions/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Delete failed');
+}
+
+export async function getApiaryFieldDefs(apiaryId: string): Promise<FieldDefinition[]> {
+  const res = await apiFetch(`/apiaries/${apiaryId}/field-definitions`);
+  if (!res.ok) throw new Error('Failed to get field definitions');
+  return res.json();
+}
+
+export async function createApiaryFieldDef(apiaryId: string, data: FieldDefinitionCreate): Promise<FieldDefinition> {
+  const res = await apiFetch(`/apiaries/${apiaryId}/field-definitions`, { method: 'POST', body: JSON.stringify(data) });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail ?? 'Create failed');
+  }
+  return res.json();
+}
+
+export async function updateApiaryFieldDef(apiaryId: string, fid: string, data: FieldDefinitionUpdate): Promise<FieldDefinition> {
+  const res = await apiFetch(`/apiaries/${apiaryId}/field-definitions/${fid}`, { method: 'PUT', body: JSON.stringify(data) });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail ?? 'Update failed');
+  }
+  return res.json();
+}
+
+export async function deleteApiaryFieldDef(apiaryId: string, fid: string): Promise<void> {
+  const res = await apiFetch(`/apiaries/${apiaryId}/field-definitions/${fid}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Delete failed');
+}
+
 // ── Types ──────────────────────────────────────────────────────────────────────
 export interface User { id: string; email: string; name: string; locale: string; created_at: string; is_admin: boolean; is_supporter: boolean; }
 export interface Apiary { id: string; name: string; hive_count: number; is_public: boolean; description?: string; address?: string; latitude?: number; longitude?: number; created_at: string; }
@@ -260,6 +318,7 @@ export interface Hive { id: string; name: string; hive_type: string; apiary_id: 
 export interface Inspection {
   id: string; date: string; varroa_count?: number; mood?: string;
   queen_seen?: boolean; brood_frames?: number; honey_frames?: number;
+  custom_fields?: Record<string, unknown>;
 }
 export interface InspectionInput {
   date: string;
@@ -267,6 +326,7 @@ export interface InspectionInput {
   mood?: string | null;
   queen_seen?: boolean | null;
   brood_frames?: number | null;
+  custom_fields?: Record<string, unknown>;
 }
 export interface QrToken { token: string; linked_hive_id: string | null; }
 export interface QrBatchSummary { id: string; count: number; created_at: string; linked_count: number; }
@@ -283,6 +343,26 @@ export interface ApiaryStats {
   mood_distribution: { calm: number; nervous: number; aggressive: number };
 }
 export interface Paginated<T> { items: T[]; total: number; page: number; per_page: number; pages: number; }
+
+// ── Field Definition types ─────────────────────────────────────────────────────
+export type FieldType = 'text' | 'number' | 'boolean' | 'date' | 'select';
+export type FieldTarget = 'hive' | 'inspection';
+export type FieldScope = 'user' | 'apiary';
+export interface FieldDefinition {
+  id: string; scope: FieldScope; apiary_id: string | null;
+  target: FieldTarget; name: string; type: FieldType;
+  options: string[]; required: boolean;
+  default_value: string | number | boolean | null; sort_order: number;
+}
+export interface FieldDefinitionCreate {
+  target: FieldTarget; name: string; type: FieldType;
+  options?: string[]; required?: boolean;
+  default_value?: string | number | boolean | null; sort_order?: number;
+}
+export interface FieldDefinitionUpdate {
+  name?: string; options?: string[]; required?: boolean;
+  default_value?: string | number | boolean | null; sort_order?: number;
+}
 
 // ── Admin types ────────────────────────────────────────────────────────────────
 export interface AdminUser { id: string; email: string; name: string; locale: string; is_admin: boolean; is_supporter: boolean; created_at: string; }
