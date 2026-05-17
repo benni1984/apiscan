@@ -2,19 +2,32 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { getMe, type User } from '@/lib/api';
+import { getMe, getPublicStats, type User, type PublicStats } from '@/lib/api';
 
 export default function MembersTeaser() {
   const t = useTranslations('members');
-  const tp = useTranslations('price');
   const [user, setUser] = useState<User | null>(null);
+  const [stats, setStats] = useState<PublicStats | null>(null);
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    getMe().then(setUser).catch(() => {}).finally(() => setChecked(true));
+    Promise.all([
+      getMe().catch(() => null),
+      getPublicStats().catch(() => null),
+    ]).then(([u, s]) => {
+      setUser(u);
+      setStats(s);
+    }).finally(() => setChecked(true));
   }, []);
 
   const isSupporter = user?.is_supporter || user?.is_admin;
+
+  const calmPct = stats
+    ? (() => {
+        const total = Object.values(stats.mood_distribution).reduce((a, b) => a + b, 0);
+        return total > 0 ? Math.round(((stats.mood_distribution['calm'] ?? 0) / total) * 100) : null;
+      })()
+    : null;
 
   if (!checked) return null;
 
@@ -30,10 +43,22 @@ export default function MembersTeaser() {
 
       <div className="members-preview" style={isSupporter ? {} : { filter: 'blur(6px)', pointerEvents: 'none', userSelect: 'none' }}>
         <div className="members-preview-grid">
-          <div className="members-preview-stat"><div className="num">3.2</div><div className="label">Avg Varroa (global)</div></div>
-          <div className="members-preview-stat"><div className="num">78%</div><div className="label">Hives: Good Mood</div></div>
-          <div className="members-preview-stat"><div className="num">6.4</div><div className="label">Avg Brood Frames</div></div>
-          <div className="members-preview-stat"><div className="num">12d</div><div className="label">Avg Inspection Interval</div></div>
+          <div className="members-preview-stat">
+            <div className="num">{stats?.avg_varroa_count != null ? stats.avg_varroa_count.toFixed(1) : '—'}</div>
+            <div className="label">{t('stat.avgVarroa')}</div>
+          </div>
+          <div className="members-preview-stat">
+            <div className="num">{calmPct != null ? `${calmPct}%` : '—'}</div>
+            <div className="label">{t('stat.goodMood')}</div>
+          </div>
+          <div className="members-preview-stat">
+            <div className="num">{stats?.avg_brood_frames != null ? stats.avg_brood_frames.toFixed(1) : '—'}</div>
+            <div className="label">{t('stat.avgBrood')}</div>
+          </div>
+          <div className="members-preview-stat">
+            <div className="num">{stats?.avg_inspection_interval_days != null ? `${stats.avg_inspection_interval_days}d` : '—'}</div>
+            <div className="label">{t('stat.interval')}</div>
+          </div>
         </div>
         <div style={{ height: '120px', background: 'linear-gradient(90deg,#dcfce7,#fef3c7,#dcfce7)', borderRadius: '12px', opacity: .5, marginTop: '16px' }} />
       </div>
@@ -41,7 +66,6 @@ export default function MembersTeaser() {
       {isSupporter ? (
         <div className="members-unlocked">
           <span className="members-unlocked-badge">✓ {t('gate.unlockedBadge')}</span>
-          <p>{t('gate.unlockedNote')}</p>
         </div>
       ) : (
         <div className="members-gate">

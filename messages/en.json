@@ -415,6 +415,7 @@
     "b4": { "title": "Regional Heatmaps", "desc": "Disease cluster maps and varroa risk overlays — planned for the next major release." },
     "b5": { "title": "Research Data Portal", "desc": "Access the anonymized dataset used in our university research partnerships." },
     "b6": { "title": "Early Access + Credits", "desc": "Try new features first and get your name listed in the app. The hive remembers its builders." },
+    "stat": { "avgVarroa": "Avg Varroa (global)", "goodMood": "Hives: Good Mood", "avgBrood": "Avg Brood Frames", "interval": "Avg Inspection Interval" },
     "coming": {
       "tag": "Coming Soon",
       "title": "Web Dashboard for Members",
