@@ -315,10 +315,43 @@ jobs:
               body: `✅ Preview deployed: ${{ steps.deploy.outputs.url }}`
             })
 
-  # ── Deploy production (push to main only, after all quality gates pass) ──────
+  # ── E2E tests against live staging (push to main only) ───────────────────────
+  e2e-staging:
+    name: E2E tests against staging
+    needs: [deploy-staging]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: rm -f package-lock.json && npm install
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Run staging e2e tests
+        run: npm run test:e2e:staging
+        env:
+          STAGING_DEMO_EMAIL: ${{ secrets.STAGING_DEMO_EMAIL }}
+          STAGING_DEMO_PASSWORD: ${{ secrets.STAGING_DEMO_PASSWORD }}
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: staging-e2e-report
+          path: playwright-report/
+          retention-days: 7
+
+  # ── Deploy production (push to main only, after staging E2E gate passes) ──────
   deploy-production:
     name: Deploy production to Vercel
-    needs: [backend, android-unit, android-ui, ios, web]
+    needs: [e2e-staging]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:

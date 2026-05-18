@@ -19,6 +19,9 @@ node_modules/
 .next/
 .vercel/
 
+# Playwright auth state (contains session tokens)
+.auth/
+
 # iOS
 ios/.build/
 ios/DerivedData/
