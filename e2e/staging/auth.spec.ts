@@ -29,6 +29,7 @@ test('register new account, verify dashboard access, then delete account', async
     await page.locator('input[type="password"]').fill(password);
     await page.locator('button.dash-submit-btn').click();
     await expect(page).toHaveURL(/\/dashboard$/, { timeout: 20_000 });
+    await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 15_000 });
     await expect(page.locator('.dash-user-email')).toContainText(email);
   });
 

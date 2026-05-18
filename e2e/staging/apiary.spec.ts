@@ -19,7 +19,8 @@ test('create, rename, and delete an apiary', async ({ page }) => {
 
   await test.step('navigate into the new apiary', async () => {
     await page.locator('.dash-apiary-card', { hasText: name }).click();
-    await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 15_000 });
+    await expect(page).toHaveURL(/\/dashboard\/apiary\//, { timeout: 15_000 });
+    await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 10_000 });
     await expect(page.locator('h1.dash-page-title')).toContainText(name);
   });
 

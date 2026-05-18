@@ -16,7 +16,8 @@ test('create a hive, view its detail page, then clean up', async ({ page }) => {
 
   await test.step('navigate into the apiary', async () => {
     await page.locator('.dash-apiary-card', { hasText: apiaryName }).click();
-    await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 15_000 });
+    await expect(page).toHaveURL(/\/dashboard\/apiary\//, { timeout: 15_000 });
+    await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 10_000 });
     await expect(page.locator('h1.dash-page-title')).toContainText(apiaryName);
   });
 
@@ -30,7 +31,8 @@ test('create a hive, view its detail page, then clean up', async ({ page }) => {
 
   await test.step('navigate into the hive and verify detail page', async () => {
     await page.locator('.dash-hive-card', { hasText: hiveName }).click();
-    await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 15_000 });
+    await expect(page).toHaveURL(/\/dashboard\/hive\//, { timeout: 15_000 });
+    await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 10_000 });
     await expect(page.locator('h1.dash-page-title')).toContainText(hiveName);
     await expect(page.locator('p.dash-hive-type-label')).toContainText('langstroth');
     await expect(page.locator('h2.dash-section-title', { hasText: 'Varroa Trend' })).toBeVisible();
