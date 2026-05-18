@@ -1,42 +1,659 @@
 {
-  "nav": { "map": "Mapa en vivo", "news": "Noticias", "contribute": "Contribuir", "members": "Miembros", "dashboard": "Mis colmenas", "download": "Descargar gratis", "back": { "map": "← Mapa en vivo" } },
-  "footer": { "tagline": "Apicultura de código abierto para un planeta más saludable.", "explore": "Explorar", "community": "Comunidad", "support": "Apoyarnos", "legal": "Legal", "privacy": "Política de privacidad", "copyright": "© 2025 ApiScan. Publicado bajo la licencia MIT.", "made": "Hecho con 🐝 para apicultores de todo el mundo." },
-  "hero": { "badge": "Código abierto · Comunidad · Gratuito", "title1": "Salvando abejas,", "title2": "un escaneo a la vez", "subtitle": "ApiScan convierte a cada apicultor en un científico ciudadano. Registra inspecciones, controla la salud de las colmenas y contribuye a datos globales que ayudan a los investigadores a entender y proteger las poblaciones de abejas.", "apple": { "pre": "Descargar en el", "store": "App Store" }, "google": { "pre": "Disponible en", "play": "Google Play" }, "scroll": "Desplázate para saber más" },
-  "stats": { "title": "Nuestra comunidad, ahora mismo", "sub": "Cifras en tiempo real de nuestra red global de apicultores", "apiaries": "Colmenares registrados", "hives": "Colmenas monitorizadas", "inspections": "Inspecciones registradas", "countries": "Países alcanzados" },
-  "feat": { "tag": "La aplicación", "title": "Todo lo que necesita un apicultor", "sub": "Desde el aficionado hasta la operación comercial, ApiScan crece contigo.", "qr": { "title": "Escanear QR y empezar", "desc": "Pega un código QR en cada colmena. Escanéalo al llegar y comienza la inspección de inmediato." }, "track": { "title": "Seguimiento inteligente", "desc": "Controla cuadros de cría, conteos de varroa, estado de la reina, reservas de miel y el comportamiento." }, "global": { "title": "Base de datos global", "desc": "Tus datos anónimos contribuyen a un panorama mundial de la salud de las colmenas." }, "trends": { "title": "Análisis de tendencias", "desc": "Visualiza los recuentos de varroa a lo largo de las estaciones y sigue el desarrollo de tus colonias." }, "batch": { "title": "Generación de lotes QR", "desc": "Genera hasta 50 códigos QR y descarga un PDF listo para imprimir." }, "privacy": { "title": "Tus datos, tu control", "desc": "Las ubicaciones precisas y las notas personales permanecen privadas. Solo se comparten datos agregados anónimos." } },
-  "mission": { "tag": "Por qué importa", "title": "Un tercio de lo que comemos depende de las abejas", "p1": "Las abejas melíferas y los polinizadores silvestres fertilizan aproximadamente el 35 % del suministro mundial de alimentos. Pero las poblaciones han ido disminuyendo durante décadas.", "li1": "El síndrome de colapso de colonias afecta millones de colmenas cada año", "li2": "El ácaro varroa es la principal amenaza para las colonias de abejas gestionadas", "li3": "Los pesticidas, la pérdida de hábitat y el cambio climático agravan la presión", "li4": "Los datos en tiempo real de los apicultores son esenciales para los sistemas de alerta temprana", "callout": "Cuando registras una inspección en ApiScan, no solo gestionas tu colmena — añades un punto de datos a una red global de alerta temprana para la salud de las abejas." },
-  "hex1": { "label": "de los cultivos con flores dependen de la polinización animal" },
-  "hex2": { "label": "de las especies de insectos polinizadores están en riesgo de extinción" },
-  "hex3": { "label": "valor anual mundial de los servicios de polinización" },
-  "comm": { "tag": "Inteligencia colectiva", "title": "Por qué los datos comunitarios lo cambian todo", "sub": "Un apicultor solo ve un colmenar. Juntos, vemos el mundo — y podemos hacer algo al respecto.", "disease": { "title": "Cartografía de enfermedades", "desc": "Identificar clusters geográficos de infestación de varroa o brotes de enfermedades antes de que se propaguen." }, "seasonal": { "title": "Tendencias estacionales", "desc": "Cruzar la salud de las colmenas con datos meteorológicos y calendarios de floración para identificar las causas de las pérdidas de colonias." }, "research": { "title": "Alianza de investigación", "desc": "Nuestro conjunto de datos anónimos se comparte con investigadores universitarios y ONG de conservación." }, "policy": { "title": "Cambio de política", "desc": "Datos sólidos de miles de colmenares dan a los apicultores una voz poderosa basada en evidencias." } },
-  "road": { "tag": "Próximos pasos", "title": "En la hoja de ruta", "sub": "Somos honestos sobre lo que está listo y lo que está planificado.", "remind": { "title": "Recordatorios de inspección", "desc": "Notificaciones push cuando una colmena lleva demasiado tiempo sin inspección." }, "export": { "title": "Exportación de datos (CSV / JSON)", "desc": "Descarga tu historial completo de inspecciones en CSV o JSON — ya disponible en el panel web." }, "fields": { "title": "Campos personalizados en formularios", "desc": "Define tus propios campos de inspección y úsalos directamente en el panel web — ya disponible." }, "heat": { "title": "Mapas de calor regionales", "desc": "Capas de riesgo varroa en el mapa público, codificadas por presión de ácaros — ya disponible." }, "label": { "planned": "Planificado", "progress": "En progreso", "shipped": "Publicado ✓" } },
-  "support": { "tag": "Apoya la misión", "title": "Mantengamos las colmenas zumbando", "sub": "ApiScan es gratuito. Una pequeña contribución mantiene los servidores en funcionamiento, financia nuevas funciones y apoya nuestras alianzas de investigación." },
-  "price": { "free": { "tier": "Siempre gratis", "f1": "Colmenas e inspecciones ilimitadas", "f2": "Escaneo QR y generación de lotes", "f3": "Estadísticas básicas por colmena", "f4": "Contribución a datos comunitarios", "f5": "Mapa público en vivo", "f6": "Gráficos y tendencias avanzados", "f7": "Exportación de datos", "f8": "Área de miembros" }, "month": "/ mes", "sup": { "tier": "Supporter", "badge": "Más popular", "f1": "Todo lo de la versión gratuita", "f2": "Gráficos de tendencias avanzados (en la app)", "f3": "Área de miembros y estadísticas globales", "f4": "Soporte prioritario", "f5": "Tu nombre en los créditos de la app", "f6": "Acceso anticipado a nuevas funciones", "f7": "Exportación de datos (CSV / JSON)", "f8": "Mapas de calor regionales" }, "coming": "Próximamente", "donate": { "tier": "Donación única", "price": "Tu elección", "note": "Cada contribución, sin importar el tamaño, ayuda a mantener ApiScan independiente, sin anuncios y gratuito para todos los apicultores." } },
-  "btn": { "free": "Descargar gratis", "supporter": "Hazte Supporter", "kofi": "Apoyar en Ko-fi", "paypal": "Donar vía PayPal" },
-  "dl": { "tag": "Empieza hoy", "title": "Descarga ApiScan — es gratis", "sub": "Disponible en iOS y Android. Escanea tu primera colmena en menos de dos minutos." },
-  "map": { "preview": { "title": "Ver nuestra comunidad en el mapa", "sub": "Explora colmenares registrados por apicultores de todo el mundo — actualizados en tiempo real.", "btn": "Abrir mapa en vivo →" }, "stat": { "apiaries": "Colmenares", "hives": "Colmenas", "inspections": "Inspecciones" }, "popup": { "hiveSingular": "colmena", "hivePlural": "colmenas", "viewDetails": "Ver detalles →" }, "heatmap": { "toggle": "Mapa varroa", "low": "Bajo (< 2)", "medium": "Medio (2–5)", "high": "Alto (> 5)" } },
-  "news": { "tag": "Novedades", "title": "Noticias & Anuncios", "sub": "Nuevas funciones, alianzas de investigación, hitos de conservación y todo lo que sucede en la comunidad ApiScan." },
-  "contrib": { "tag": "Código abierto", "title": "Ayuda a construir ApiScan", "sub": "ApiScan es un proyecto de código abierto construido por y para la comunidad apícola.", "ways": { "title": "Formas de contribuir", "sub": "No necesitas ser programador para ayudar." }, "bug": { "title": "Reportar errores", "desc": "¿Algo no funciona? Abre un issue en GitHub con información del dispositivo y pasos para reproducir.", "link": "Abrir un issue →" }, "code": { "title": "Enviar código", "desc": "Haz un fork del repositorio, crea una rama, abre un PR.", "link": "Ver el repositorio →" }, "docs": { "title": "Mejorar la documentación", "desc": "Ayuda a mejorar los textos de ayuda, el contrato API, las notas de arquitectura o este sitio web.", "link": "Ver la carpeta docs →" }, "trans": { "title": "Traducir la app", "desc": "¿Eres bilingüe? Ayuda a añadir o mejorar una traducción.", "link": "Unirse a la discusión →" }, "test": { "title": "Probar nuevas funciones", "desc": "Únete al programa beta y da tu opinión antes del lanzamiento.", "link": "Unirse a la beta →" }, "spread": { "title": "Difundir la palabra", "desc": "Habla de ApiScan a tu asociación apícola. Cada nuevo apicultor fortalece los datos globales.", "link": "Compartir el enlace →" }, "github": { "title": "🐝 La colmena está en GitHub", "desc": "ApiScan es totalmente open source bajo la licencia MIT.", "btn": "Ver en GitHub" } },
-  "fr": { "tag": "Integración GitHub", "title": "Solicitar una función o reportar un error", "sub": "Rellena el formulario y abriremos un issue en GitHub prerrellenado.", "label": { "title": "Título", "cat": "Categoría", "platform": "Plataforma", "desc": "Descripción", "usecase": "Caso de uso / Por qué" }, "ph": { "title": "Título corto y descriptivo", "desc": "Describe la función o el error en detalle.", "usecase": "¿Por qué lo necesitas? ¿Cómo lo usarías?" }, "cat": { "feature": "✨ Nueva función", "enhance": "⚡ Mejora", "bug": "🐛 Reporte de error", "idea": "💡 Idea / Discusión" }, "platform": { "all": "Todas las plataformas", "ios": "iOS", "android": "Android", "backend": "Backend / API", "web": "Sitio web" }, "btn": "Abrir en GitHub →", "note": "Serás redirigido a GitHub para revisar y enviar el issue." },
-  "privacy": { "title": "Política de privacidad", "updated": "Última actualización: mayo de 2026", "intro": "ApiScan es una aplicación de apicultura de código abierto. Esta política explica qué datos recopilamos, por qué los recopilamos y las opciones que tienes, incluido cómo controlas si tu colmenar aparece en el mapa público.", "s1title": "1. Datos que recopilamos", "s1body": "Al registrarte: tu dirección de correo electrónico, nombre de display y idioma preferido. Al usar la app: nombres de colmenares y coordenadas GPS (si las introduces), detalles de colmenas y registros de inspecciones. No recopilamos identificadores de dispositivo, IDs publicitarios ni datos de ubicación precisos sin que tú los introduzcas explícitamente.", "s2title": "2. Mapa público — opt-in", "s2body": "El mapa público muestra marcadores anónimos para visualizar la actividad apícola global. La participación es estrictamente voluntaria (opt-in). Por defecto, cada colmenar que creas es privado. Puedes activar 'Mostrar en el mapa público' por colmenar en los ajustes de la app en cualquier momento. Cuando está activado, el marcador muestra el nombre de tu colmenar, coordenadas GPS y número de colmenas. Nunca se comparte públicamente ninguna identidad ni dato de inspección.", "s3title": "3. Cómo usamos tus datos", "s3body": "Tus datos se usan únicamente para el funcionamiento de la app y, solo si aceptas, para mostrar tu marcador en el mapa público y contribuir a las estadísticas globales. No vendemos, intercambiamos ni alquilamos datos personales. No los usamos para publicidad.", "s4title": "4. Base legal (RGPD)", "s4body": "Para usuarios de la UE/EEE, procesamos tus datos sobre la base del cumplimiento del contrato (Art. 6(1)(b) RGPD) para las funciones principales de la app, y sobre la base de tu consentimiento explícito (Art. 6(1)(a) RGPD) para el mapa público. Puedes retirar el consentimiento en cualquier momento.", "s5title": "5. Retención de datos", "s5body": "Tus datos se conservan mientras tu cuenta esté activa. Puedes solicitar la eliminación completa en privacy@apiscan.app — eliminaremos tu cuenta y todos los registros asociados en 30 días.", "s6title": "6. Tus derechos", "s6body": "Conforme al RGPD, tienes derecho de acceso, rectificación, supresión y portabilidad de tus datos. Contacto: privacy@apiscan.app.", "s7title": "7. Seguridad", "s7body": "Las contraseñas se cifran con bcrypt. El acceso a la API requiere un token JWT firmado. Los datos en tránsito están cifrados con TLS.", "s8title": "8. Contacto", "s8body": "¿Preguntas sobre esta política o tus datos? Escríbenos a privacy@apiscan.app." },
-  "dash": {
-    "login": { "title": "Iniciar sesión en ApiScan", "email": "Correo electrónico", "password": "Contraseña", "submit": "Iniciar sesión", "noAccount": "¿Sin cuenta?", "register": "Registrarse", "errorGeneric": "Error al iniciar sesión. Inténtalo de nuevo." },
-    "register": { "title": "Crear tu cuenta", "name": "Nombre", "email": "Correo electrónico", "password": "Contraseña (mín. 8 caracteres)", "submit": "Crear cuenta", "hasAccount": "¿Ya tienes cuenta?", "login": "Iniciar sesión", "errorGeneric": "Error al registrarse. Inténtalo de nuevo." },
-    "nav": { "apiaries": "Mis colmenares", "stats": "Mis estadísticas", "qrBatches": "Lotes QR", "customFields": "Campos perso.", "profile": "Perfil", "logout": "Cerrar sesión" },
-    "overview": { "title": "Mis estadísticas", "period": "Período", "preset30d": "Últimos 30 días", "preset90d": "Últimos 90 días", "preset365d": "Último año", "presetAll": "Todo el tiempo", "apiaries": "Colmenares", "hives": "Colmenas", "inspections": "Inspecciones", "perApiary": "Por colmenar", "apiary": "Colmenar", "noData": "Sin inspecciones en este período." },
-    "profile": { "title": "Perfil", "editTitle": "Editar perfil", "passwordTitle": "Cambiar contraseña", "name": "Nombre", "language": "Idioma", "currentPassword": "Contraseña actual", "newPassword": "Nueva contraseña (mín. 8 caracteres)", "confirmPassword": "Confirmar nueva contraseña", "saveProfile": "Guardar perfil", "savePassword": "Cambiar contraseña", "profileSaved": "Perfil guardado.", "passwordSaved": "Contraseña cambiada correctamente.", "passwordMismatch": "Las nuevas contraseñas no coinciden.", "errorGeneric": "Algo salió mal. Por favor, inténtalo de nuevo.", "badgeAdmin": "Admin", "badgeSupporter": "Supporter", "memberSince": "Miembro desde", "dangerTitle": "Zona de peligro", "dangerDesc": "Elimina permanentemente tu cuenta y todos los datos asociados — colmenares, colmenas, inspecciones. Esta acción no se puede deshacer.", "deleteAccount": "Eliminar mi cuenta", "deleteConfirm": "¿Estás seguro? Todos tus datos se eliminarán permanentemente.", "deleteConfirmBtn": "Sí, eliminar mi cuenta", "deleteCancel": "Cancelar" },
-    "admin": {
-      "nav": { "section": "Admin", "stats": "Estadísticas", "users": "Usuarios", "map": "Mapa", "health": "Calidad datos" },
-      "stats": { "title": "Estadísticas de la plataforma", "totalUsers": "Usuarios totales", "newUsers": "Nuevos usuarios", "supporters": "Supporters", "totalApiaries": "Colmenares totales", "publicApiaries": "Colmenares públicos", "totalHives": "Colmenas totales", "totalInspections": "Inspecciones totales", "activeUsers": "Usuarios activos (30d)", "activeSessions": "Sesiones activas", "preset": "Período" },
-      "users": { "title": "Gestión de usuarios", "search": "Buscar por email…", "all": "Todos", "supportersOnly": "Solo supporters", "email": "Email", "name": "Nombre", "joined": "Registrado", "supporter": "Supporter", "actions": "Acciones", "makeSupporter": "Hacer Supporter", "removeSupporter": "Quitar Supporter", "revokeSessions": "Revocar sesiones", "delete": "Eliminar", "confirmDelete": "¿Eliminar este usuario y todos sus datos? Esta acción no se puede deshacer.", "confirmRevoke": "¿Revocar todas las sesiones de este usuario?" },
-      "map": { "title": "Moderación del mapa", "all": "Todos los colmenares públicos", "flagged": "Marcados", "name": "Colmenar", "owner": "Propietario", "hives": "Colmenas", "setPrivate": "Hacer privado", "noFlagged": "No hay colmenares marcados." },
-      "health": { "title": "Calidad de datos", "inactiveUsers": "Usuarios inactivos", "zeroHives": "Colmenas sin inspecciones", "noVarroa": "Datos de varroa faltantes", "inactiveDesc": "Registrado hace > 30 días, sin inspecciones", "zeroDesc": "Inicializado pero nunca inspeccionado", "noVarroaDesc": "Inspecciones sin recuento de varroa", "email": "Email", "joined": "Registrado", "apiaries": "Colmenares", "hive": "Colmena", "apiary": "Colmenar", "missing": "Cantidad faltante", "noData": "No se encontraron problemas." }
-    },
-    "apiaries": { "title": "Mis colmenares", "empty": "Aún no hay colmenares.", "hives": "colmenas", "public": "Público", "private": "Privado", "new": "Nuevo colmenar", "createTitle": "Crear colmenar", "name": "Nombre", "description": "Descripción", "address": "Dirección", "isPublic": "Mostrar en el mapa público", "cancel": "Cancelar", "createBtn": "Crear colmenar", "createSuccess": "Colmenar creado.", "errorGeneric": "Algo salió mal." },
-    "apiary": { "hives": "Colmenas", "inspections": "Inspecciones", "avgVarroa": "Varroa prom.", "noHives": "Aún no hay colmenas en este colmenar.", "newHive": "Nueva colmena", "createHiveTitle": "Añadir colmena", "createHiveBtn": "Añadir colmena", "createHiveSuccess": "Colmena añadida.", "editBtn": "Editar colmenar", "editTitle": "Editar colmenar", "saveBtn": "Guardar cambios", "saveSuccess": "Colmenar guardado.", "dangerTitle": "Zona de peligro", "deleteBtn": "Eliminar colmenar", "deleteConfirmText": "Esta acción no se puede deshacer.", "deleteConfirmBtn": "Confirmar eliminación", "deleteSuccess": "Colmenar eliminado.", "deleteHasHives": "No se puede eliminar — este colmenar aún tiene colmenas. Elimina primero todas las colmenas.", "errorGeneric": "Algo salió mal.", "moodTitle": "Distribución del comportamiento", "noMoodData": "Aún no hay datos de comportamiento." },
-    "hive": { "inspections": "Inspecciones", "varroaTrend": "Tendencia varroa (12 meses)", "noTrend": "Aún no hay datos de varroa.", "noInspections": "Aún no hay inspecciones.", "date": "Fecha", "varroa": "Varroa", "mood": "Comportamiento", "queen": "Reina vista", "brood": "Marcos de cría", "yes": "Sí", "no": "No", "hiveType": "Tipo de colmena", "acquisitionDate": "Fecha de adquisición", "notes": "Notas", "editBtn": "Editar colmena", "editTitle": "Editar colmena", "saveBtn": "Guardar cambios", "saveSuccess": "Colmena guardada.", "dangerTitle": "Zona de peligro", "deleteBtn": "Eliminar colmena", "deleteConfirmText": "Esto eliminará permanentemente la colmena y todas sus inspecciones.", "deleteConfirmBtn": "Confirmar eliminación", "deleteSuccess": "Colmena eliminada.", "errorGeneric": "Algo salió mal.", "newInspectionBtn": "Nueva inspección", "addInspectionTitle": "Registrar inspección", "editInspectionTitle": "Editar inspección", "inspectionSaveBtn": "Guardar inspección", "inspectionUpdateBtn": "Actualizar inspección", "inspectionSaveSuccess": "Inspección registrada.", "inspectionUpdateSuccess": "Inspección actualizada.", "inspectionEditBtn": "Editar", "inspectionDeleteBtn": "Eliminar", "inspectionConfirmDeleteText": "¿Eliminar esta inspección?", "inspectionConfirmDeleteBtn": "Confirmar", "inspectionLoadMore": "Cargar más", "inspectionLoadingMore": "Cargando…", "inspectionShowing": "Mostrando {shown} de {total}", "exportCsv": "Exportar CSV", "exportJson": "Exportar JSON", "actions": "Acciones", "moodCalm": "Calmada", "moodNervous": "Nerviosa", "moodAggressive": "Agresiva", "queenNotRecorded": "No registrado", "moodTitle": "Distribución del comportamiento", "noMoodData": "Aún no hay datos de comportamiento." },
-    "fieldDefs": { "title": "Campos personalizados", "subtitle": "Amplía tus formularios de colmenas e inspecciones con campos personalizados.", "empty": "No hay campos personalizados todavía.", "new": "Nuevo campo", "createTitle": "Nuevo campo personalizado", "editTitle": "Editar campo", "name": "Nombre del campo", "target": "Se aplica a", "targetHive": "Colmena", "targetInspection": "Inspección", "type": "Tipo de campo", "typeText": "Texto", "typeNumber": "Número", "typeBoolean": "Sí / No", "typeDate": "Fecha", "typeSelect": "Selección", "options": "Opciones (una por línea)", "required": "Obligatorio", "createBtn": "Crear campo", "saveBtn": "Guardar cambios", "cancel": "Cancelar", "createSuccess": "Campo creado.", "saveSuccess": "Campo guardado.", "deleteBtn": "Eliminar", "deleteConfirmText": "¿Eliminar este campo? Los datos existentes se perderán.", "deleteConfirmBtn": "Confirmar", "errorGeneric": "Algo salió mal.", "colName": "Nombre", "colTarget": "Se aplica a", "colType": "Tipo", "colRequired": "Obligatorio", "colActions": "Acciones", "apiaryTitle": "Campos del apiario", "apiarySubtitle": "Estos campos sólo se aplican a colmenas e inspecciones de este apiario." },
-    "qrBatches": { "title": "Lotes de códigos QR", "empty": "Aún no hay lotes QR.", "new": "Nuevo lote", "createTitle": "Generar lote QR", "count": "Número de códigos (1–50)", "createBtn": "Generar", "cancel": "Cancelar", "createSuccess": "Lote creado.", "errorGeneric": "Algo salió mal.", "date": "Creado", "total": "Códigos", "linked": "Vinculados", "view": "Ver", "detailTitle": "Lote QR", "backToList": "← Todos los lotes", "downloadPdf": "Descargar PDF", "tokens": "Códigos QR", "linkedBadge": "Vinculado", "unlinkedBadge": "Sin vincular" }
+  "nav": {
+    "map": "Mapa en vivo",
+    "news": "Noticias",
+    "contribute": "Contribuir",
+    "members": "Miembros",
+    "dashboard": "Mis colmenas",
+    "download": "Descargar gratis",
+    "back": {
+      "map": "← Mapa en vivo"
+    }
   },
-  "members": { "tag": "Área de miembros", "title": "Perspectivas comunitarias", "sub": "Los supporters desbloquean estadísticas más detalladas, tendencias globales y datos de calidad investigadora.", "snap": { "title": "Instantánea global de la comunidad", "sub": "Estos números están disponibles para todos. Los supporters ven mucho más." }, "teaser": { "title": "Estadísticas globales avanzadas", "sub": "Solo para supporters — desbloquea en la app", "subUnlocked": "Contenido para supporters — panel web próximamente" }, "gate": { "title": "Desbloquea el panorama completo", "unlockedBadge": "Supporter", "unlockedNote": "Las estadísticas globales en vivo aparecerán aquí cuando se lance el panel web. Todas las funciones están disponibles ahora en la app.", "desc": "Los supporters ven tendencias regionales de varroa, curvas estacionales de salud de colmenas y datos cruzados de clima/floración.", "cta": "Obtener la app", "note": "Actualiza a Supporter (2,99 € / mes) dentro de la app después de registrarte." }, "benefits": { "title": "Qué obtienen los supporters", "sub": "Cada euro va directamente a mantener ApiScan independiente y financiar alianzas de investigación." }, "b1": { "title": "Panel de salud global", "desc": "Índice de varroa en tiempo real, distribución del comportamiento y frecuencia de inspección en todas las regiones." }, "b2": { "title": "Gráficos de tendencias estacionales", "desc": "¿Cómo evoluciona la salud de las colmenas en tu región comparado con el año pasado?" }, "b3": { "title": "Exportación completa de datos", "desc": "Descarga tu historial completo de inspecciones en CSV o JSON — previsto para la próxima versión mayor." }, "b4": { "title": "Mapas de calor regionales", "desc": "Mapas de clusters de enfermedades y riesgo de varroa — en planificación." }, "b5": { "title": "Portal de datos de investigación", "desc": "Acceso al conjunto de datos anónimos usado en nuestras alianzas universitarias." }, "b6": { "title": "Acceso anticipado y créditos", "desc": "Prueba las nuevas funciones primero y ve tu nombre en la app." }, "stat": { "avgVarroa": "Varroa prom. (global)", "goodMood": "Colmenas: Buen humor", "avgBrood": "Marcos de cría prom.", "interval": "Intervalo de inspección prom." }, "coming": { "tag": "Próximamente", "title": "Panel web para miembros", "desc": "Estamos construyendo un panel web completo para que puedas explorar tus datos directamente en el navegador.", "btn": "Seguir en GitHub" } }
+  "footer": {
+    "tagline": "Apicultura de código abierto para un planeta más saludable.",
+    "explore": "Explorar",
+    "community": "Comunidad",
+    "support": "Apoyarnos",
+    "legal": "Legal",
+    "privacy": "Política de privacidad",
+    "copyright": "© 2025 ApiScan. Publicado bajo la licencia MIT.",
+    "made": "Hecho con 🐝 para apicultores de todo el mundo."
+  },
+  "hero": {
+    "badge": "Código abierto · Comunidad · Gratuito",
+    "title1": "Salvando abejas,",
+    "title2": "un escaneo a la vez",
+    "subtitle": "ApiScan convierte a cada apicultor en un científico ciudadano. Registra inspecciones, controla la salud de las colmenas y contribuye a datos globales que ayudan a los investigadores a entender y proteger las poblaciones de abejas.",
+    "apple": {
+      "pre": "Descargar en el",
+      "store": "App Store"
+    },
+    "google": {
+      "pre": "Disponible en",
+      "play": "Google Play"
+    },
+    "scroll": "Desplázate para saber más"
+  },
+  "stats": {
+    "title": "Nuestra comunidad, ahora mismo",
+    "sub": "Cifras en tiempo real de nuestra red global de apicultores",
+    "apiaries": "Colmenares registrados",
+    "hives": "Colmenas monitorizadas",
+    "inspections": "Inspecciones registradas",
+    "countries": "Países alcanzados"
+  },
+  "feat": {
+    "tag": "La aplicación",
+    "title": "Todo lo que necesita un apicultor",
+    "sub": "Desde el aficionado hasta la operación comercial, ApiScan crece contigo.",
+    "qr": {
+      "title": "Escanear QR y empezar",
+      "desc": "Pega un código QR en cada colmena. Escanéalo al llegar y comienza la inspección de inmediato."
+    },
+    "track": {
+      "title": "Seguimiento inteligente",
+      "desc": "Controla cuadros de cría, conteos de varroa, estado de la reina, reservas de miel y el comportamiento."
+    },
+    "global": {
+      "title": "Base de datos global",
+      "desc": "Tus datos anónimos contribuyen a un panorama mundial de la salud de las colmenas."
+    },
+    "trends": {
+      "title": "Análisis de tendencias",
+      "desc": "Visualiza los recuentos de varroa a lo largo de las estaciones y sigue el desarrollo de tus colonias."
+    },
+    "batch": {
+      "title": "Generación de lotes QR",
+      "desc": "Genera hasta 50 códigos QR y descarga un PDF listo para imprimir."
+    },
+    "privacy": {
+      "title": "Tus datos, tu control",
+      "desc": "Las ubicaciones precisas y las notas personales permanecen privadas. Solo se comparten datos agregados anónimos."
+    }
+  },
+  "mission": {
+    "tag": "Por qué importa",
+    "title": "Un tercio de lo que comemos depende de las abejas",
+    "p1": "Las abejas melíferas y los polinizadores silvestres fertilizan aproximadamente el 35 % del suministro mundial de alimentos. Pero las poblaciones han ido disminuyendo durante décadas.",
+    "li1": "El síndrome de colapso de colonias afecta millones de colmenas cada año",
+    "li2": "El ácaro varroa es la principal amenaza para las colonias de abejas gestionadas",
+    "li3": "Los pesticidas, la pérdida de hábitat y el cambio climático agravan la presión",
+    "li4": "Los datos en tiempo real de los apicultores son esenciales para los sistemas de alerta temprana",
+    "callout": "Cuando registras una inspección en ApiScan, no solo gestionas tu colmena — añades un punto de datos a una red global de alerta temprana para la salud de las abejas."
+  },
+  "hex1": {
+    "label": "de los cultivos con flores dependen de la polinización animal"
+  },
+  "hex2": {
+    "label": "de las especies de insectos polinizadores están en riesgo de extinción"
+  },
+  "hex3": {
+    "label": "valor anual mundial de los servicios de polinización"
+  },
+  "comm": {
+    "tag": "Inteligencia colectiva",
+    "title": "Por qué los datos comunitarios lo cambian todo",
+    "sub": "Un apicultor solo ve un colmenar. Juntos, vemos el mundo — y podemos hacer algo al respecto.",
+    "disease": {
+      "title": "Cartografía de enfermedades",
+      "desc": "Identificar clusters geográficos de infestación de varroa o brotes de enfermedades antes de que se propaguen."
+    },
+    "seasonal": {
+      "title": "Tendencias estacionales",
+      "desc": "Cruzar la salud de las colmenas con datos meteorológicos y calendarios de floración para identificar las causas de las pérdidas de colonias."
+    },
+    "research": {
+      "title": "Alianza de investigación",
+      "desc": "Nuestro conjunto de datos anónimos se comparte con investigadores universitarios y ONG de conservación."
+    },
+    "policy": {
+      "title": "Cambio de política",
+      "desc": "Datos sólidos de miles de colmenares dan a los apicultores una voz poderosa basada en evidencias."
+    }
+  },
+  "road": {
+    "tag": "Próximos pasos",
+    "title": "En la hoja de ruta",
+    "sub": "Somos honestos sobre lo que está listo y lo que está planificado.",
+    "remind": {
+      "title": "Recordatorios de inspección",
+      "desc": "Notificaciones push cuando una colmena lleva demasiado tiempo sin inspección."
+    },
+    "export": {
+      "title": "Exportación de datos (CSV / JSON)",
+      "desc": "Descarga tu historial completo de inspecciones en CSV o JSON — ya disponible en el panel web."
+    },
+    "fields": {
+      "title": "Campos personalizados en formularios",
+      "desc": "Define tus propios campos de inspección y úsalos directamente en el panel web — ya disponible."
+    },
+    "heat": {
+      "title": "Mapas de calor regionales",
+      "desc": "Capas de riesgo varroa en el mapa público, codificadas por presión de ácaros — ya disponible."
+    },
+    "label": {
+      "planned": "Planificado",
+      "progress": "En progreso",
+      "shipped": "Publicado ✓"
+    }
+  },
+  "support": {
+    "tag": "Apoya la misión",
+    "title": "Mantengamos las colmenas zumbando",
+    "sub": "ApiScan es gratuito. Una pequeña contribución mantiene los servidores en funcionamiento, financia nuevas funciones y apoya nuestras alianzas de investigación."
+  },
+  "price": {
+    "free": {
+      "tier": "Siempre gratis",
+      "f1": "Colmenas e inspecciones ilimitadas",
+      "f2": "Escaneo QR y generación de lotes",
+      "f3": "Estadísticas básicas por colmena",
+      "f4": "Contribución a datos comunitarios",
+      "f5": "Mapa público en vivo",
+      "f6": "Gráficos y tendencias avanzados",
+      "f7": "Exportación de datos",
+      "f8": "Área de miembros"
+    },
+    "month": "/ mes",
+    "sup": {
+      "tier": "Supporter",
+      "badge": "Más popular",
+      "f1": "Todo lo de la versión gratuita",
+      "f2": "Gráficos de tendencias avanzados (en la app)",
+      "f3": "Área de miembros y estadísticas globales",
+      "f4": "Soporte prioritario",
+      "f5": "Tu nombre en los créditos de la app",
+      "f6": "Acceso anticipado a nuevas funciones",
+      "f7": "Exportación de datos (CSV / JSON)",
+      "f8": "Mapas de calor regionales"
+    },
+    "coming": "Próximamente",
+    "donate": {
+      "tier": "Donación única",
+      "price": "Tu elección",
+      "note": "Cada contribución, sin importar el tamaño, ayuda a mantener ApiScan independiente, sin anuncios y gratuito para todos los apicultores."
+    }
+  },
+  "btn": {
+    "free": "Descargar gratis",
+    "supporter": "Hazte Supporter",
+    "kofi": "Apoyar en Ko-fi",
+    "paypal": "Donar vía PayPal"
+  },
+  "dl": {
+    "tag": "Empieza hoy",
+    "title": "Descarga ApiScan — es gratis",
+    "sub": "Disponible en iOS y Android. Escanea tu primera colmena en menos de dos minutos."
+  },
+  "map": {
+    "preview": {
+      "title": "Ver nuestra comunidad en el mapa",
+      "sub": "Explora colmenares registrados por apicultores de todo el mundo — actualizados en tiempo real.",
+      "btn": "Abrir mapa en vivo →"
+    },
+    "stat": {
+      "apiaries": "Colmenares",
+      "hives": "Colmenas",
+      "inspections": "Inspecciones"
+    },
+    "popup": {
+      "hiveSingular": "colmena",
+      "hivePlural": "colmenas",
+      "viewDetails": "Ver detalles →"
+    },
+    "heatmap": {
+      "toggle": "Mapa varroa",
+      "low": "Bajo (< 2)",
+      "medium": "Medio (2–5)",
+      "high": "Alto (> 5)"
+    }
+  },
+  "news": {
+    "tag": "Novedades",
+    "title": "Noticias & Anuncios",
+    "sub": "Nuevas funciones, alianzas de investigación, hitos de conservación y todo lo que sucede en la comunidad ApiScan."
+  },
+  "contrib": {
+    "tag": "Código abierto",
+    "title": "Ayuda a construir ApiScan",
+    "sub": "ApiScan es un proyecto de código abierto construido por y para la comunidad apícola.",
+    "ways": {
+      "title": "Formas de contribuir",
+      "sub": "No necesitas ser programador para ayudar."
+    },
+    "bug": {
+      "title": "Reportar errores",
+      "desc": "¿Algo no funciona? Abre un issue en GitHub con información del dispositivo y pasos para reproducir.",
+      "link": "Abrir un issue →"
+    },
+    "code": {
+      "title": "Enviar código",
+      "desc": "Haz un fork del repositorio, crea una rama, abre un PR.",
+      "link": "Ver el repositorio →"
+    },
+    "docs": {
+      "title": "Mejorar la documentación",
+      "desc": "Ayuda a mejorar los textos de ayuda, el contrato API, las notas de arquitectura o este sitio web.",
+      "link": "Ver la carpeta docs →"
+    },
+    "trans": {
+      "title": "Traducir la app",
+      "desc": "¿Eres bilingüe? Ayuda a añadir o mejorar una traducción.",
+      "link": "Unirse a la discusión →"
+    },
+    "test": {
+      "title": "Probar nuevas funciones",
+      "desc": "Únete al programa beta y da tu opinión antes del lanzamiento.",
+      "link": "Unirse a la beta →"
+    },
+    "spread": {
+      "title": "Difundir la palabra",
+      "desc": "Habla de ApiScan a tu asociación apícola. Cada nuevo apicultor fortalece los datos globales.",
+      "link": "Compartir el enlace →"
+    },
+    "github": {
+      "title": "🐝 La colmena está en GitHub",
+      "desc": "ApiScan es totalmente open source bajo la licencia MIT.",
+      "btn": "Ver en GitHub"
+    }
+  },
+  "fr": {
+    "tag": "Integración GitHub",
+    "title": "Solicitar una función o reportar un error",
+    "sub": "Rellena el formulario y abriremos un issue en GitHub prerrellenado.",
+    "label": {
+      "title": "Título",
+      "cat": "Categoría",
+      "platform": "Plataforma",
+      "desc": "Descripción",
+      "usecase": "Caso de uso / Por qué"
+    },
+    "ph": {
+      "title": "Título corto y descriptivo",
+      "desc": "Describe la función o el error en detalle.",
+      "usecase": "¿Por qué lo necesitas? ¿Cómo lo usarías?"
+    },
+    "cat": {
+      "feature": "✨ Nueva función",
+      "enhance": "⚡ Mejora",
+      "bug": "🐛 Reporte de error",
+      "idea": "💡 Idea / Discusión"
+    },
+    "platform": {
+      "all": "Todas las plataformas",
+      "ios": "iOS",
+      "android": "Android",
+      "backend": "Backend / API",
+      "web": "Sitio web"
+    },
+    "btn": "Abrir en GitHub →",
+    "note": "Serás redirigido a GitHub para revisar y enviar el issue."
+  },
+  "privacy": {
+    "title": "Política de privacidad",
+    "updated": "Última actualización: mayo de 2026",
+    "intro": "ApiScan es una aplicación de apicultura de código abierto. Esta política explica qué datos recopilamos, por qué los recopilamos y las opciones que tienes, incluido cómo controlas si tu colmenar aparece en el mapa público.",
+    "s1title": "1. Datos que recopilamos",
+    "s1body": "Al registrarte: tu dirección de correo electrónico, nombre de display y idioma preferido. Al usar la app: nombres de colmenares y coordenadas GPS (si las introduces), detalles de colmenas y registros de inspecciones. No recopilamos identificadores de dispositivo, IDs publicitarios ni datos de ubicación precisos sin que tú los introduzcas explícitamente.",
+    "s2title": "2. Mapa público — opt-in",
+    "s2body": "El mapa público muestra marcadores anónimos para visualizar la actividad apícola global. La participación es estrictamente voluntaria (opt-in). Por defecto, cada colmenar que creas es privado. Puedes activar 'Mostrar en el mapa público' por colmenar en los ajustes de la app en cualquier momento. Cuando está activado, el marcador muestra el nombre de tu colmenar, coordenadas GPS y número de colmenas. Nunca se comparte públicamente ninguna identidad ni dato de inspección.",
+    "s3title": "3. Cómo usamos tus datos",
+    "s3body": "Tus datos se usan únicamente para el funcionamiento de la app y, solo si aceptas, para mostrar tu marcador en el mapa público y contribuir a las estadísticas globales. No vendemos, intercambiamos ni alquilamos datos personales. No los usamos para publicidad.",
+    "s4title": "4. Base legal (RGPD)",
+    "s4body": "Para usuarios de la UE/EEE, procesamos tus datos sobre la base del cumplimiento del contrato (Art. 6(1)(b) RGPD) para las funciones principales de la app, y sobre la base de tu consentimiento explícito (Art. 6(1)(a) RGPD) para el mapa público. Puedes retirar el consentimiento en cualquier momento.",
+    "s5title": "5. Retención de datos",
+    "s5body": "Tus datos se conservan mientras tu cuenta esté activa. Puedes solicitar la eliminación completa en privacy@apiscan.app — eliminaremos tu cuenta y todos los registros asociados en 30 días.",
+    "s6title": "6. Tus derechos",
+    "s6body": "Conforme al RGPD, tienes derecho de acceso, rectificación, supresión y portabilidad de tus datos. Contacto: privacy@apiscan.app.",
+    "s7title": "7. Seguridad",
+    "s7body": "Las contraseñas se cifran con bcrypt. El acceso a la API requiere un token JWT firmado. Los datos en tránsito están cifrados con TLS.",
+    "s8title": "8. Contacto",
+    "s8body": "¿Preguntas sobre esta política o tus datos? Escríbenos a privacy@apiscan.app."
+  },
+  "dash": {
+    "login": {
+      "title": "Iniciar sesión en ApiScan",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Iniciar sesión",
+      "noAccount": "¿Sin cuenta?",
+      "register": "Registrarse",
+      "errorGeneric": "Error al iniciar sesión. Inténtalo de nuevo."
+    },
+    "register": {
+      "title": "Crear tu cuenta",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "password": "Contraseña (mín. 8 caracteres)",
+      "submit": "Crear cuenta",
+      "hasAccount": "¿Ya tienes cuenta?",
+      "login": "Iniciar sesión",
+      "errorGeneric": "Error al registrarse. Inténtalo de nuevo."
+    },
+    "nav": {
+      "apiaries": "Mis colmenares",
+      "stats": "Mis estadísticas",
+      "qrBatches": "Lotes QR",
+      "customFields": "Campos perso.",
+      "profile": "Perfil",
+      "logout": "Cerrar sesión"
+    },
+    "overview": {
+      "title": "Mis estadísticas",
+      "period": "Período",
+      "preset30d": "Últimos 30 días",
+      "preset90d": "Últimos 90 días",
+      "preset365d": "Último año",
+      "presetAll": "Todo el tiempo",
+      "apiaries": "Colmenares",
+      "hives": "Colmenas",
+      "inspections": "Inspecciones",
+      "perApiary": "Por colmenar",
+      "apiary": "Colmenar",
+      "noData": "Sin inspecciones en este período."
+    },
+    "profile": {
+      "title": "Perfil",
+      "editTitle": "Editar perfil",
+      "passwordTitle": "Cambiar contraseña",
+      "name": "Nombre",
+      "language": "Idioma",
+      "currentPassword": "Contraseña actual",
+      "newPassword": "Nueva contraseña (mín. 8 caracteres)",
+      "confirmPassword": "Confirmar nueva contraseña",
+      "saveProfile": "Guardar perfil",
+      "savePassword": "Cambiar contraseña",
+      "profileSaved": "Perfil guardado.",
+      "passwordSaved": "Contraseña cambiada correctamente.",
+      "passwordMismatch": "Las nuevas contraseñas no coinciden.",
+      "errorGeneric": "Algo salió mal. Por favor, inténtalo de nuevo.",
+      "badgeAdmin": "Admin",
+      "badgeSupporter": "Supporter",
+      "memberSince": "Miembro desde",
+      "dangerTitle": "Zona de peligro",
+      "dangerDesc": "Elimina permanentemente tu cuenta y todos los datos asociados — colmenares, colmenas, inspecciones. Esta acción no se puede deshacer.",
+      "deleteAccount": "Eliminar mi cuenta",
+      "deleteConfirm": "¿Estás seguro? Todos tus datos se eliminarán permanentemente.",
+      "deleteConfirmBtn": "Sí, eliminar mi cuenta",
+      "deleteCancel": "Cancelar"
+    },
+    "admin": {
+      "nav": {
+        "section": "Admin",
+        "stats": "Estadísticas",
+        "users": "Usuarios",
+        "map": "Mapa",
+        "health": "Calidad datos"
+      },
+      "stats": {
+        "title": "Estadísticas de la plataforma",
+        "totalUsers": "Usuarios totales",
+        "newUsers": "Nuevos usuarios",
+        "supporters": "Supporters",
+        "totalApiaries": "Colmenares totales",
+        "publicApiaries": "Colmenares públicos",
+        "totalHives": "Colmenas totales",
+        "totalInspections": "Inspecciones totales",
+        "activeUsers": "Usuarios activos (30d)",
+        "activeSessions": "Sesiones activas",
+        "preset": "Período"
+      },
+      "users": {
+        "title": "Gestión de usuarios",
+        "search": "Buscar por email…",
+        "all": "Todos",
+        "supportersOnly": "Solo supporters",
+        "email": "Email",
+        "name": "Nombre",
+        "joined": "Registrado",
+        "supporter": "Supporter",
+        "actions": "Acciones",
+        "makeSupporter": "Hacer Supporter",
+        "removeSupporter": "Quitar Supporter",
+        "revokeSessions": "Revocar sesiones",
+        "delete": "Eliminar",
+        "confirmDelete": "¿Eliminar este usuario y todos sus datos? Esta acción no se puede deshacer.",
+        "confirmRevoke": "¿Revocar todas las sesiones de este usuario?"
+      },
+      "map": {
+        "title": "Moderación del mapa",
+        "all": "Todos los colmenares públicos",
+        "flagged": "Marcados",
+        "name": "Colmenar",
+        "owner": "Propietario",
+        "hives": "Colmenas",
+        "setPrivate": "Hacer privado",
+        "noFlagged": "No hay colmenares marcados."
+      },
+      "health": {
+        "title": "Calidad de datos",
+        "inactiveUsers": "Usuarios inactivos",
+        "zeroHives": "Colmenas sin inspecciones",
+        "noVarroa": "Datos de varroa faltantes",
+        "inactiveDesc": "Registrado hace > 30 días, sin inspecciones",
+        "zeroDesc": "Inicializado pero nunca inspeccionado",
+        "noVarroaDesc": "Inspecciones sin recuento de varroa",
+        "email": "Email",
+        "joined": "Registrado",
+        "apiaries": "Colmenares",
+        "hive": "Colmena",
+        "apiary": "Colmenar",
+        "missing": "Cantidad faltante",
+        "noData": "No se encontraron problemas."
+      }
+    },
+    "apiaries": {
+      "title": "Mis colmenares",
+      "empty": "Aún no hay colmenares.",
+      "hives": "colmenas",
+      "public": "Público",
+      "private": "Privado",
+      "new": "Nuevo colmenar",
+      "createTitle": "Crear colmenar",
+      "name": "Nombre",
+      "description": "Descripción",
+      "address": "Dirección",
+      "isPublic": "Mostrar en el mapa público",
+      "cancel": "Cancelar",
+      "createBtn": "Crear colmenar",
+      "createSuccess": "Colmenar creado.",
+      "errorGeneric": "Algo salió mal."
+    },
+    "apiary": {
+      "hives": "Colmenas",
+      "inspections": "Inspecciones",
+      "avgVarroa": "Varroa prom.",
+      "noHives": "Aún no hay colmenas en este colmenar.",
+      "newHive": "Nueva colmena",
+      "createHiveTitle": "Añadir colmena",
+      "createHiveBtn": "Añadir colmena",
+      "createHiveSuccess": "Colmena añadida.",
+      "editBtn": "Editar colmenar",
+      "editTitle": "Editar colmenar",
+      "saveBtn": "Guardar cambios",
+      "saveSuccess": "Colmenar guardado.",
+      "dangerTitle": "Zona de peligro",
+      "deleteBtn": "Eliminar colmenar",
+      "deleteConfirmText": "Esta acción no se puede deshacer.",
+      "deleteConfirmBtn": "Confirmar eliminación",
+      "deleteSuccess": "Colmenar eliminado.",
+      "deleteHasHives": "No se puede eliminar — este colmenar aún tiene colmenas. Elimina primero todas las colmenas.",
+      "errorGeneric": "Algo salió mal.",
+      "moodTitle": "Distribución del comportamiento",
+      "noMoodData": "Aún no hay datos de comportamiento."
+    },
+    "hive": {
+      "inspections": "Inspecciones",
+      "varroaTrend": "Tendencia varroa (12 meses)",
+      "noTrend": "Aún no hay datos de varroa.",
+      "noInspections": "Aún no hay inspecciones.",
+      "date": "Fecha",
+      "varroa": "Varroa",
+      "mood": "Comportamiento",
+      "queen": "Reina vista",
+      "brood": "Marcos de cría",
+      "yes": "Sí",
+      "no": "No",
+      "hiveType": "Tipo de colmena",
+      "acquisitionDate": "Fecha de adquisición",
+      "notes": "Notas",
+      "editBtn": "Editar colmena",
+      "editTitle": "Editar colmena",
+      "saveBtn": "Guardar cambios",
+      "saveSuccess": "Colmena guardada.",
+      "dangerTitle": "Zona de peligro",
+      "deleteBtn": "Eliminar colmena",
+      "deleteConfirmText": "Esto eliminará permanentemente la colmena y todas sus inspecciones.",
+      "deleteConfirmBtn": "Confirmar eliminación",
+      "deleteSuccess": "Colmena eliminada.",
+      "errorGeneric": "Algo salió mal.",
+      "newInspectionBtn": "Nueva inspección",
+      "addInspectionTitle": "Registrar inspección",
+      "editInspectionTitle": "Editar inspección",
+      "inspectionSaveBtn": "Guardar inspección",
+      "inspectionUpdateBtn": "Actualizar inspección",
+      "inspectionSaveSuccess": "Inspección registrada.",
+      "inspectionUpdateSuccess": "Inspección actualizada.",
+      "inspectionEditBtn": "Editar",
+      "inspectionDeleteBtn": "Eliminar",
+      "inspectionConfirmDeleteText": "¿Eliminar esta inspección?",
+      "inspectionConfirmDeleteBtn": "Confirmar",
+      "inspectionLoadMore": "Cargar más",
+      "inspectionLoadingMore": "Cargando…",
+      "inspectionShowing": "Mostrando {shown} de {total}",
+      "exportCsv": "Exportar CSV",
+      "exportJson": "Exportar JSON",
+      "actions": "Acciones",
+      "moodCalm": "Calmada",
+      "moodNervous": "Nerviosa",
+      "moodAggressive": "Agresiva",
+      "queenNotRecorded": "No registrado",
+      "moodTitle": "Distribución del comportamiento",
+      "noMoodData": "Aún no hay datos de comportamiento."
+    },
+    "fieldDefs": {
+      "title": "Campos personalizados",
+      "subtitle": "Amplía tus formularios de colmenas e inspecciones con campos personalizados.",
+      "empty": "No hay campos personalizados todavía.",
+      "new": "Nuevo campo",
+      "createTitle": "Nuevo campo personalizado",
+      "editTitle": "Editar campo",
+      "name": "Nombre del campo",
+      "target": "Se aplica a",
+      "targetHive": "Colmena",
+      "targetInspection": "Inspección",
+      "type": "Tipo de campo",
+      "typeText": "Texto",
+      "typeNumber": "Número",
+      "typeBoolean": "Sí / No",
+      "typeDate": "Fecha",
+      "typeSelect": "Selección",
+      "options": "Opciones (una por línea)",
+      "required": "Obligatorio",
+      "createBtn": "Crear campo",
+      "saveBtn": "Guardar cambios",
+      "cancel": "Cancelar",
+      "createSuccess": "Campo creado.",
+      "saveSuccess": "Campo guardado.",
+      "deleteBtn": "Eliminar",
+      "deleteConfirmText": "¿Eliminar este campo? Los datos existentes se perderán.",
+      "deleteConfirmBtn": "Confirmar",
+      "errorGeneric": "Algo salió mal.",
+      "colName": "Nombre",
+      "colTarget": "Se aplica a",
+      "colType": "Tipo",
+      "colRequired": "Obligatorio",
+      "colActions": "Acciones",
+      "apiaryTitle": "Campos del apiario",
+      "apiarySubtitle": "Estos campos sólo se aplican a colmenas e inspecciones de este apiario."
+    },
+    "qrBatches": {
+      "title": "Lotes de códigos QR",
+      "empty": "Aún no hay lotes QR.",
+      "new": "Nuevo lote",
+      "createTitle": "Generar lote QR",
+      "count": "Número de códigos (1–50)",
+      "createBtn": "Generar",
+      "cancel": "Cancelar",
+      "createSuccess": "Lote creado.",
+      "errorGeneric": "Algo salió mal.",
+      "date": "Creado",
+      "total": "Códigos",
+      "linked": "Vinculados",
+      "view": "Ver",
+      "detailTitle": "Lote QR",
+      "backToList": "← Todos los lotes",
+      "downloadPdf": "Descargar PDF",
+      "tokens": "Códigos QR",
+      "linkedBadge": "Vinculado",
+      "unlinkedBadge": "Sin vincular"
+    }
+  },
+  "members": {
+    "tag": "Área de miembros",
+    "title": "Perspectivas comunitarias",
+    "sub": "Los supporters desbloquean estadísticas más detalladas, tendencias globales y datos de calidad investigadora.",
+    "snap": {
+      "title": "Instantánea global de la comunidad",
+      "sub": "Estos números están disponibles para todos. Los supporters ven mucho más."
+    },
+    "teaser": {
+      "title": "Estadísticas globales avanzadas",
+      "sub": "Solo para supporters — desbloquea en la app",
+      "subUnlocked": "Contenido para supporters — panel web próximamente",
+      "subMember": "Datos comunitarios en vivo — listos para explorar"
+    },
+    "gate": {
+      "title": "Desbloquea el panorama completo",
+      "unlockedBadge": "Supporter",
+      "unlockedNote": "Las estadísticas globales en vivo aparecerán aquí cuando se lance el panel web. Todas las funciones están disponibles ahora en la app.",
+      "desc": "Los supporters ven tendencias regionales de varroa, curvas estacionales de salud de colmenas y datos cruzados de clima/floración.",
+      "cta": "Obtener la app",
+      "note": "Actualiza a Supporter (2,99 € / mes) dentro de la app después de registrarte.",
+      "loginTitle": "Inicia sesión para ver las estadísticas en vivo",
+      "loginDesc": "Inicia sesión con tu cuenta ApiScan para ver los datos globales de la comunidad en tiempo real.",
+      "loginCta": "Iniciar sesión"
+    },
+    "benefits": {
+      "title": "Qué obtienen los supporters",
+      "sub": "Cada euro va directamente a mantener ApiScan independiente y financiar alianzas de investigación."
+    },
+    "b1": {
+      "title": "Panel de salud global",
+      "desc": "Índice de varroa en tiempo real, distribución del comportamiento y frecuencia de inspección en todas las regiones."
+    },
+    "b2": {
+      "title": "Gráficos de tendencias estacionales",
+      "desc": "¿Cómo evoluciona la salud de las colmenas en tu región comparado con el año pasado?"
+    },
+    "b3": {
+      "title": "Exportación completa de datos",
+      "desc": "Descarga tu historial completo de inspecciones en CSV o JSON — previsto para la próxima versión mayor."
+    },
+    "b4": {
+      "title": "Mapas de calor regionales",
+      "desc": "Mapas de clusters de enfermedades y riesgo de varroa — en planificación."
+    },
+    "b5": {
+      "title": "Portal de datos de investigación",
+      "desc": "Acceso al conjunto de datos anónimos usado en nuestras alianzas universitarias."
+    },
+    "b6": {
+      "title": "Acceso anticipado y créditos",
+      "desc": "Prueba las nuevas funciones primero y ve tu nombre en la app."
+    },
+    "stat": {
+      "avgVarroa": "Varroa prom. (global)",
+      "goodMood": "Colmenas: Buen humor",
+      "avgBrood": "Marcos de cría prom.",
+      "interval": "Intervalo de inspección prom."
+    },
+    "coming": {
+      "tag": "Próximamente",
+      "title": "Panel web para miembros",
+      "desc": "Estamos construyendo un panel web completo para que puedas explorar tus datos directamente en el navegador.",
+      "btn": "Seguir en GitHub"
+    }
+  }
 }

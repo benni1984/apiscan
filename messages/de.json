@@ -1,50 +1,659 @@
 {
-  "nav": { "map": "Live-Karte", "news": "Neuigkeiten", "contribute": "Mitmachen", "members": "Mitglieder", "dashboard": "Meine Völker", "download": "Kostenlos laden", "back": { "map": "← Live-Karte" } },
-  "footer": { "tagline": "Open-Source-Imkerei für einen gesünderen Planeten.", "explore": "Entdecken", "community": "Gemeinschaft", "support": "Unterstützen", "legal": "Rechtliches", "privacy": "Datenschutzerklärung", "copyright": "© 2025 ApiScan. Veröffentlicht unter der MIT-Lizenz.", "made": "Mit 🐝 für Imkerinnen und Imker weltweit." },
-  "hero": { "badge": "Open Source · Gemeinschaftsprojekt · Kostenlos", "title1": "Bienen retten,", "title2": "Scan für Scan", "subtitle": "ApiScan macht jeden Imker zum Bürgerwissenschaftler. Dokumentiere Kontrollen, verfolge den Gesundheitszustand deiner Völker und trage zu globalen Daten bei, die Forschern helfen, Bienenpopulationen weltweit zu verstehen und zu schützen.", "apple": { "pre": "Laden im", "store": "App Store" }, "google": { "pre": "Jetzt bei", "play": "Google Play" }, "scroll": "Runterscrollen für mehr" },
-  "stats": { "title": "Unsere Gemeinschaft, gerade jetzt", "sub": "Echtzeitdaten aus unserem globalen Netzwerk von Imkerinnen und Imkern", "apiaries": "Registrierte Bienenstände", "hives": "Überwachte Völker", "inspections": "Protokollierte Kontrollen", "countries": "Länder erreicht" },
-  "feat": {
-    "tag": "Die App", "title": "Alles, was ein Imker braucht", "sub": "Vom Hobby-Imker bis zum Profi-Betrieb – ApiScan wächst mit dir und trägt gleichzeitig zum Schutz unseres Planeten bei.",
-    "qr": { "title": "QR-Code scannen & loslegen", "desc": "Klebe einen QR-Code auf jeden Stock. Beim Ankommen scannen und direkt mit der Kontrolle beginnen – kein Suchen, kein Vertippen." },
-    "track": { "title": "Intelligentes Tracking", "desc": "Verfolge Bruträhmenzahl, Varroabefall, Weiselstand, Honigvorräte und Stimmung über Zeit. Erkenne Trends, bevor sie zu Problemen werden." },
-    "global": { "title": "Globaler Datenpool", "desc": "Deine anonymisierten Daten tragen zu einem weltweiten Bild der Völkergesundheit bei – geteilt mit Forschern, die Völkerkollaps und Krankheitsverbreitung untersuchen." },
-    "trends": { "title": "Trendanalyse", "desc": "Varroazahlen über Jahreszeiten visualisieren, die Völkergesundheit im Stand vergleichen und die Entwicklung der Kolonie in übersichtlichen Grafiken verfolgen." },
-    "batch": { "title": "QR-Batch-Generierung", "desc": "Bis zu 50 QR-Codes auf einmal generieren und als druckfertiges PDF herunterladen – ideal für neue Bienenstände oder Ersatz verlorener Etiketten." },
-    "privacy": { "title": "Deine Daten, deine Kontrolle", "desc": "Genaue Standorte und persönliche Notizen bleiben privat. Nur anonymisierte Zusammenfassungen werden geteilt – du bestimmst, was auf der öffentlichen Karte sichtbar ist." }
+  "nav": {
+    "map": "Live-Karte",
+    "news": "Neuigkeiten",
+    "contribute": "Mitmachen",
+    "members": "Mitglieder",
+    "dashboard": "Meine Völker",
+    "download": "Kostenlos laden",
+    "back": {
+      "map": "← Live-Karte"
+    }
   },
-  "mission": { "tag": "Warum es wichtig ist", "title": "Ein Drittel aller Lebensmittel hängt von Bienen ab", "p1": "Honigbienen und Wildbestäuber bestäuben rund 35 % der weltweiten Nahrungsmittelproduktion – Obst, Gemüse, Nüsse und Öle. Doch die Populationen nehmen seit Jahrzehnten ab, und die Wissenschaft sucht noch immer nach den genauen Ursachen.", "li1": "Völkerkollaps-Syndrom betrifft jedes Jahr Millionen von Völkern", "li2": "Die Varroamilbe ist weltweit die größte Bedrohung für Honigbienen", "li3": "Pestizide, Habitatverlust und Klimawandel verstärken den Druck", "li4": "Echtzeitdaten von Imkern sind entscheidend für Frühwarnsysteme", "callout": "Wenn du in ApiScan eine Kontrolle einträgst, verwaltest du nicht nur dein Volk – du fügst einem globalen Frühwarnnetz für Bienengesundheit einen Datenpunkt hinzu." },
-  "hex1": { "label": "der Blütenpflanzen sind auf tierische Bestäubung angewiesen" },
-  "hex2": { "label": "der Insektenbestäuber sind vom Aussterben bedroht" },
-  "hex3": { "label": "jährlicher globaler Wert der Bestäubungsleistung" },
-  "comm": { "tag": "Kollektive Intelligenz", "title": "Warum Gemeinschaftsdaten alles verändern", "sub": "Ein einzelner Imker sieht einen Bienenstand. Gemeinsam sehen wir die Welt – und können etwas dagegen tun.", "disease": { "title": "Krankheitskartierung", "desc": "Geografische Cluster von Varroabefall oder Krankheitsausbrüchen erkennen, bevor sie sich ausbreiten, und gezielte Gegenmaßnahmen ermöglichen." }, "seasonal": { "title": "Saisonale Trends", "desc": "Völkergesundheit mit Wetterdaten, Blühkalendern und lokaler Landnutzung vergleichen, um Kolonieverluste in jeder Region zu erklären." }, "research": { "title": "Forschungspartnerschaft", "desc": "Unser anonymisierter Datensatz wird mit Universitätsforschern und Naturschutzorganisationen geteilt und trägt zu begutachteter Wissenschaft über Bestäubergesundheit bei." }, "policy": { "title": "Politischer Einfluss", "desc": "Harte Daten aus tausenden von Bienenständen geben Imkern eine starke, faktenbasierte Stimme in Gesprächen über Pestizidregulierung und Habitatschutz." } },
-  "road": { "tag": "Was kommt als Nächstes", "title": "Auf der Roadmap", "sub": "Wir sind ehrlich darüber, was bereits fertig ist und was noch geplant wird.", "remind": { "title": "Kontrollierungserinnerungen", "desc": "Push-Benachrichtigungen, wenn ein Volk zu lange nicht kontrolliert wurde." }, "export": { "title": "Datenexport (CSV / JSON)", "desc": "Vollständige Kontrollhistorie als CSV oder JSON herunterladen – jetzt live im Web-Dashboard." }, "fields": { "title": "Benutzerdefinierte Felder in Formularen", "desc": "Eigene Kontrollfelder definieren und direkt im Web-Dashboard nutzen – jetzt live." }, "heat": { "title": "Regionale Heatmaps", "desc": "Varroa-Risikoüberlagerungen auf der öffentlichen Karte, farbcodiert nach Milbendruck – jetzt live." }, "label": { "planned": "Geplant", "progress": "In Arbeit", "shipped": "Veröffentlicht ✓" } },
-  "support": { "tag": "Unterstütze die Mission", "title": "Halte die Völker am Summen", "sub": "ApiScan ist kostenlos nutzbar. Ein kleiner Beitrag hält die Server am Laufen, finanziert neue Funktionen und unterstützt unsere Forschungspartnerschaften." },
-  "price": { "free": { "tier": "Dauerhaft kostenlos", "f1": "Unbegrenzte Völker & Kontrollen", "f2": "QR-Code-Scan & Batch-Generierung", "f3": "Grundlegende Statistiken pro Volk", "f4": "Beitrag zu Gemeinschaftsdaten", "f5": "Öffentliche Live-Karte", "f6": "Erweiterte Grafiken & Trends", "f7": "Datenexport", "f8": "Mitgliederbereich" }, "month": "/ Monat", "sup": { "tier": "Supporter", "badge": "Am beliebtesten", "f1": "Alles im kostenlosen Plan", "f2": "Erweiterte Trendgrafiken (in der App)", "f3": "Mitgliederbereich & globale Statistiken", "f4": "Vorrangiger Support", "f5": "Dein Name in den App-Credits", "f6": "Frühzeitiger Zugang zu neuen Funktionen", "f7": "Datenexport (CSV / JSON)", "f8": "Regionale Heatmaps" }, "coming": "Demnächst", "donate": { "tier": "Einmalige Spende", "price": "Dein Betrag", "note": "Jeder Beitrag, egal wie groß, hilft ApiScan unabhängig, werbefrei und für alle Imker zugänglich zu halten." } },
-  "btn": { "free": "Kostenlos herunterladen", "supporter": "Supporter werden", "kofi": "Auf Ko-fi unterstützen", "paypal": "Per PayPal spenden" },
-  "dl": { "tag": "Noch heute starten", "title": "ApiScan herunterladen – kostenlos", "sub": "Für iOS und Android verfügbar. Scan dein erstes Volk in unter zwei Minuten." },
-  "map": { "preview": { "title": "Unsere Gemeinschaft auf der Karte", "sub": "Entdecke weltweit registrierte Bienenstände – in Echtzeit aktualisiert.", "btn": "Live-Karte öffnen →" }, "stat": { "apiaries": "Bienenstände", "hives": "Völker", "inspections": "Kontrollen" }, "popup": { "hiveSingular": "Volk", "hivePlural": "Völker", "viewDetails": "Details ansehen →" }, "heatmap": { "toggle": "Varroa-Heatmap", "low": "Niedrig (< 2)", "medium": "Mittel (2–5)", "high": "Hoch (> 5)" } },
-  "news": { "tag": "Aktuelles", "title": "News & Ankündigungen", "sub": "Neue Funktionen, Forschungspartnerschaften, Naturschutzmeilensteine und alles Wichtige aus der ApiScan-Gemeinschaft." },
-  "contrib": { "tag": "Open Source", "title": "Hilf ApiScan aufzubauen", "sub": "ApiScan ist ein Open-Source-Projekt, das von und für die Imkergemeinschaft gebaut wird.", "ways": { "title": "Wie du beitragen kannst", "sub": "Du musst kein Programmierer sein, um zu helfen." }, "bug": { "title": "Bugs melden", "desc": "Etwas funktioniert nicht? Öffne ein GitHub-Issue mit Gerätebeschreibung, OS-Version und Schritten zur Reproduktion.", "link": "Issue auf GitHub öffnen →" }, "code": { "title": "Code einreichen", "desc": "Repository forken, Branch erstellen, Pull Request öffnen.", "link": "Repository ansehen →" }, "docs": { "title": "Dokumentation verbessern", "desc": "Hilf dabei, die In-App-Hilfetexte, den API-Vertrag, Architekturnotizen oder diese Website zu verbessern.", "link": "Docs-Ordner ansehen →" }, "trans": { "title": "App übersetzen", "desc": "Zweisprachig? Hilf dabei, eine Übersetzung hinzuzufügen oder zu verbessern. Kein Programmieren erforderlich.", "link": "Zur Übersetzungsdiskussion →" }, "test": { "title": "Neue Funktionen testen", "desc": "Tritt dem Beta-Programm bei und gib Feedback, bevor Funktionen veröffentlicht werden.", "link": "Zur Beta-Diskussion →" }, "spread": { "title": "Weiterempfehlen", "desc": "Erzähl deinem Imkerverein oder deiner Online-Community von ApiScan.", "link": "Download-Link teilen →" }, "github": { "title": "🐝 Der Bienenstock ist auf GitHub", "desc": "ApiScan ist vollständig Open Source unter der MIT-Lizenz.", "btn": "Auf GitHub ansehen" } },
-  "fr": { "tag": "GitHub-Integration", "title": "Funktion anfragen oder Bug melden", "sub": "Füll das Formular aus und wir öffnen ein vorausgefülltes GitHub-Issue für dich.", "label": { "title": "Titel", "cat": "Kategorie", "platform": "Plattform", "desc": "Beschreibung", "usecase": "Anwendungsfall / Warum" }, "ph": { "title": "Kurzer, beschreibender Titel", "desc": "Beschreibe die Funktion oder den Fehler im Detail.", "usecase": "Warum brauchst du das? Wie würdest du es nutzen?" }, "cat": { "feature": "✨ Neue Funktion", "enhance": "⚡ Verbesserung", "bug": "🐛 Fehlermeldung", "idea": "💡 Idee / Diskussion" }, "platform": { "all": "Alle Plattformen", "ios": "iOS", "android": "Android", "backend": "Backend / API", "web": "Website" }, "btn": "Auf GitHub öffnen →", "note": "Du wirst zu GitHub weitergeleitet, um das Issue zu prüfen und einzureichen." },
-  "privacy": { "title": "Datenschutzerklärung", "updated": "Zuletzt aktualisiert: Mai 2026", "intro": "ApiScan ist eine Open-Source-Imker-App. Diese Datenschutzerklärung erläutert, welche Daten wir erheben, warum wir sie verarbeiten und welche Wahlmöglichkeiten du hast – insbesondere wie du steuerst, ob dein Bienenstand auf der öffentlichen Karte erscheint.", "s1title": "1. Erhobene Daten", "s1body": "Bei der Registrierung: deine E-Mail-Adresse, dein Anzeigename und deine bevorzugte Sprache. Bei der App-Nutzung: Bienenstands-Namen und GPS-Koordinaten (wenn du sie eingibst), Völkerdetails und Kontrolldaten. Wir erheben keine Gerätekennungen, Werbe-IDs oder genaue Standortdaten ohne ausdrückliche Eingabe durch dich.", "s2title": "2. Öffentliche Karte – Opt-in", "s2body": "Die öffentliche Karte zeigt anonymisierte Bienenstands-Pins, um globale Imkeraktivität sichtbar zu machen. Die Teilnahme ist ausschließlich freiwillig (Opt-in). Standardmäßig ist jeder Bienenstand privat. Du kannst 'Auf öffentlicher Karte anzeigen' pro Bienenstand in den App-Einstellungen jederzeit aktivieren und wieder deaktivieren. Bei Aktivierung werden Name, GPS-Koordinaten und Völkerzahl angezeigt. Keine Identitäts- oder Kontrolldaten werden jemals öffentlich geteilt.", "s3title": "3. Verwendung deiner Daten", "s3body": "Deine Daten werden ausschließlich für den App-Betrieb verwendet und – nur bei Opt-in – für die öffentliche Karte und globale Statistiken. Wir verkaufen, handeln oder vermieten keine personenbezogenen Daten. Wir verwenden sie nicht für Werbung.", "s4title": "4. Rechtsgrundlage (DSGVO)", "s4body": "Für EU/EWR-Nutzer verarbeiten wir deine Daten auf Basis der Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO) für die App-Kernfunktionen und auf Basis deiner ausdrücklichen Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) für die öffentliche Karte. Du kannst die Einwilligung jederzeit widerrufen.", "s5title": "5. Datenspeicherung", "s5body": "Deine Daten werden gespeichert, solange dein Konto aktiv ist. Du kannst die vollständige Löschung unter privacy@apiscan.app beantragen – wir löschen alle Daten innerhalb von 30 Tagen.", "s6title": "6. Deine Rechte", "s6body": "Du hast das Recht auf Auskunft, Berichtigung, Löschung und Datenübertragbarkeit sowie das Widerspruchsrecht. Kontakt: privacy@apiscan.app.", "s7title": "7. Sicherheit", "s7body": "Passwörter werden mit bcrypt gehasht. Der API-Zugriff erfordert ein signiertes JWT-Token. Datenübertragungen sind TLS-verschlüsselt.", "s8title": "8. Kontakt", "s8body": "Fragen zu dieser Erklärung oder deinen Daten? Schreib uns an privacy@apiscan.app." },
-  "dash": {
-    "login": { "title": "Bei ApiScan anmelden", "email": "E-Mail", "password": "Passwort", "submit": "Anmelden", "noAccount": "Noch kein Konto?", "register": "Registrieren", "errorGeneric": "Anmeldung fehlgeschlagen. Bitte erneut versuchen." },
-    "register": { "title": "Konto erstellen", "name": "Name", "email": "E-Mail", "password": "Passwort (min. 8 Zeichen)", "submit": "Konto erstellen", "hasAccount": "Bereits ein Konto?", "login": "Anmelden", "errorGeneric": "Registrierung fehlgeschlagen. Bitte erneut versuchen." },
-    "nav": { "apiaries": "Meine Bienenstände", "stats": "Meine Statistiken", "qrBatches": "QR-Batches", "customFields": "Eigene Felder", "profile": "Profil", "logout": "Abmelden" },
-    "overview": { "title": "Meine Statistiken", "period": "Zeitraum", "preset30d": "Letzte 30 Tage", "preset90d": "Letzte 90 Tage", "preset365d": "Letztes Jahr", "presetAll": "Gesamte Zeit", "apiaries": "Bienenstände", "hives": "Völker", "inspections": "Inspektionen", "perApiary": "Nach Bienenstand", "apiary": "Bienenstand", "noData": "Keine Inspektionen in diesem Zeitraum." },
-    "profile": { "title": "Profil", "editTitle": "Profil bearbeiten", "passwordTitle": "Passwort ändern", "name": "Name", "language": "Sprache", "currentPassword": "Aktuelles Passwort", "newPassword": "Neues Passwort (min. 8 Zeichen)", "confirmPassword": "Neues Passwort bestätigen", "saveProfile": "Profil speichern", "savePassword": "Passwort ändern", "profileSaved": "Profil gespeichert.", "passwordSaved": "Passwort erfolgreich geändert.", "passwordMismatch": "Die neuen Passwörter stimmen nicht überein.", "errorGeneric": "Etwas ist schiefgelaufen. Bitte erneut versuchen.", "badgeAdmin": "Admin", "badgeSupporter": "Supporter", "memberSince": "Mitglied seit", "dangerTitle": "Gefahrenzone", "dangerDesc": "Löscht dein Konto und alle zugehörigen Daten unwiderruflich – Bienenstände, Völker, Kontrollen.", "deleteAccount": "Konto löschen", "deleteConfirm": "Bist du sicher? Alle deine Daten werden dauerhaft gelöscht.", "deleteConfirmBtn": "Ja, Konto löschen", "deleteCancel": "Abbrechen" },
-    "admin": {
-      "nav": { "section": "Admin", "stats": "Plattform-Statistiken", "users": "Benutzer", "map": "Karte", "health": "Datenqualität" },
-      "stats": { "title": "Plattform-Statistiken", "totalUsers": "Gesamtbenutzer", "newUsers": "Neue Benutzer", "supporters": "Supporter", "totalApiaries": "Bienenstände gesamt", "publicApiaries": "Öffentliche Bienenstände", "totalHives": "Völker gesamt", "totalInspections": "Kontrollen gesamt", "activeUsers": "Aktive Benutzer (30T)", "activeSessions": "Aktive Sitzungen", "preset": "Zeitraum" },
-      "users": { "title": "Benutzerverwaltung", "search": "Nach E-Mail suchen…", "all": "Alle", "supportersOnly": "Nur Supporter", "email": "E-Mail", "name": "Name", "joined": "Beigetreten", "supporter": "Supporter", "actions": "Aktionen", "makeSupporter": "Supporter machen", "removeSupporter": "Supporter entfernen", "revokeSessions": "Sitzungen widerrufen", "delete": "Löschen", "confirmDelete": "Diesen Benutzer und alle Daten löschen? Dies kann nicht rückgängig gemacht werden.", "confirmRevoke": "Alle Sitzungen für diesen Benutzer widerrufen?" },
-      "map": { "title": "Karten-Moderation", "all": "Alle öffentlichen Bienenstände", "flagged": "Markiert", "name": "Bienenstand", "owner": "Besitzer", "hives": "Völker", "setPrivate": "Privat setzen", "noFlagged": "Keine markierten Bienenstände." },
-      "health": { "title": "Datenqualität", "inactiveUsers": "Inaktive Benutzer", "zeroHives": "Nicht kontrollierte Völker", "noVarroa": "Fehlende Varroa-Daten", "inactiveDesc": "Vor > 30 Tagen registriert, keine Kontrollen", "zeroDesc": "Initialisiert, aber nie kontrolliert", "noVarroaDesc": "Kontrollen ohne Varroa-Zählung", "email": "E-Mail", "joined": "Beigetreten", "apiaries": "Bienenstände", "hive": "Volk", "apiary": "Bienenstand", "missing": "Fehlende Anzahl", "noData": "Keine Probleme gefunden." }
+  "footer": {
+    "tagline": "Open-Source-Imkerei für einen gesünderen Planeten.",
+    "explore": "Entdecken",
+    "community": "Gemeinschaft",
+    "support": "Unterstützen",
+    "legal": "Rechtliches",
+    "privacy": "Datenschutzerklärung",
+    "copyright": "© 2025 ApiScan. Veröffentlicht unter der MIT-Lizenz.",
+    "made": "Mit 🐝 für Imkerinnen und Imker weltweit."
+  },
+  "hero": {
+    "badge": "Open Source · Gemeinschaftsprojekt · Kostenlos",
+    "title1": "Bienen retten,",
+    "title2": "Scan für Scan",
+    "subtitle": "ApiScan macht jeden Imker zum Bürgerwissenschaftler. Dokumentiere Kontrollen, verfolge den Gesundheitszustand deiner Völker und trage zu globalen Daten bei, die Forschern helfen, Bienenpopulationen weltweit zu verstehen und zu schützen.",
+    "apple": {
+      "pre": "Laden im",
+      "store": "App Store"
     },
-    "apiaries": { "title": "Meine Bienenstände", "empty": "Noch keine Bienenstände.", "hives": "Völker", "public": "Öffentlich", "private": "Privat", "new": "Neuer Bienenstand", "createTitle": "Bienenstand erstellen", "name": "Name", "description": "Beschreibung", "address": "Adresse", "isPublic": "Auf öffentlicher Karte anzeigen", "cancel": "Abbrechen", "createBtn": "Bienenstand anlegen", "createSuccess": "Bienenstand erstellt.", "errorGeneric": "Etwas ist schiefgelaufen." },
-    "apiary": { "hives": "Völker", "inspections": "Kontrollen", "avgVarroa": "Ø Varroa", "noHives": "Noch keine Völker in diesem Bienenstand.", "newHive": "Neues Volk", "createHiveTitle": "Volk hinzufügen", "createHiveBtn": "Volk anlegen", "createHiveSuccess": "Volk hinzugefügt.", "editBtn": "Bienenstand bearbeiten", "editTitle": "Bienenstand bearbeiten", "saveBtn": "Änderungen speichern", "saveSuccess": "Bienenstand gespeichert.", "dangerTitle": "Gefahrenzone", "deleteBtn": "Bienenstand löschen", "deleteConfirmText": "Diese Aktion kann nicht rückgängig gemacht werden.", "deleteConfirmBtn": "Endgültig löschen", "deleteSuccess": "Bienenstand gelöscht.", "deleteHasHives": "Löschen nicht möglich – dieser Bienenstand hat noch Völker. Bitte erst alle Völker löschen.", "errorGeneric": "Etwas ist schiefgelaufen.", "moodTitle": "Stimmungsverteilung", "noMoodData": "Noch keine Stimmungsdaten." },
-    "hive": { "inspections": "Kontrollen", "varroaTrend": "Varroa-Verlauf (12 Monate)", "noTrend": "Noch keine Varroa-Daten.", "noInspections": "Noch keine Kontrollen.", "date": "Datum", "varroa": "Varroa", "mood": "Stimmung", "queen": "Königin gesehen", "brood": "Bruträhmchen", "yes": "Ja", "no": "Nein", "hiveType": "Bienenstock-Typ", "acquisitionDate": "Anschaffungsdatum", "notes": "Notizen", "editBtn": "Volk bearbeiten", "editTitle": "Volk bearbeiten", "saveBtn": "Änderungen speichern", "saveSuccess": "Volk gespeichert.", "dangerTitle": "Gefahrenzone", "deleteBtn": "Volk löschen", "deleteConfirmText": "Dies löscht das Volk und alle Kontrollen dauerhaft.", "deleteConfirmBtn": "Endgültig löschen", "deleteSuccess": "Volk gelöscht.", "errorGeneric": "Etwas ist schiefgelaufen.", "newInspectionBtn": "Neue Kontrolle", "addInspectionTitle": "Kontrolle erfassen", "editInspectionTitle": "Kontrolle bearbeiten", "inspectionSaveBtn": "Kontrolle speichern", "inspectionUpdateBtn": "Kontrolle aktualisieren", "inspectionSaveSuccess": "Kontrolle erfasst.", "inspectionUpdateSuccess": "Kontrolle aktualisiert.", "inspectionEditBtn": "Bearbeiten", "inspectionDeleteBtn": "Löschen", "inspectionConfirmDeleteText": "Kontrolle löschen?", "inspectionConfirmDeleteBtn": "Bestätigen", "inspectionLoadMore": "Laden", "inspectionLoadingMore": "Lädt…", "inspectionShowing": "Zeige {shown} von {total}", "exportCsv": "CSV exportieren", "exportJson": "JSON exportieren", "actions": "Aktionen", "moodCalm": "Ruhig", "moodNervous": "Nervös", "moodAggressive": "Aggressiv", "queenNotRecorded": "Nicht erfasst", "moodTitle": "Stimmungsverteilung", "noMoodData": "Noch keine Stimmungsdaten." },
-    "fieldDefs": { "title": "Eigene Felder", "subtitle": "Erweitere deine Völker- und Kontrollformulare mit eigenen Feldern.", "empty": "Noch keine eigenen Felder.", "new": "Neues Feld", "createTitle": "Neues eigenes Feld", "editTitle": "Feld bearbeiten", "name": "Feldname", "target": "Gilt für", "targetHive": "Volk", "targetInspection": "Kontrolle", "type": "Feldtyp", "typeText": "Text", "typeNumber": "Zahl", "typeBoolean": "Ja / Nein", "typeDate": "Datum", "typeSelect": "Auswahl", "options": "Optionen (eine pro Zeile)", "required": "Pflichtfeld", "createBtn": "Feld erstellen", "saveBtn": "Änderungen speichern", "cancel": "Abbrechen", "createSuccess": "Feld erstellt.", "saveSuccess": "Feld gespeichert.", "deleteBtn": "Löschen", "deleteConfirmText": "Dieses Feld löschen? Vorhandene Daten gehen verloren.", "deleteConfirmBtn": "Bestätigen", "errorGeneric": "Etwas ist schiefgelaufen.", "colName": "Name", "colTarget": "Gilt für", "colType": "Typ", "colRequired": "Pflichtfeld", "colActions": "Aktionen", "apiaryTitle": "Bienenstand-Felder", "apiarySubtitle": "Diese Felder gelten nur für Völker und Kontrollen in diesem Bienenstand." },
-    "qrBatches": { "title": "QR-Code-Batches", "empty": "Noch keine QR-Batches.", "new": "Neuer Batch", "createTitle": "QR-Batch generieren", "count": "Anzahl Codes (1–50)", "createBtn": "Generieren", "cancel": "Abbrechen", "createSuccess": "Batch erstellt.", "errorGeneric": "Etwas ist schiefgelaufen.", "date": "Erstellt", "total": "Codes", "linked": "Verknüpft", "view": "Ansehen", "detailTitle": "QR-Batch", "backToList": "← Alle Batches", "downloadPdf": "PDF herunterladen", "tokens": "QR-Codes", "linkedBadge": "Verknüpft", "unlinkedBadge": "Unverknüpft" }
+    "google": {
+      "pre": "Jetzt bei",
+      "play": "Google Play"
+    },
+    "scroll": "Runterscrollen für mehr"
   },
-  "members": { "tag": "Mitgliederbereich", "title": "Gemeinschaftseinblicke", "sub": "Unterstützer erhalten Zugang zu tieferen Statistiken, globalen Trends und forschungsgeeigneten Daten.", "snap": { "title": "Globaler Gemeinschaftsüberblick", "sub": "Diese Zahlen sind für alle sichtbar. Unterstützer sehen viel mehr." }, "teaser": { "title": "Erweiterte globale Statistiken", "sub": "Nur für Unterstützer – in der App freischalten", "subUnlocked": "Supporter-Inhalte – Web-Dashboard kommt bald" }, "gate": { "title": "Das vollständige Bild freischalten", "unlockedBadge": "Supporter", "unlockedNote": "Live-Globalstatistiken erscheinen hier, sobald das Web-Dashboard veröffentlicht wird. Alle Funktionen sind jetzt in der App verfügbar.", "desc": "Unterstützer sehen regionale Varroatrends, saisonale Völkergesundheitskurven, Weiselwechselraten und wetterkorrelierte Blühdaten.", "cta": "App herunterladen", "note": "Nach der Anmeldung in der App auf Supporter upgraden (2,99 € / Monat)." }, "benefits": { "title": "Was Unterstützer erhalten", "sub": "Jeder Euro fließt direkt in die Unabhängigkeit von ApiScan und die Finanzierung von Forschungspartnerschaften." }, "b1": { "title": "Globales Gesundheits-Dashboard", "desc": "Echtzeit-Varroaindex, Stimmungsverteilung und Kontrollhäufigkeit in allen Regionen." }, "b2": { "title": "Saisonale Trendgrafiken", "desc": "Wie entwickelt sich die Völkergesundheit in deiner Region im Vergleich zum Vorjahr?" }, "b3": { "title": "Vollständiger Datenexport", "desc": "Vollständige Kontrollhistorie als CSV oder JSON herunterladen – geplant für das nächste Major-Release." }, "b4": { "title": "Regionale Heatmaps", "desc": "Krankheitscluster-Karten und Varroa-Risikokarten – in Planung." }, "b5": { "title": "Forschungsdatenportal", "desc": "Zugang zum anonymisierten Datensatz, der in unseren Universitätsforschungspartnerschaften verwendet wird." }, "b6": { "title": "Frühzugang & Credits", "desc": "Neue Funktionen als Erster testen und deinen Namen in der App sehen." }, "stat": { "avgVarroa": "Durchschn. Varroa (global)", "goodMood": "Völker: Gute Stimmung", "avgBrood": "Durchschn. Brutwaben", "interval": "Durchschn. Kontrollintervall" }, "coming": { "tag": "Demnächst", "title": "Web-Dashboard für Mitglieder", "desc": "Wir bauen ein vollständiges webbasiertes Mitglieder-Dashboard, damit du deine Daten direkt im Browser erkunden kannst.", "btn": "Auf GitHub verfolgen" } }
+  "stats": {
+    "title": "Unsere Gemeinschaft, gerade jetzt",
+    "sub": "Echtzeitdaten aus unserem globalen Netzwerk von Imkerinnen und Imkern",
+    "apiaries": "Registrierte Bienenstände",
+    "hives": "Überwachte Völker",
+    "inspections": "Protokollierte Kontrollen",
+    "countries": "Länder erreicht"
+  },
+  "feat": {
+    "tag": "Die App",
+    "title": "Alles, was ein Imker braucht",
+    "sub": "Vom Hobby-Imker bis zum Profi-Betrieb – ApiScan wächst mit dir und trägt gleichzeitig zum Schutz unseres Planeten bei.",
+    "qr": {
+      "title": "QR-Code scannen & loslegen",
+      "desc": "Klebe einen QR-Code auf jeden Stock. Beim Ankommen scannen und direkt mit der Kontrolle beginnen – kein Suchen, kein Vertippen."
+    },
+    "track": {
+      "title": "Intelligentes Tracking",
+      "desc": "Verfolge Bruträhmenzahl, Varroabefall, Weiselstand, Honigvorräte und Stimmung über Zeit. Erkenne Trends, bevor sie zu Problemen werden."
+    },
+    "global": {
+      "title": "Globaler Datenpool",
+      "desc": "Deine anonymisierten Daten tragen zu einem weltweiten Bild der Völkergesundheit bei – geteilt mit Forschern, die Völkerkollaps und Krankheitsverbreitung untersuchen."
+    },
+    "trends": {
+      "title": "Trendanalyse",
+      "desc": "Varroazahlen über Jahreszeiten visualisieren, die Völkergesundheit im Stand vergleichen und die Entwicklung der Kolonie in übersichtlichen Grafiken verfolgen."
+    },
+    "batch": {
+      "title": "QR-Batch-Generierung",
+      "desc": "Bis zu 50 QR-Codes auf einmal generieren und als druckfertiges PDF herunterladen – ideal für neue Bienenstände oder Ersatz verlorener Etiketten."
+    },
+    "privacy": {
+      "title": "Deine Daten, deine Kontrolle",
+      "desc": "Genaue Standorte und persönliche Notizen bleiben privat. Nur anonymisierte Zusammenfassungen werden geteilt – du bestimmst, was auf der öffentlichen Karte sichtbar ist."
+    }
+  },
+  "mission": {
+    "tag": "Warum es wichtig ist",
+    "title": "Ein Drittel aller Lebensmittel hängt von Bienen ab",
+    "p1": "Honigbienen und Wildbestäuber bestäuben rund 35 % der weltweiten Nahrungsmittelproduktion – Obst, Gemüse, Nüsse und Öle. Doch die Populationen nehmen seit Jahrzehnten ab, und die Wissenschaft sucht noch immer nach den genauen Ursachen.",
+    "li1": "Völkerkollaps-Syndrom betrifft jedes Jahr Millionen von Völkern",
+    "li2": "Die Varroamilbe ist weltweit die größte Bedrohung für Honigbienen",
+    "li3": "Pestizide, Habitatverlust und Klimawandel verstärken den Druck",
+    "li4": "Echtzeitdaten von Imkern sind entscheidend für Frühwarnsysteme",
+    "callout": "Wenn du in ApiScan eine Kontrolle einträgst, verwaltest du nicht nur dein Volk – du fügst einem globalen Frühwarnnetz für Bienengesundheit einen Datenpunkt hinzu."
+  },
+  "hex1": {
+    "label": "der Blütenpflanzen sind auf tierische Bestäubung angewiesen"
+  },
+  "hex2": {
+    "label": "der Insektenbestäuber sind vom Aussterben bedroht"
+  },
+  "hex3": {
+    "label": "jährlicher globaler Wert der Bestäubungsleistung"
+  },
+  "comm": {
+    "tag": "Kollektive Intelligenz",
+    "title": "Warum Gemeinschaftsdaten alles verändern",
+    "sub": "Ein einzelner Imker sieht einen Bienenstand. Gemeinsam sehen wir die Welt – und können etwas dagegen tun.",
+    "disease": {
+      "title": "Krankheitskartierung",
+      "desc": "Geografische Cluster von Varroabefall oder Krankheitsausbrüchen erkennen, bevor sie sich ausbreiten, und gezielte Gegenmaßnahmen ermöglichen."
+    },
+    "seasonal": {
+      "title": "Saisonale Trends",
+      "desc": "Völkergesundheit mit Wetterdaten, Blühkalendern und lokaler Landnutzung vergleichen, um Kolonieverluste in jeder Region zu erklären."
+    },
+    "research": {
+      "title": "Forschungspartnerschaft",
+      "desc": "Unser anonymisierter Datensatz wird mit Universitätsforschern und Naturschutzorganisationen geteilt und trägt zu begutachteter Wissenschaft über Bestäubergesundheit bei."
+    },
+    "policy": {
+      "title": "Politischer Einfluss",
+      "desc": "Harte Daten aus tausenden von Bienenständen geben Imkern eine starke, faktenbasierte Stimme in Gesprächen über Pestizidregulierung und Habitatschutz."
+    }
+  },
+  "road": {
+    "tag": "Was kommt als Nächstes",
+    "title": "Auf der Roadmap",
+    "sub": "Wir sind ehrlich darüber, was bereits fertig ist und was noch geplant wird.",
+    "remind": {
+      "title": "Kontrollierungserinnerungen",
+      "desc": "Push-Benachrichtigungen, wenn ein Volk zu lange nicht kontrolliert wurde."
+    },
+    "export": {
+      "title": "Datenexport (CSV / JSON)",
+      "desc": "Vollständige Kontrollhistorie als CSV oder JSON herunterladen – jetzt live im Web-Dashboard."
+    },
+    "fields": {
+      "title": "Benutzerdefinierte Felder in Formularen",
+      "desc": "Eigene Kontrollfelder definieren und direkt im Web-Dashboard nutzen – jetzt live."
+    },
+    "heat": {
+      "title": "Regionale Heatmaps",
+      "desc": "Varroa-Risikoüberlagerungen auf der öffentlichen Karte, farbcodiert nach Milbendruck – jetzt live."
+    },
+    "label": {
+      "planned": "Geplant",
+      "progress": "In Arbeit",
+      "shipped": "Veröffentlicht ✓"
+    }
+  },
+  "support": {
+    "tag": "Unterstütze die Mission",
+    "title": "Halte die Völker am Summen",
+    "sub": "ApiScan ist kostenlos nutzbar. Ein kleiner Beitrag hält die Server am Laufen, finanziert neue Funktionen und unterstützt unsere Forschungspartnerschaften."
+  },
+  "price": {
+    "free": {
+      "tier": "Dauerhaft kostenlos",
+      "f1": "Unbegrenzte Völker & Kontrollen",
+      "f2": "QR-Code-Scan & Batch-Generierung",
+      "f3": "Grundlegende Statistiken pro Volk",
+      "f4": "Beitrag zu Gemeinschaftsdaten",
+      "f5": "Öffentliche Live-Karte",
+      "f6": "Erweiterte Grafiken & Trends",
+      "f7": "Datenexport",
+      "f8": "Mitgliederbereich"
+    },
+    "month": "/ Monat",
+    "sup": {
+      "tier": "Supporter",
+      "badge": "Am beliebtesten",
+      "f1": "Alles im kostenlosen Plan",
+      "f2": "Erweiterte Trendgrafiken (in der App)",
+      "f3": "Mitgliederbereich & globale Statistiken",
+      "f4": "Vorrangiger Support",
+      "f5": "Dein Name in den App-Credits",
+      "f6": "Frühzeitiger Zugang zu neuen Funktionen",
+      "f7": "Datenexport (CSV / JSON)",
+      "f8": "Regionale Heatmaps"
+    },
+    "coming": "Demnächst",
+    "donate": {
+      "tier": "Einmalige Spende",
+      "price": "Dein Betrag",
+      "note": "Jeder Beitrag, egal wie groß, hilft ApiScan unabhängig, werbefrei und für alle Imker zugänglich zu halten."
+    }
+  },
+  "btn": {
+    "free": "Kostenlos herunterladen",
+    "supporter": "Supporter werden",
+    "kofi": "Auf Ko-fi unterstützen",
+    "paypal": "Per PayPal spenden"
+  },
+  "dl": {
+    "tag": "Noch heute starten",
+    "title": "ApiScan herunterladen – kostenlos",
+    "sub": "Für iOS und Android verfügbar. Scan dein erstes Volk in unter zwei Minuten."
+  },
+  "map": {
+    "preview": {
+      "title": "Unsere Gemeinschaft auf der Karte",
+      "sub": "Entdecke weltweit registrierte Bienenstände – in Echtzeit aktualisiert.",
+      "btn": "Live-Karte öffnen →"
+    },
+    "stat": {
+      "apiaries": "Bienenstände",
+      "hives": "Völker",
+      "inspections": "Kontrollen"
+    },
+    "popup": {
+      "hiveSingular": "Volk",
+      "hivePlural": "Völker",
+      "viewDetails": "Details ansehen →"
+    },
+    "heatmap": {
+      "toggle": "Varroa-Heatmap",
+      "low": "Niedrig (< 2)",
+      "medium": "Mittel (2–5)",
+      "high": "Hoch (> 5)"
+    }
+  },
+  "news": {
+    "tag": "Aktuelles",
+    "title": "News & Ankündigungen",
+    "sub": "Neue Funktionen, Forschungspartnerschaften, Naturschutzmeilensteine und alles Wichtige aus der ApiScan-Gemeinschaft."
+  },
+  "contrib": {
+    "tag": "Open Source",
+    "title": "Hilf ApiScan aufzubauen",
+    "sub": "ApiScan ist ein Open-Source-Projekt, das von und für die Imkergemeinschaft gebaut wird.",
+    "ways": {
+      "title": "Wie du beitragen kannst",
+      "sub": "Du musst kein Programmierer sein, um zu helfen."
+    },
+    "bug": {
+      "title": "Bugs melden",
+      "desc": "Etwas funktioniert nicht? Öffne ein GitHub-Issue mit Gerätebeschreibung, OS-Version und Schritten zur Reproduktion.",
+      "link": "Issue auf GitHub öffnen →"
+    },
+    "code": {
+      "title": "Code einreichen",
+      "desc": "Repository forken, Branch erstellen, Pull Request öffnen.",
+      "link": "Repository ansehen →"
+    },
+    "docs": {
+      "title": "Dokumentation verbessern",
+      "desc": "Hilf dabei, die In-App-Hilfetexte, den API-Vertrag, Architekturnotizen oder diese Website zu verbessern.",
+      "link": "Docs-Ordner ansehen →"
+    },
+    "trans": {
+      "title": "App übersetzen",
+      "desc": "Zweisprachig? Hilf dabei, eine Übersetzung hinzuzufügen oder zu verbessern. Kein Programmieren erforderlich.",
+      "link": "Zur Übersetzungsdiskussion →"
+    },
+    "test": {
+      "title": "Neue Funktionen testen",
+      "desc": "Tritt dem Beta-Programm bei und gib Feedback, bevor Funktionen veröffentlicht werden.",
+      "link": "Zur Beta-Diskussion →"
+    },
+    "spread": {
+      "title": "Weiterempfehlen",
+      "desc": "Erzähl deinem Imkerverein oder deiner Online-Community von ApiScan.",
+      "link": "Download-Link teilen →"
+    },
+    "github": {
+      "title": "🐝 Der Bienenstock ist auf GitHub",
+      "desc": "ApiScan ist vollständig Open Source unter der MIT-Lizenz.",
+      "btn": "Auf GitHub ansehen"
+    }
+  },
+  "fr": {
+    "tag": "GitHub-Integration",
+    "title": "Funktion anfragen oder Bug melden",
+    "sub": "Füll das Formular aus und wir öffnen ein vorausgefülltes GitHub-Issue für dich.",
+    "label": {
+      "title": "Titel",
+      "cat": "Kategorie",
+      "platform": "Plattform",
+      "desc": "Beschreibung",
+      "usecase": "Anwendungsfall / Warum"
+    },
+    "ph": {
+      "title": "Kurzer, beschreibender Titel",
+      "desc": "Beschreibe die Funktion oder den Fehler im Detail.",
+      "usecase": "Warum brauchst du das? Wie würdest du es nutzen?"
+    },
+    "cat": {
+      "feature": "✨ Neue Funktion",
+      "enhance": "⚡ Verbesserung",
+      "bug": "🐛 Fehlermeldung",
+      "idea": "💡 Idee / Diskussion"
+    },
+    "platform": {
+      "all": "Alle Plattformen",
+      "ios": "iOS",
+      "android": "Android",
+      "backend": "Backend / API",
+      "web": "Website"
+    },
+    "btn": "Auf GitHub öffnen →",
+    "note": "Du wirst zu GitHub weitergeleitet, um das Issue zu prüfen und einzureichen."
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "updated": "Zuletzt aktualisiert: Mai 2026",
+    "intro": "ApiScan ist eine Open-Source-Imker-App. Diese Datenschutzerklärung erläutert, welche Daten wir erheben, warum wir sie verarbeiten und welche Wahlmöglichkeiten du hast – insbesondere wie du steuerst, ob dein Bienenstand auf der öffentlichen Karte erscheint.",
+    "s1title": "1. Erhobene Daten",
+    "s1body": "Bei der Registrierung: deine E-Mail-Adresse, dein Anzeigename und deine bevorzugte Sprache. Bei der App-Nutzung: Bienenstands-Namen und GPS-Koordinaten (wenn du sie eingibst), Völkerdetails und Kontrolldaten. Wir erheben keine Gerätekennungen, Werbe-IDs oder genaue Standortdaten ohne ausdrückliche Eingabe durch dich.",
+    "s2title": "2. Öffentliche Karte – Opt-in",
+    "s2body": "Die öffentliche Karte zeigt anonymisierte Bienenstands-Pins, um globale Imkeraktivität sichtbar zu machen. Die Teilnahme ist ausschließlich freiwillig (Opt-in). Standardmäßig ist jeder Bienenstand privat. Du kannst 'Auf öffentlicher Karte anzeigen' pro Bienenstand in den App-Einstellungen jederzeit aktivieren und wieder deaktivieren. Bei Aktivierung werden Name, GPS-Koordinaten und Völkerzahl angezeigt. Keine Identitäts- oder Kontrolldaten werden jemals öffentlich geteilt.",
+    "s3title": "3. Verwendung deiner Daten",
+    "s3body": "Deine Daten werden ausschließlich für den App-Betrieb verwendet und – nur bei Opt-in – für die öffentliche Karte und globale Statistiken. Wir verkaufen, handeln oder vermieten keine personenbezogenen Daten. Wir verwenden sie nicht für Werbung.",
+    "s4title": "4. Rechtsgrundlage (DSGVO)",
+    "s4body": "Für EU/EWR-Nutzer verarbeiten wir deine Daten auf Basis der Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO) für die App-Kernfunktionen und auf Basis deiner ausdrücklichen Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) für die öffentliche Karte. Du kannst die Einwilligung jederzeit widerrufen.",
+    "s5title": "5. Datenspeicherung",
+    "s5body": "Deine Daten werden gespeichert, solange dein Konto aktiv ist. Du kannst die vollständige Löschung unter privacy@apiscan.app beantragen – wir löschen alle Daten innerhalb von 30 Tagen.",
+    "s6title": "6. Deine Rechte",
+    "s6body": "Du hast das Recht auf Auskunft, Berichtigung, Löschung und Datenübertragbarkeit sowie das Widerspruchsrecht. Kontakt: privacy@apiscan.app.",
+    "s7title": "7. Sicherheit",
+    "s7body": "Passwörter werden mit bcrypt gehasht. Der API-Zugriff erfordert ein signiertes JWT-Token. Datenübertragungen sind TLS-verschlüsselt.",
+    "s8title": "8. Kontakt",
+    "s8body": "Fragen zu dieser Erklärung oder deinen Daten? Schreib uns an privacy@apiscan.app."
+  },
+  "dash": {
+    "login": {
+      "title": "Bei ApiScan anmelden",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "submit": "Anmelden",
+      "noAccount": "Noch kein Konto?",
+      "register": "Registrieren",
+      "errorGeneric": "Anmeldung fehlgeschlagen. Bitte erneut versuchen."
+    },
+    "register": {
+      "title": "Konto erstellen",
+      "name": "Name",
+      "email": "E-Mail",
+      "password": "Passwort (min. 8 Zeichen)",
+      "submit": "Konto erstellen",
+      "hasAccount": "Bereits ein Konto?",
+      "login": "Anmelden",
+      "errorGeneric": "Registrierung fehlgeschlagen. Bitte erneut versuchen."
+    },
+    "nav": {
+      "apiaries": "Meine Bienenstände",
+      "stats": "Meine Statistiken",
+      "qrBatches": "QR-Batches",
+      "customFields": "Eigene Felder",
+      "profile": "Profil",
+      "logout": "Abmelden"
+    },
+    "overview": {
+      "title": "Meine Statistiken",
+      "period": "Zeitraum",
+      "preset30d": "Letzte 30 Tage",
+      "preset90d": "Letzte 90 Tage",
+      "preset365d": "Letztes Jahr",
+      "presetAll": "Gesamte Zeit",
+      "apiaries": "Bienenstände",
+      "hives": "Völker",
+      "inspections": "Inspektionen",
+      "perApiary": "Nach Bienenstand",
+      "apiary": "Bienenstand",
+      "noData": "Keine Inspektionen in diesem Zeitraum."
+    },
+    "profile": {
+      "title": "Profil",
+      "editTitle": "Profil bearbeiten",
+      "passwordTitle": "Passwort ändern",
+      "name": "Name",
+      "language": "Sprache",
+      "currentPassword": "Aktuelles Passwort",
+      "newPassword": "Neues Passwort (min. 8 Zeichen)",
+      "confirmPassword": "Neues Passwort bestätigen",
+      "saveProfile": "Profil speichern",
+      "savePassword": "Passwort ändern",
+      "profileSaved": "Profil gespeichert.",
+      "passwordSaved": "Passwort erfolgreich geändert.",
+      "passwordMismatch": "Die neuen Passwörter stimmen nicht überein.",
+      "errorGeneric": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
+      "badgeAdmin": "Admin",
+      "badgeSupporter": "Supporter",
+      "memberSince": "Mitglied seit",
+      "dangerTitle": "Gefahrenzone",
+      "dangerDesc": "Löscht dein Konto und alle zugehörigen Daten unwiderruflich – Bienenstände, Völker, Kontrollen.",
+      "deleteAccount": "Konto löschen",
+      "deleteConfirm": "Bist du sicher? Alle deine Daten werden dauerhaft gelöscht.",
+      "deleteConfirmBtn": "Ja, Konto löschen",
+      "deleteCancel": "Abbrechen"
+    },
+    "admin": {
+      "nav": {
+        "section": "Admin",
+        "stats": "Plattform-Statistiken",
+        "users": "Benutzer",
+        "map": "Karte",
+        "health": "Datenqualität"
+      },
+      "stats": {
+        "title": "Plattform-Statistiken",
+        "totalUsers": "Gesamtbenutzer",
+        "newUsers": "Neue Benutzer",
+        "supporters": "Supporter",
+        "totalApiaries": "Bienenstände gesamt",
+        "publicApiaries": "Öffentliche Bienenstände",
+        "totalHives": "Völker gesamt",
+        "totalInspections": "Kontrollen gesamt",
+        "activeUsers": "Aktive Benutzer (30T)",
+        "activeSessions": "Aktive Sitzungen",
+        "preset": "Zeitraum"
+      },
+      "users": {
+        "title": "Benutzerverwaltung",
+        "search": "Nach E-Mail suchen…",
+        "all": "Alle",
+        "supportersOnly": "Nur Supporter",
+        "email": "E-Mail",
+        "name": "Name",
+        "joined": "Beigetreten",
+        "supporter": "Supporter",
+        "actions": "Aktionen",
+        "makeSupporter": "Supporter machen",
+        "removeSupporter": "Supporter entfernen",
+        "revokeSessions": "Sitzungen widerrufen",
+        "delete": "Löschen",
+        "confirmDelete": "Diesen Benutzer und alle Daten löschen? Dies kann nicht rückgängig gemacht werden.",
+        "confirmRevoke": "Alle Sitzungen für diesen Benutzer widerrufen?"
+      },
+      "map": {
+        "title": "Karten-Moderation",
+        "all": "Alle öffentlichen Bienenstände",
+        "flagged": "Markiert",
+        "name": "Bienenstand",
+        "owner": "Besitzer",
+        "hives": "Völker",
+        "setPrivate": "Privat setzen",
+        "noFlagged": "Keine markierten Bienenstände."
+      },
+      "health": {
+        "title": "Datenqualität",
+        "inactiveUsers": "Inaktive Benutzer",
+        "zeroHives": "Nicht kontrollierte Völker",
+        "noVarroa": "Fehlende Varroa-Daten",
+        "inactiveDesc": "Vor > 30 Tagen registriert, keine Kontrollen",
+        "zeroDesc": "Initialisiert, aber nie kontrolliert",
+        "noVarroaDesc": "Kontrollen ohne Varroa-Zählung",
+        "email": "E-Mail",
+        "joined": "Beigetreten",
+        "apiaries": "Bienenstände",
+        "hive": "Volk",
+        "apiary": "Bienenstand",
+        "missing": "Fehlende Anzahl",
+        "noData": "Keine Probleme gefunden."
+      }
+    },
+    "apiaries": {
+      "title": "Meine Bienenstände",
+      "empty": "Noch keine Bienenstände.",
+      "hives": "Völker",
+      "public": "Öffentlich",
+      "private": "Privat",
+      "new": "Neuer Bienenstand",
+      "createTitle": "Bienenstand erstellen",
+      "name": "Name",
+      "description": "Beschreibung",
+      "address": "Adresse",
+      "isPublic": "Auf öffentlicher Karte anzeigen",
+      "cancel": "Abbrechen",
+      "createBtn": "Bienenstand anlegen",
+      "createSuccess": "Bienenstand erstellt.",
+      "errorGeneric": "Etwas ist schiefgelaufen."
+    },
+    "apiary": {
+      "hives": "Völker",
+      "inspections": "Kontrollen",
+      "avgVarroa": "Ø Varroa",
+      "noHives": "Noch keine Völker in diesem Bienenstand.",
+      "newHive": "Neues Volk",
+      "createHiveTitle": "Volk hinzufügen",
+      "createHiveBtn": "Volk anlegen",
+      "createHiveSuccess": "Volk hinzugefügt.",
+      "editBtn": "Bienenstand bearbeiten",
+      "editTitle": "Bienenstand bearbeiten",
+      "saveBtn": "Änderungen speichern",
+      "saveSuccess": "Bienenstand gespeichert.",
+      "dangerTitle": "Gefahrenzone",
+      "deleteBtn": "Bienenstand löschen",
+      "deleteConfirmText": "Diese Aktion kann nicht rückgängig gemacht werden.",
+      "deleteConfirmBtn": "Endgültig löschen",
+      "deleteSuccess": "Bienenstand gelöscht.",
+      "deleteHasHives": "Löschen nicht möglich – dieser Bienenstand hat noch Völker. Bitte erst alle Völker löschen.",
+      "errorGeneric": "Etwas ist schiefgelaufen.",
+      "moodTitle": "Stimmungsverteilung",
+      "noMoodData": "Noch keine Stimmungsdaten."
+    },
+    "hive": {
+      "inspections": "Kontrollen",
+      "varroaTrend": "Varroa-Verlauf (12 Monate)",
+      "noTrend": "Noch keine Varroa-Daten.",
+      "noInspections": "Noch keine Kontrollen.",
+      "date": "Datum",
+      "varroa": "Varroa",
+      "mood": "Stimmung",
+      "queen": "Königin gesehen",
+      "brood": "Bruträhmchen",
+      "yes": "Ja",
+      "no": "Nein",
+      "hiveType": "Bienenstock-Typ",
+      "acquisitionDate": "Anschaffungsdatum",
+      "notes": "Notizen",
+      "editBtn": "Volk bearbeiten",
+      "editTitle": "Volk bearbeiten",
+      "saveBtn": "Änderungen speichern",
+      "saveSuccess": "Volk gespeichert.",
+      "dangerTitle": "Gefahrenzone",
+      "deleteBtn": "Volk löschen",
+      "deleteConfirmText": "Dies löscht das Volk und alle Kontrollen dauerhaft.",
+      "deleteConfirmBtn": "Endgültig löschen",
+      "deleteSuccess": "Volk gelöscht.",
+      "errorGeneric": "Etwas ist schiefgelaufen.",
+      "newInspectionBtn": "Neue Kontrolle",
+      "addInspectionTitle": "Kontrolle erfassen",
+      "editInspectionTitle": "Kontrolle bearbeiten",
+      "inspectionSaveBtn": "Kontrolle speichern",
+      "inspectionUpdateBtn": "Kontrolle aktualisieren",
+      "inspectionSaveSuccess": "Kontrolle erfasst.",
+      "inspectionUpdateSuccess": "Kontrolle aktualisiert.",
+      "inspectionEditBtn": "Bearbeiten",
+      "inspectionDeleteBtn": "Löschen",
+      "inspectionConfirmDeleteText": "Kontrolle löschen?",
+      "inspectionConfirmDeleteBtn": "Bestätigen",
+      "inspectionLoadMore": "Laden",
+      "inspectionLoadingMore": "Lädt…",
+      "inspectionShowing": "Zeige {shown} von {total}",
+      "exportCsv": "CSV exportieren",
+      "exportJson": "JSON exportieren",
+      "actions": "Aktionen",
+      "moodCalm": "Ruhig",
+      "moodNervous": "Nervös",
+      "moodAggressive": "Aggressiv",
+      "queenNotRecorded": "Nicht erfasst",
+      "moodTitle": "Stimmungsverteilung",
+      "noMoodData": "Noch keine Stimmungsdaten."
+    },
+    "fieldDefs": {
+      "title": "Eigene Felder",
+      "subtitle": "Erweitere deine Völker- und Kontrollformulare mit eigenen Feldern.",
+      "empty": "Noch keine eigenen Felder.",
+      "new": "Neues Feld",
+      "createTitle": "Neues eigenes Feld",
+      "editTitle": "Feld bearbeiten",
+      "name": "Feldname",
+      "target": "Gilt für",
+      "targetHive": "Volk",
+      "targetInspection": "Kontrolle",
+      "type": "Feldtyp",
+      "typeText": "Text",
+      "typeNumber": "Zahl",
+      "typeBoolean": "Ja / Nein",
+      "typeDate": "Datum",
+      "typeSelect": "Auswahl",
+      "options": "Optionen (eine pro Zeile)",
+      "required": "Pflichtfeld",
+      "createBtn": "Feld erstellen",
+      "saveBtn": "Änderungen speichern",
+      "cancel": "Abbrechen",
+      "createSuccess": "Feld erstellt.",
+      "saveSuccess": "Feld gespeichert.",
+      "deleteBtn": "Löschen",
+      "deleteConfirmText": "Dieses Feld löschen? Vorhandene Daten gehen verloren.",
+      "deleteConfirmBtn": "Bestätigen",
+      "errorGeneric": "Etwas ist schiefgelaufen.",
+      "colName": "Name",
+      "colTarget": "Gilt für",
+      "colType": "Typ",
+      "colRequired": "Pflichtfeld",
+      "colActions": "Aktionen",
+      "apiaryTitle": "Bienenstand-Felder",
+      "apiarySubtitle": "Diese Felder gelten nur für Völker und Kontrollen in diesem Bienenstand."
+    },
+    "qrBatches": {
+      "title": "QR-Code-Batches",
+      "empty": "Noch keine QR-Batches.",
+      "new": "Neuer Batch",
+      "createTitle": "QR-Batch generieren",
+      "count": "Anzahl Codes (1–50)",
+      "createBtn": "Generieren",
+      "cancel": "Abbrechen",
+      "createSuccess": "Batch erstellt.",
+      "errorGeneric": "Etwas ist schiefgelaufen.",
+      "date": "Erstellt",
+      "total": "Codes",
+      "linked": "Verknüpft",
+      "view": "Ansehen",
+      "detailTitle": "QR-Batch",
+      "backToList": "← Alle Batches",
+      "downloadPdf": "PDF herunterladen",
+      "tokens": "QR-Codes",
+      "linkedBadge": "Verknüpft",
+      "unlinkedBadge": "Unverknüpft"
+    }
+  },
+  "members": {
+    "tag": "Mitgliederbereich",
+    "title": "Gemeinschaftseinblicke",
+    "sub": "Unterstützer erhalten Zugang zu tieferen Statistiken, globalen Trends und forschungsgeeigneten Daten.",
+    "snap": {
+      "title": "Globaler Gemeinschaftsüberblick",
+      "sub": "Diese Zahlen sind für alle sichtbar. Unterstützer sehen viel mehr."
+    },
+    "teaser": {
+      "title": "Erweiterte globale Statistiken",
+      "sub": "Nur für Unterstützer – in der App freischalten",
+      "subUnlocked": "Supporter-Inhalte – Web-Dashboard kommt bald",
+      "subMember": "Live-Community-Daten – für dich zum Erkunden"
+    },
+    "gate": {
+      "title": "Das vollständige Bild freischalten",
+      "unlockedBadge": "Supporter",
+      "unlockedNote": "Live-Globalstatistiken erscheinen hier, sobald das Web-Dashboard veröffentlicht wird. Alle Funktionen sind jetzt in der App verfügbar.",
+      "desc": "Unterstützer sehen regionale Varroatrends, saisonale Völkergesundheitskurven, Weiselwechselraten und wetterkorrelierte Blühdaten.",
+      "cta": "App herunterladen",
+      "note": "Nach der Anmeldung in der App auf Supporter upgraden (2,99 € / Monat).",
+      "loginTitle": "Anmelden, um Live-Statistiken zu sehen",
+      "loginDesc": "Melde dich mit deinem ApiScan-Konto an, um globale Community-Daten in Echtzeit zu sehen.",
+      "loginCta": "Anmelden"
+    },
+    "benefits": {
+      "title": "Was Unterstützer erhalten",
+      "sub": "Jeder Euro fließt direkt in die Unabhängigkeit von ApiScan und die Finanzierung von Forschungspartnerschaften."
+    },
+    "b1": {
+      "title": "Globales Gesundheits-Dashboard",
+      "desc": "Echtzeit-Varroaindex, Stimmungsverteilung und Kontrollhäufigkeit in allen Regionen."
+    },
+    "b2": {
+      "title": "Saisonale Trendgrafiken",
+      "desc": "Wie entwickelt sich die Völkergesundheit in deiner Region im Vergleich zum Vorjahr?"
+    },
+    "b3": {
+      "title": "Vollständiger Datenexport",
+      "desc": "Vollständige Kontrollhistorie als CSV oder JSON herunterladen – geplant für das nächste Major-Release."
+    },
+    "b4": {
+      "title": "Regionale Heatmaps",
+      "desc": "Krankheitscluster-Karten und Varroa-Risikokarten – in Planung."
+    },
+    "b5": {
+      "title": "Forschungsdatenportal",
+      "desc": "Zugang zum anonymisierten Datensatz, der in unseren Universitätsforschungspartnerschaften verwendet wird."
+    },
+    "b6": {
+      "title": "Frühzugang & Credits",
+      "desc": "Neue Funktionen als Erster testen und deinen Namen in der App sehen."
+    },
+    "stat": {
+      "avgVarroa": "Durchschn. Varroa (global)",
+      "goodMood": "Völker: Gute Stimmung",
+      "avgBrood": "Durchschn. Brutwaben",
+      "interval": "Durchschn. Kontrollintervall"
+    },
+    "coming": {
+      "tag": "Demnächst",
+      "title": "Web-Dashboard für Mitglieder",
+      "desc": "Wir bauen ein vollständiges webbasiertes Mitglieder-Dashboard, damit du deine Daten direkt im Browser erkunden kannst.",
+      "btn": "Auf GitHub verfolgen"
+    }
+  }
 }
