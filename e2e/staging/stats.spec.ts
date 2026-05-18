@@ -1,5 +1,15 @@
 import { test, expect } from '@playwright/test';
 
+// ── /dashboard/members — community dashboard gate ────────────────────────────
+
+test('community dashboard redirects non-supporter demo user to /dashboard', async ({ page }) => {
+  // The demo account is a regular user (not a supporter/admin).
+  // Visiting /dashboard/members should redirect back to the apiaries page.
+  await page.goto('/dashboard/members');
+  await expect(page).toHaveURL(/\/dashboard$/, { timeout: 15_000 });
+  await expect(page.locator('h1.dash-page-title')).toContainText('My Apiaries', { timeout: 10_000 });
+});
+
 // ── /members login gate (anonymous) ─────────────────────────────────────────
 
 test('members page shows login gate and blurred stats for anonymous visitor', async ({ browser }) => {

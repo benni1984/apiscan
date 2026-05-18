@@ -87,6 +87,42 @@ describe('DashboardShell', () => {
     expect(statsLink.closest('a')).toHaveAttribute('href', '/dashboard/stats');
   });
 
+  it('shows Community nav link for supporters', () => {
+    const supporter = { ...mockUser, is_supporter: true };
+    mockUseDashboardAuth.mockReturnValue({ user: supporter, loading: false });
+    render(<DashboardShell>content</DashboardShell>);
+    const link = screen.getByText('nav.members');
+    expect(link).toBeInTheDocument();
+    expect(link.closest('a')).toHaveAttribute('href', '/dashboard/members');
+  });
+
+  it('hides Community nav link for regular users', () => {
+    mockUseDashboardAuth.mockReturnValue({ user: mockUser, loading: false });
+    render(<DashboardShell>content</DashboardShell>);
+    expect(screen.queryByText('nav.members')).not.toBeInTheDocument();
+  });
+
+  it('redirects non-supporter away from memberOnly pages', () => {
+    mockUseDashboardAuth.mockReturnValue({ user: mockUser, loading: false });
+    render(<DashboardShell memberOnly>members content</DashboardShell>);
+    expect(mockReplace).toHaveBeenCalledWith('/dashboard');
+    expect(screen.queryByText('members content')).not.toBeInTheDocument();
+  });
+
+  it('renders memberOnly page for supporters', () => {
+    const supporter = { ...mockUser, is_supporter: true };
+    mockUseDashboardAuth.mockReturnValue({ user: supporter, loading: false });
+    render(<DashboardShell memberOnly>members content</DashboardShell>);
+    expect(screen.getByText('members content')).toBeInTheDocument();
+    expect(mockReplace).not.toHaveBeenCalled();
+  });
+
+  it('renders memberOnly page for admins', () => {
+    mockUseDashboardAuth.mockReturnValue({ user: mockAdmin, loading: false });
+    render(<DashboardShell memberOnly>members content</DashboardShell>);
+    expect(screen.getByText('members content')).toBeInTheDocument();
+  });
+
   it('redirects non-admin away from adminOnly pages', () => {
     mockUseDashboardAuth.mockReturnValue({ user: mockUser, loading: false });
     render(<DashboardShell adminOnly>content</DashboardShell>);

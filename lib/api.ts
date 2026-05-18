@@ -331,6 +331,12 @@ export async function getPublicStats(): Promise<PublicStats> {
 }
 
 // ── Types ──────────────────────────────────────────────────────────────────────
+export interface PublicApiary {
+  id: string;
+  name: string;
+  city_name: string | null;
+  hive_count: number;
+}
 export interface PublicStats {
   apiary_count: number;
   hive_count: number;
@@ -339,6 +345,7 @@ export interface PublicStats {
   mood_distribution: Record<string, number>;
   avg_brood_frames: number | null;
   avg_inspection_interval_days: number | null;
+  apiaries: PublicApiary[];
 }
 export interface User { id: string; email: string; name: string; locale: string; created_at: string; is_admin: boolean; is_supporter: boolean; }
 export interface Apiary { id: string; name: string; hive_count: number; is_public: boolean; description?: string; address?: string; latitude?: number; longitude?: number; created_at: string; }

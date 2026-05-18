@@ -47,8 +47,8 @@ export default function MembersPage() {
             <div className="section-tag light" style={{marginBottom:'16px'}}>{t('coming.tag')}</div>
             <h2 style={{fontSize:'1.7rem',fontWeight:800,marginBottom:'12px'}}>{t('coming.title')}</h2>
             <p style={{color:'rgba(255,255,255,.8)',maxWidth:'520px',margin:'0 auto 28px',fontSize:'1rem',lineHeight:1.65}}>{t('coming.desc')}</p>
-            <a href="https://github.com/benni1984/apiscan" className="btn-github" target="_blank" rel="noopener">
-              <i className="fab fa-github" /> {t('coming.btn')}
+            <a href="/dashboard/members" className="btn-primary" style={{display:'inline-block'}}>
+              {t('coming.btn')}
             </a>
           </div>
         </div>

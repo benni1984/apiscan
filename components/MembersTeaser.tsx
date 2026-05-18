@@ -69,6 +69,7 @@ export default function MembersTeaser() {
       {isSupporter ? (
         <div className="members-unlocked">
           <span className="members-unlocked-badge">✓ {t('gate.unlockedBadge')}</span>
+          <Link href="/dashboard/members" className="btn-primary" style={{ display: 'inline-block', marginTop: '12px' }} data-umami-event="members_open_dashboard">{t('gate.openDashboard')}</Link>
         </div>
       ) : isLoggedIn ? (
         <div className="members-gate">
