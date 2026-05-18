@@ -79,6 +79,14 @@ describe('DashboardShell', () => {
     expect(screen.queryByText('admin.nav.users')).not.toBeInTheDocument();
   });
 
+  it('renders My Statistics nav link for regular users', () => {
+    mockUseDashboardAuth.mockReturnValue({ user: mockUser, loading: false });
+    render(<DashboardShell>content</DashboardShell>);
+    const statsLink = screen.getByText('nav.stats');
+    expect(statsLink).toBeInTheDocument();
+    expect(statsLink.closest('a')).toHaveAttribute('href', '/dashboard/stats');
+  });
+
   it('redirects non-admin away from adminOnly pages', () => {
     mockUseDashboardAuth.mockReturnValue({ user: mockUser, loading: false });
     render(<DashboardShell adminOnly>content</DashboardShell>);

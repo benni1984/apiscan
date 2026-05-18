@@ -1,5 +1,40 @@
 import { test, expect } from '@playwright/test';
 
+test('My Statistics page shows summary pills and per-apiary table', async ({ page }) => {
+  await page.goto('/dashboard/stats');
+  await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 15_000 });
+
+  // Page title
+  await expect(page.locator('h1.dash-page-title')).toHaveText('My Statistics', { timeout: 10_000 });
+
+  // Three summary pills (apiaries, hives, inspections)
+  const pills = page.locator('.dash-stat-pill');
+  await expect(pills).toHaveCount(3, { timeout: 10_000 });
+  await expect(pills.nth(0)).toBeVisible();
+  await expect(pills.nth(1)).toBeVisible();
+  await expect(pills.nth(2)).toBeVisible();
+
+  // Per-apiary table or empty state must be present
+  const hasTable = await page.locator('.dash-table').isVisible().catch(() => false);
+  const hasEmpty = await page.locator('.dash-empty').isVisible().catch(() => false);
+  expect(hasTable || hasEmpty).toBeTruthy();
+});
+
+test('My Statistics preset buttons change the period', async ({ page }) => {
+  await page.goto('/dashboard/stats');
+  await expect(page.locator('h1.dash-page-title')).toBeVisible({ timeout: 15_000 });
+
+  // All four preset buttons should be visible
+  await expect(page.getByRole('button', { name: 'Last 30 days' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Last 90 days' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Last year' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'All time' })).toBeVisible();
+
+  // Click 30d — spinner appears then summary pills return
+  await page.getByRole('button', { name: 'Last 30 days' }).click();
+  await expect(page.locator('.dash-stat-pill').first()).toBeVisible({ timeout: 15_000 });
+});
+
 test('apiary stats section renders with live data', async ({ page }) => {
   await page.goto('/dashboard');
   await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 15_000 });
