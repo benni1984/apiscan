@@ -18,7 +18,7 @@ test('login page renders and rejects wrong credentials', async ({ page }) => {
 test('register new account, verify dashboard access, then delete account', async ({ page }) => {
   const tag = Date.now();
   const name = `E2E User ${tag}`;
-  const email = `e2e-${tag}@staging.test`;
+  const email = `e2e-${tag}@example.com`;
   const password = 'E2eTest1234!';
 
   await test.step('register', async () => {

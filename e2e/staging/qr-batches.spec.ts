@@ -4,7 +4,7 @@ test('QR batch list renders and a batch can be created and viewed', async ({ pag
   await test.step('navigate to QR batches', async () => {
     await page.goto('/dashboard/qr-batches');
     await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 15_000 });
-    await expect(page.locator('h1.dash-page-title')).toContainText('QR Batches');
+    await expect(page.locator('h1.dash-page-title')).toContainText('QR Code Batches');
   });
 
   await test.step('create a new QR batch', async () => {

@@ -1,4 +1,3 @@
-from __future__ import annotations
 from datetime import date, datetime
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, EmailStr, Field, model_validator
@@ -40,6 +39,18 @@ class LogoutRequest(BaseModel):
     refresh_token: str
 
 
+class UserOut(BaseModel):
+    id: str
+    email: str
+    name: str
+    locale: str
+    is_admin: bool
+    is_supporter: bool
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
 class TokenResponse(BaseModel):
     access_token: str
     refresh_token: str
@@ -53,17 +64,6 @@ class AccessTokenResponse(BaseModel):
 # ---------------------------------------------------------------------------
 # Users
 # ---------------------------------------------------------------------------
-
-class UserOut(BaseModel):
-    id: str
-    email: str
-    name: str
-    locale: str
-    is_admin: bool
-    is_supporter: bool
-    created_at: datetime
-
-    model_config = {"from_attributes": True}
 
 
 class UserUpdate(BaseModel):
@@ -338,6 +338,12 @@ class QrScanUnlinked(BaseModel):
 # Inspections
 # ---------------------------------------------------------------------------
 
+# _Date avoids field-name / type-name shadowing: Python assigns `date = None`
+# before evaluating annotations, so `date: Optional[date]` would resolve to
+# Optional[NoneType]. Using an alias keeps the module-level datetime.date.
+_Date = date
+
+
 class InspectionCreate(BaseModel):
     date: date
     queen_seen: Optional[bool] = None
@@ -356,8 +362,22 @@ class InspectionCreate(BaseModel):
     custom_fields: Dict[str, Any] = Field(default_factory=dict)
 
 
-class InspectionUpdate(InspectionCreate):
-    date: Optional[date] = None
+class InspectionUpdate(BaseModel):
+    date: Optional[_Date] = None
+    queen_seen: Optional[bool] = None
+    queen_color: Optional[str] = Field(default=None, pattern="^(white|yellow|red|green|blue)$")
+    brood_frames: Optional[int] = Field(default=None, ge=0, le=10)
+    honey_frames: Optional[int] = Field(default=None, ge=0, le=10)
+    mood: Optional[str] = Field(default=None, pattern="^(calm|nervous|aggressive)$")
+    population_strength: Optional[int] = Field(default=None, ge=1, le=5)
+    varroa_count: Optional[int] = Field(default=None, ge=0)
+    swarm_cells_seen: Optional[bool] = None
+    treatment_applied: Optional[str] = None
+    feeding_done: Optional[bool] = None
+    feeding_type: Optional[str] = None
+    weight_kg: Optional[float] = None
+    notes: Optional[str] = None
+    custom_fields: Optional[Dict[str, Any]] = None
 
 
 class InspectionOut(BaseModel):

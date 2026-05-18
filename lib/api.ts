@@ -216,7 +216,8 @@ export async function updateInspection(id: string, data: InspectionInput): Promi
   const res = await apiFetch(`/inspections/${id}`, { method: 'PUT', body: JSON.stringify(data) });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.detail ?? 'Update failed');
+    const detail = err.detail;
+    throw new Error(Array.isArray(detail) ? detail.map((e: { msg: string }) => e.msg).join('; ') : (detail ?? 'Update failed'));
   }
   return res.json();
 }

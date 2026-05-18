@@ -24,8 +24,8 @@ test('custom fields page: create a text field and delete it', async ({ page }) =
   await test.step('delete the custom field', async () => {
     const fieldRow = page.locator('tr', { has: page.locator('td', { hasText: fieldName }) });
     await fieldRow.locator('button.dash-row-btn-danger').click();
-    // Confirm deletion
-    await fieldRow.locator('button.dash-row-btn-danger').click();
+    // Row replaced by a confirm row — click the confirm button there
+    await page.locator('tr.dash-confirm-row').locator('button.dash-row-btn-danger').click();
     await expect(page.locator('td', { hasText: fieldName })).not.toBeVisible({ timeout: 10_000 });
   });
 });

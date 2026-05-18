@@ -37,6 +37,15 @@ def test_update_inspection(auth_client, hive):
     assert r2.json()["varroa_count"] == 5
 
 
+def test_update_inspection_with_date(auth_client, hive):
+    r = auth_client.post(f"/api/v1/hives/{hive['id']}/inspections", json={"date": "2026-04-01", "varroa_count": 3, "mood": "calm"})
+    iid = r.json()["id"]
+    r2 = auth_client.put(f"/api/v1/inspections/{iid}", json={"date": "2026-04-02", "varroa_count": 7, "mood": "calm", "queen_seen": True, "brood_frames": 5})
+    assert r2.status_code == 200
+    assert r2.json()["varroa_count"] == 7
+    assert r2.json()["date"] == "2026-04-02"
+
+
 def test_delete_inspection(auth_client, hive):
     r = auth_client.post(f"/api/v1/hives/{hive['id']}/inspections", json={"date": "2026-04-01"})
     iid = r.json()["id"]

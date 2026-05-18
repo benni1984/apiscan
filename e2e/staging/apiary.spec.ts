@@ -11,7 +11,7 @@ test('create, rename, and delete an apiary', async ({ page }) => {
     await expect(page.locator('h1.dash-page-title')).toContainText('My Apiaries');
 
     await page.locator('button.dash-new-btn').click();
-    await page.locator('.dash-inline-form input[type="text"]').fill(name);
+    await page.locator('.dash-inline-form input[type="text"]').first().fill(name);
     await page.locator('button.dash-submit-btn').click();
     await expect(page.locator('.dash-success-banner')).toBeVisible({ timeout: 10_000 });
     await expect(page.locator('.dash-apiary-card', { hasText: name })).toBeVisible();

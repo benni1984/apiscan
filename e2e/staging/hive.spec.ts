@@ -9,7 +9,7 @@ test('create a hive, view its detail page, then clean up', async ({ page }) => {
     await page.goto('/dashboard');
     await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 15_000 });
     await page.locator('button.dash-new-btn').click();
-    await page.locator('.dash-inline-form input[type="text"]').fill(apiaryName);
+    await page.locator('.dash-inline-form input[type="text"]').first().fill(apiaryName);
     await page.locator('button.dash-submit-btn').click();
     await expect(page.locator('.dash-success-banner')).toBeVisible({ timeout: 10_000 });
   });
@@ -22,7 +22,7 @@ test('create a hive, view its detail page, then clean up', async ({ page }) => {
 
   await test.step('create a hive', async () => {
     await page.locator('button.dash-new-btn', { hasText: 'New Hive' }).click();
-    await page.locator('.dash-inline-form input[type="text"]').fill(hiveName);
+    await page.locator('.dash-inline-form input[type="text"]').first().fill(hiveName);
     await page.locator('.dash-inline-form button.dash-submit-btn').click();
     await expect(page.locator('.dash-success-banner')).toBeVisible({ timeout: 10_000 });
     await expect(page.locator('.dash-hive-card', { hasText: hiveName })).toBeVisible();
