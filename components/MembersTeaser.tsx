@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { getMe, getPublicStats, type User, type PublicStats } from '@/lib/api';
 
 export default function MembersTeaser() {
@@ -20,6 +21,7 @@ export default function MembersTeaser() {
     }).finally(() => setChecked(true));
   }, []);
 
+  const isLoggedIn = !!user;
   const isSupporter = user?.is_supporter || user?.is_admin;
 
   const calmPct = stats
@@ -38,11 +40,11 @@ export default function MembersTeaser() {
         <i className="fas fa-chart-bar" />
         <div>
           <h3>{t('teaser.title')}</h3>
-          <p>{isSupporter ? t('teaser.subUnlocked') : t('teaser.sub')}</p>
+          <p>{isSupporter ? t('teaser.subUnlocked') : isLoggedIn ? t('teaser.subMember') : t('teaser.sub')}</p>
         </div>
       </div>
 
-      <div className="members-preview" style={isSupporter ? {} : { filter: 'blur(6px)', pointerEvents: 'none', userSelect: 'none' }}>
+      <div className="members-preview" style={isLoggedIn ? {} : { filter: 'blur(6px)', pointerEvents: 'none', userSelect: 'none' }}>
         <div className="members-preview-grid">
           <div className="members-preview-stat">
             <div className="num">{stats?.avg_varroa_count != null ? stats.avg_varroa_count.toFixed(1) : '—'}</div>
@@ -68,12 +70,18 @@ export default function MembersTeaser() {
         <div className="members-unlocked">
           <span className="members-unlocked-badge">✓ {t('gate.unlockedBadge')}</span>
         </div>
-      ) : (
+      ) : isLoggedIn ? (
         <div className="members-gate">
           <h3>{t('gate.title')}</h3>
           <p>{t('gate.desc')}</p>
           <a href="/#download" className="btn-primary" style={{ display: 'inline-block', marginBottom: '8px' }} data-umami-event="members_get_app">{t('gate.cta')}</a>
           <p style={{ fontSize: '.82rem', color: 'var(--muted)', marginTop: '12px' }}>{t('gate.note')}</p>
+        </div>
+      ) : (
+        <div className="members-gate">
+          <h3>{t('gate.loginTitle')}</h3>
+          <p>{t('gate.loginDesc')}</p>
+          <Link href="/dashboard/login" className="btn-primary" style={{ display: 'inline-block', marginBottom: '8px' }} data-umami-event="members_login">{t('gate.loginCta')}</Link>
         </div>
       )}
     </div>
