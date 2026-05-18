@@ -338,6 +338,12 @@ class QrScanUnlinked(BaseModel):
 # Inspections
 # ---------------------------------------------------------------------------
 
+# _Date avoids field-name / type-name shadowing: Python assigns `date = None`
+# before evaluating annotations, so `date: Optional[date]` would resolve to
+# Optional[NoneType]. Using an alias keeps the module-level datetime.date.
+_Date = date
+
+
 class InspectionCreate(BaseModel):
     date: date
     queen_seen: Optional[bool] = None
@@ -357,7 +363,7 @@ class InspectionCreate(BaseModel):
 
 
 class InspectionUpdate(BaseModel):
-    date: Optional[date] = None
+    date: Optional[_Date] = None
     queen_seen: Optional[bool] = None
     queen_color: Optional[str] = Field(default=None, pattern="^(white|yellow|red|green|blue)$")
     brood_frames: Optional[int] = Field(default=None, ge=0, le=10)
