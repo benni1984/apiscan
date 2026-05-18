@@ -337,7 +337,8 @@
       "qrBatches": "Lots QR",
       "customFields": "Champs perso.",
       "profile": "Profil",
-      "logout": "Se déconnecter"
+      "logout": "Se déconnecter",
+      "members": "Communauté"
     },
     "overview": {
       "title": "Mes statistiques",
@@ -588,6 +589,22 @@
       "tokens": "Codes QR",
       "linkedBadge": "Associé",
       "unlinkedBadge": "Non associé"
+    },
+    "community": {
+      "title": "Tableau de bord communautaire",
+      "snapshot": "Aperçu mondial",
+      "health": "Moyennes de santé",
+      "avgVarroa": "Varroa moy. (mondial)",
+      "goodMood": "Ruches : bonne humeur",
+      "avgBrood": "Cadres de couvain moy.",
+      "interval": "Intervalle d'inspection moy.",
+      "moodChart": "Humeur des ruches",
+      "cityChart": "Ruches par ville (Top 15)",
+      "sizeChart": "Taille des ruchers",
+      "apiaryTable": "Ruchers publics",
+      "city": "Ville",
+      "other": "Autre / Inconnu",
+      "noData": "Aucune donnée communautaire disponible."
     }
   },
   "members": {
@@ -601,7 +618,7 @@
     "teaser": {
       "title": "Statistiques mondiales avancées",
       "sub": "Réservé aux supporters — à débloquer dans l'app",
-      "subUnlocked": "Contenu supporter — tableau de bord web bientôt disponible",
+      "subUnlocked": "Données communautaires en direct — ouvrir le tableau de bord",
       "subMember": "Données communautaires en direct — à vous de les explorer"
     },
     "gate": {
@@ -613,7 +630,8 @@
       "note": "Passez à Supporter (2,99 € / mois) dans l'app après inscription.",
       "loginTitle": "Connectez-vous pour voir les statistiques en direct",
       "loginDesc": "Connectez-vous avec votre compte ApiScan pour accéder aux données mondiales de la communauté en temps réel.",
-      "loginCta": "Se connecter"
+      "loginCta": "Se connecter",
+      "openDashboard": "Ouvrir le tableau de bord communautaire"
     },
     "benefits": {
       "title": "Ce que les supporters obtiennent",
@@ -650,10 +668,10 @@
       "interval": "Intervalle d'inspection moy."
     },
     "coming": {
-      "tag": "Bientôt disponible",
+      "tag": "Maintenant disponible",
       "title": "Tableau de bord web pour les membres",
-      "desc": "Nous construisons un tableau de bord web complet pour explorer vos données directement dans le navigateur.",
-      "btn": "Suivre sur GitHub"
+      "desc": "Le tableau de bord web complet pour les membres est en ligne. Explorez les données mondiales de santé des ruches, les tendances d'humeur et les ruchers de la communauté directement dans votre navigateur.",
+      "btn": "Ouvrir le tableau de bord"
     }
   }
 }

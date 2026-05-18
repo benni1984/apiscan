@@ -6,7 +6,9 @@
     "members": "Members",
     "dashboard": "My Hives",
     "download": "Download Free",
-    "back": { "map": "← Live Map" }
+    "back": {
+      "map": "← Live Map"
+    }
   },
   "footer": {
     "tagline": "Open-source beekeeping for a healthier planet.",
@@ -23,8 +25,14 @@
     "title1": "Saving Bees,",
     "title2": "One Scan at a Time",
     "subtitle": "ApiScan turns every beekeeper into a citizen scientist. Log inspections, track hive health, and contribute to global data that helps researchers understand and protect honey bee populations worldwide.",
-    "apple": { "pre": "Download on the", "store": "App Store" },
-    "google": { "pre": "Get it on", "play": "Google Play" },
+    "apple": {
+      "pre": "Download on the",
+      "store": "App Store"
+    },
+    "google": {
+      "pre": "Get it on",
+      "play": "Google Play"
+    },
     "scroll": "Scroll to learn more"
   },
   "stats": {
@@ -39,12 +47,30 @@
     "tag": "The App",
     "title": "Everything a beekeeper needs",
     "sub": "From first-time hobbyist to commercial operation, ApiScan grows with you — and your data grows with the planet.",
-    "qr": { "title": "QR Scan & Go", "desc": "Stick a QR code on each hive. Scan it on arrival and jump straight into your inspection — no searching, no typos, no forgotten hive names." },
-    "track": { "title": "Smart Tracking", "desc": "Track brood frames, varroa counts, queen status, honey stores, and hive mood over time. Spot trends before they become problems." },
-    "global": { "title": "Global Data Pool", "desc": "Your anonymized data contributes to a global picture of hive health — shared with researchers studying colony collapse and disease spread." },
-    "trends": { "title": "Trend Analysis", "desc": "Visualize varroa counts across seasons, compare hive health across your apiary, and follow your colony's development in beautiful charts." },
-    "batch": { "title": "QR Batch Generation", "desc": "Generate batches of up to 50 QR codes and download a print-ready PDF — perfect for labelling a new apiary or replacing lost tags." },
-    "privacy": { "title": "Your Data, Private", "desc": "Precise locations and personal notes stay private. Only anonymized aggregates are shared — you control what's visible on the public map." }
+    "qr": {
+      "title": "QR Scan & Go",
+      "desc": "Stick a QR code on each hive. Scan it on arrival and jump straight into your inspection — no searching, no typos, no forgotten hive names."
+    },
+    "track": {
+      "title": "Smart Tracking",
+      "desc": "Track brood frames, varroa counts, queen status, honey stores, and hive mood over time. Spot trends before they become problems."
+    },
+    "global": {
+      "title": "Global Data Pool",
+      "desc": "Your anonymized data contributes to a global picture of hive health — shared with researchers studying colony collapse and disease spread."
+    },
+    "trends": {
+      "title": "Trend Analysis",
+      "desc": "Visualize varroa counts across seasons, compare hive health across your apiary, and follow your colony's development in beautiful charts."
+    },
+    "batch": {
+      "title": "QR Batch Generation",
+      "desc": "Generate batches of up to 50 QR codes and download a print-ready PDF — perfect for labelling a new apiary or replacing lost tags."
+    },
+    "privacy": {
+      "title": "Your Data, Private",
+      "desc": "Precise locations and personal notes stay private. Only anonymized aggregates are shared — you control what's visible on the public map."
+    }
   },
   "mission": {
     "tag": "Why It Matters",
@@ -56,27 +82,61 @@
     "li4": "Real-time beekeeper data is essential for early-warning systems",
     "callout": "When you log an inspection in ApiScan, you're not just managing your hive — you're adding a data point to a global early-warning network for bee health."
   },
-  "hex1": { "label": "of flowering crops depend on animal pollination" },
-  "hex2": { "label": "of insect pollinator species face extinction risk" },
-  "hex3": { "label": "annual value of global pollination services" },
+  "hex1": {
+    "label": "of flowering crops depend on animal pollination"
+  },
+  "hex2": {
+    "label": "of insect pollinator species face extinction risk"
+  },
+  "hex3": {
+    "label": "annual value of global pollination services"
+  },
   "comm": {
     "tag": "Collective Intelligence",
     "title": "Why community data changes everything",
     "sub": "A single beekeeper sees one apiary. Together, we see the world — and we can do something about it.",
-    "disease": { "title": "Disease Mapping", "desc": "Identify geographic clusters of varroa infestation or disease outbreaks before they spread, enabling targeted beekeeper intervention across regions." },
-    "seasonal": { "title": "Seasonal Trends", "desc": "Cross-reference hive health with weather patterns, bloom calendars, and local land-use to pinpoint what's driving colony losses in each area." },
-    "research": { "title": "Research Partnership", "desc": "Our anonymized dataset is shared with university researchers and conservation NGOs, contributing to peer-reviewed science on pollinator health." },
-    "policy": { "title": "Policy Change", "desc": "Hard data from thousands of apiaries gives beekeepers a powerful evidence-based voice in conversations about pesticide regulation and habitat protection." }
+    "disease": {
+      "title": "Disease Mapping",
+      "desc": "Identify geographic clusters of varroa infestation or disease outbreaks before they spread, enabling targeted beekeeper intervention across regions."
+    },
+    "seasonal": {
+      "title": "Seasonal Trends",
+      "desc": "Cross-reference hive health with weather patterns, bloom calendars, and local land-use to pinpoint what's driving colony losses in each area."
+    },
+    "research": {
+      "title": "Research Partnership",
+      "desc": "Our anonymized dataset is shared with university researchers and conservation NGOs, contributing to peer-reviewed science on pollinator health."
+    },
+    "policy": {
+      "title": "Policy Change",
+      "desc": "Hard data from thousands of apiaries gives beekeepers a powerful evidence-based voice in conversations about pesticide regulation and habitat protection."
+    }
   },
   "road": {
     "tag": "What's Next",
     "title": "On the Roadmap",
     "sub": "We're honest about what's shipped and what's planned. Here's where we're heading.",
-    "remind": { "title": "Inspection Reminders", "desc": "Push notifications when a hive is overdue for inspection." },
-    "export": { "title": "Data Export (CSV / JSON)", "desc": "Download your complete inspection history as CSV or JSON — now live in the web dashboard." },
-    "fields": { "title": "Custom Fields in Forms", "desc": "Define your own inspection fields and have them appear in every inspection form — now live in the web dashboard." },
-    "heat": { "title": "Regional Heatmaps", "desc": "Varroa risk overlays on the public live map, colour-coded by mite pressure — now live." },
-    "label": { "planned": "Planned", "progress": "In Progress", "shipped": "Shipped ✓" }
+    "remind": {
+      "title": "Inspection Reminders",
+      "desc": "Push notifications when a hive is overdue for inspection."
+    },
+    "export": {
+      "title": "Data Export (CSV / JSON)",
+      "desc": "Download your complete inspection history as CSV or JSON — now live in the web dashboard."
+    },
+    "fields": {
+      "title": "Custom Fields in Forms",
+      "desc": "Define your own inspection fields and have them appear in every inspection form — now live in the web dashboard."
+    },
+    "heat": {
+      "title": "Regional Heatmaps",
+      "desc": "Varroa risk overlays on the public live map, colour-coded by mite pressure — now live."
+    },
+    "label": {
+      "planned": "Planned",
+      "progress": "In Progress",
+      "shipped": "Shipped ✓"
+    }
   },
   "support": {
     "tag": "Support the Mission",
@@ -158,23 +218,75 @@
     "tag": "Open Source",
     "title": "Help Build ApiScan",
     "sub": "ApiScan is an open-source project built by and for the beekeeping community. Every contribution — whether code, documentation, translation, or feedback — makes a difference.",
-    "ways": { "title": "Ways to Contribute", "sub": "You don't need to be a programmer to help. There's a meaningful role for everyone who cares about bees." },
-    "bug": { "title": "Report Bugs", "desc": "Found something that doesn't work? Open a GitHub issue with device info, OS version, and steps to reproduce.", "link": "Open an issue on GitHub →" },
-    "code": { "title": "Submit Code", "desc": "Fork the repo, create a branch, open a PR. Backend (Python), iOS (Swift), Android (Kotlin) — all welcome.", "link": "View the repository →" },
-    "docs": { "title": "Improve Documentation", "desc": "Help improve the in-app help text, the API contract, architecture notes, or this website.", "link": "Browse the docs folder →" },
-    "trans": { "title": "Translate the App", "desc": "Bilingual? Help add or improve a translation. iOS uses .strings files, Android uses XML resources — no programming required.", "link": "Join the translation discussion →" },
-    "test": { "title": "Test New Features", "desc": "Join the beta program and give feedback before features ship. Your real-world perspective beats any automated test.", "link": "Join the beta discussion →" },
-    "spread": { "title": "Spread the Word", "desc": "Tell your beekeeping club or online community about ApiScan. Every new beekeeper strengthens the global dataset.", "link": "Share the download link →" },
-    "github": { "title": "🐝 The Hive is on GitHub", "desc": "ApiScan is fully open source under the MIT License. Read the code, open issues, fork it, and make it better.", "btn": "View on GitHub" }
+    "ways": {
+      "title": "Ways to Contribute",
+      "sub": "You don't need to be a programmer to help. There's a meaningful role for everyone who cares about bees."
+    },
+    "bug": {
+      "title": "Report Bugs",
+      "desc": "Found something that doesn't work? Open a GitHub issue with device info, OS version, and steps to reproduce.",
+      "link": "Open an issue on GitHub →"
+    },
+    "code": {
+      "title": "Submit Code",
+      "desc": "Fork the repo, create a branch, open a PR. Backend (Python), iOS (Swift), Android (Kotlin) — all welcome.",
+      "link": "View the repository →"
+    },
+    "docs": {
+      "title": "Improve Documentation",
+      "desc": "Help improve the in-app help text, the API contract, architecture notes, or this website.",
+      "link": "Browse the docs folder →"
+    },
+    "trans": {
+      "title": "Translate the App",
+      "desc": "Bilingual? Help add or improve a translation. iOS uses .strings files, Android uses XML resources — no programming required.",
+      "link": "Join the translation discussion →"
+    },
+    "test": {
+      "title": "Test New Features",
+      "desc": "Join the beta program and give feedback before features ship. Your real-world perspective beats any automated test.",
+      "link": "Join the beta discussion →"
+    },
+    "spread": {
+      "title": "Spread the Word",
+      "desc": "Tell your beekeeping club or online community about ApiScan. Every new beekeeper strengthens the global dataset.",
+      "link": "Share the download link →"
+    },
+    "github": {
+      "title": "🐝 The Hive is on GitHub",
+      "desc": "ApiScan is fully open source under the MIT License. Read the code, open issues, fork it, and make it better.",
+      "btn": "View on GitHub"
+    }
   },
   "fr": {
     "tag": "GitHub Integration",
     "title": "Request a Feature or Report a Bug",
     "sub": "Fill in the form and we'll open a pre-filled GitHub issue for you — one click to submit. No account needed to preview; GitHub login required to post.",
-    "label": { "title": "Title", "cat": "Category", "platform": "Platform", "desc": "Description", "usecase": "Use Case / Why" },
-    "ph": { "title": "Short, descriptive title", "desc": "Describe the feature or bug in detail. What should happen? What does happen?", "usecase": "Why do you need this? How would you use it?" },
-    "cat": { "feature": "✨ New Feature", "enhance": "⚡ Enhancement", "bug": "🐛 Bug Report", "idea": "💡 Idea / Discussion" },
-    "platform": { "all": "All Platforms", "ios": "iOS", "android": "Android", "backend": "Backend / API", "web": "Website" },
+    "label": {
+      "title": "Title",
+      "cat": "Category",
+      "platform": "Platform",
+      "desc": "Description",
+      "usecase": "Use Case / Why"
+    },
+    "ph": {
+      "title": "Short, descriptive title",
+      "desc": "Describe the feature or bug in detail. What should happen? What does happen?",
+      "usecase": "Why do you need this? How would you use it?"
+    },
+    "cat": {
+      "feature": "✨ New Feature",
+      "enhance": "⚡ Enhancement",
+      "bug": "🐛 Bug Report",
+      "idea": "💡 Idea / Discussion"
+    },
+    "platform": {
+      "all": "All Platforms",
+      "ios": "iOS",
+      "android": "Android",
+      "backend": "Backend / API",
+      "web": "Website"
+    },
     "btn": "Open on GitHub →",
     "note": "You'll be redirected to GitHub to review and submit the issue."
   },
@@ -219,7 +331,15 @@
       "login": "Log in",
       "errorGeneric": "Registration failed. Please try again."
     },
-    "nav": { "apiaries": "My Apiaries", "stats": "My Statistics", "qrBatches": "QR Batches", "customFields": "Custom Fields", "profile": "Profile", "logout": "Log out" },
+    "nav": {
+      "apiaries": "My Apiaries",
+      "stats": "My Statistics",
+      "qrBatches": "QR Batches",
+      "customFields": "Custom Fields",
+      "profile": "Profile",
+      "logout": "Log out",
+      "members": "Community"
+    },
     "overview": {
       "title": "My Statistics",
       "period": "Period",
@@ -260,11 +380,69 @@
       "deleteCancel": "Cancel"
     },
     "admin": {
-      "nav": { "section": "Admin", "stats": "Platform Stats", "users": "Users", "map": "Map", "health": "Health" },
-      "stats": { "title": "Platform Statistics", "totalUsers": "Total Users", "newUsers": "New Users", "supporters": "Supporters", "totalApiaries": "Total Apiaries", "publicApiaries": "Public Apiaries", "totalHives": "Total Hives", "totalInspections": "Total Inspections", "activeUsers": "Active Users (30d)", "activeSessions": "Active Sessions", "preset": "Period" },
-      "users": { "title": "User Management", "search": "Search by email…", "all": "All", "supportersOnly": "Supporters only", "email": "Email", "name": "Name", "joined": "Joined", "supporter": "Supporter", "actions": "Actions", "makeSupporter": "Make Supporter", "removeSupporter": "Remove Supporter", "revokeSessions": "Revoke Sessions", "delete": "Delete", "confirmDelete": "Delete this user and all their data? This cannot be undone.", "confirmRevoke": "Revoke all sessions for this user?" },
-      "map": { "title": "Map Moderation", "all": "All Public Apiaries", "flagged": "Flagged", "name": "Apiary", "owner": "Owner", "hives": "Hives", "setPrivate": "Set Private", "noFlagged": "No flagged apiaries." },
-      "health": { "title": "Data Health", "inactiveUsers": "Inactive Users", "zeroHives": "Zero-Inspection Hives", "noVarroa": "Missing Varroa Data", "inactiveDesc": "Registered > 30 days ago, no inspections", "zeroDesc": "Initialized but never inspected", "noVarroaDesc": "Inspections without a varroa count", "email": "Email", "joined": "Joined", "apiaries": "Apiaries", "hive": "Hive", "apiary": "Apiary", "missing": "Missing Count", "noData": "No issues found." }
+      "nav": {
+        "section": "Admin",
+        "stats": "Platform Stats",
+        "users": "Users",
+        "map": "Map",
+        "health": "Health"
+      },
+      "stats": {
+        "title": "Platform Statistics",
+        "totalUsers": "Total Users",
+        "newUsers": "New Users",
+        "supporters": "Supporters",
+        "totalApiaries": "Total Apiaries",
+        "publicApiaries": "Public Apiaries",
+        "totalHives": "Total Hives",
+        "totalInspections": "Total Inspections",
+        "activeUsers": "Active Users (30d)",
+        "activeSessions": "Active Sessions",
+        "preset": "Period"
+      },
+      "users": {
+        "title": "User Management",
+        "search": "Search by email…",
+        "all": "All",
+        "supportersOnly": "Supporters only",
+        "email": "Email",
+        "name": "Name",
+        "joined": "Joined",
+        "supporter": "Supporter",
+        "actions": "Actions",
+        "makeSupporter": "Make Supporter",
+        "removeSupporter": "Remove Supporter",
+        "revokeSessions": "Revoke Sessions",
+        "delete": "Delete",
+        "confirmDelete": "Delete this user and all their data? This cannot be undone.",
+        "confirmRevoke": "Revoke all sessions for this user?"
+      },
+      "map": {
+        "title": "Map Moderation",
+        "all": "All Public Apiaries",
+        "flagged": "Flagged",
+        "name": "Apiary",
+        "owner": "Owner",
+        "hives": "Hives",
+        "setPrivate": "Set Private",
+        "noFlagged": "No flagged apiaries."
+      },
+      "health": {
+        "title": "Data Health",
+        "inactiveUsers": "Inactive Users",
+        "zeroHives": "Zero-Inspection Hives",
+        "noVarroa": "Missing Varroa Data",
+        "inactiveDesc": "Registered > 30 days ago, no inspections",
+        "zeroDesc": "Initialized but never inspected",
+        "noVarroaDesc": "Inspections without a varroa count",
+        "email": "Email",
+        "joined": "Joined",
+        "apiaries": "Apiaries",
+        "hive": "Hive",
+        "apiary": "Apiary",
+        "missing": "Missing Count",
+        "noData": "No issues found."
+      }
     },
     "apiaries": {
       "title": "My Apiaries",
@@ -411,14 +589,38 @@
       "tokens": "QR Codes",
       "linkedBadge": "Linked",
       "unlinkedBadge": "Unlinked"
+    },
+    "community": {
+      "title": "Community Dashboard",
+      "snapshot": "Global Snapshot",
+      "health": "Health Averages",
+      "avgVarroa": "Avg Varroa (global)",
+      "goodMood": "Hives: Good Mood",
+      "avgBrood": "Avg Brood Frames",
+      "interval": "Avg Inspection Interval",
+      "moodChart": "Hive Mood Distribution",
+      "cityChart": "Hives by City (Top 15)",
+      "sizeChart": "Apiary Size Distribution",
+      "apiaryTable": "Public Apiaries",
+      "city": "City",
+      "other": "Other / Unknown",
+      "noData": "No community data available."
     }
   },
   "members": {
     "tag": "Members Area",
     "title": "Community Insights",
     "sub": "Supporters unlock deeper statistics, global trends, and research-grade data that help you become a better beekeeper — and help science understand our bees.",
-    "snap": { "title": "Global Community Snapshot", "sub": "These numbers are available to everyone. Supporters see much more." },
-    "teaser": { "title": "Advanced Global Statistics", "sub": "Supporter-only — unlock in the app", "subUnlocked": "Supporter content — web dashboard coming soon", "subMember": "Live community data — yours to explore" },
+    "snap": {
+      "title": "Global Community Snapshot",
+      "sub": "These numbers are available to everyone. Supporters see much more."
+    },
+    "teaser": {
+      "title": "Advanced Global Statistics",
+      "sub": "Supporter-only — unlock in the app",
+      "subUnlocked": "Live community data — open your dashboard",
+      "subMember": "Live community data — yours to explore"
+    },
     "gate": {
       "title": "Unlock the full picture",
       "unlockedBadge": "Supporter",
@@ -428,21 +630,48 @@
       "note": "Upgrade to Supporter (€2.99 / month) inside the app after signing up.",
       "loginTitle": "Log in to see live statistics",
       "loginDesc": "Sign in with your ApiScan account to view live global community data.",
-      "loginCta": "Log in"
+      "loginCta": "Log in",
+      "openDashboard": "Open Community Dashboard"
     },
-    "benefits": { "title": "What Supporters Get", "sub": "Every euro goes directly into keeping ApiScan independent and funding research partnerships." },
-    "b1": { "title": "Global Health Dashboard", "desc": "Real-time varroa index, mood distribution, and inspection frequency across all regions." },
-    "b2": { "title": "Seasonal Trend Charts", "desc": "How does hive health in your region compare to last year? And to beekeepers 500 km away?" },
-    "b3": { "title": "Full Data Export", "desc": "Download your complete inspection history as CSV or JSON for your own analysis." },
-    "b4": { "title": "Regional Heatmaps", "desc": "Disease cluster maps and varroa risk overlays — planned for the next major release." },
-    "b5": { "title": "Research Data Portal", "desc": "Access the anonymized dataset used in our university research partnerships." },
-    "b6": { "title": "Early Access + Credits", "desc": "Try new features first and get your name listed in the app. The hive remembers its builders." },
-    "stat": { "avgVarroa": "Avg Varroa (global)", "goodMood": "Hives: Good Mood", "avgBrood": "Avg Brood Frames", "interval": "Avg Inspection Interval" },
+    "benefits": {
+      "title": "What Supporters Get",
+      "sub": "Every euro goes directly into keeping ApiScan independent and funding research partnerships."
+    },
+    "b1": {
+      "title": "Global Health Dashboard",
+      "desc": "Real-time varroa index, mood distribution, and inspection frequency across all regions."
+    },
+    "b2": {
+      "title": "Seasonal Trend Charts",
+      "desc": "How does hive health in your region compare to last year? And to beekeepers 500 km away?"
+    },
+    "b3": {
+      "title": "Full Data Export",
+      "desc": "Download your complete inspection history as CSV or JSON for your own analysis."
+    },
+    "b4": {
+      "title": "Regional Heatmaps",
+      "desc": "Disease cluster maps and varroa risk overlays — planned for the next major release."
+    },
+    "b5": {
+      "title": "Research Data Portal",
+      "desc": "Access the anonymized dataset used in our university research partnerships."
+    },
+    "b6": {
+      "title": "Early Access + Credits",
+      "desc": "Try new features first and get your name listed in the app. The hive remembers its builders."
+    },
+    "stat": {
+      "avgVarroa": "Avg Varroa (global)",
+      "goodMood": "Hives: Good Mood",
+      "avgBrood": "Avg Brood Frames",
+      "interval": "Avg Inspection Interval"
+    },
     "coming": {
-      "tag": "Coming Soon",
+      "tag": "Now Live",
       "title": "Web Dashboard for Members",
-      "desc": "We're building a full web-based members dashboard so you can explore your data and the global dataset directly in the browser — no app required.",
-      "btn": "Watch on GitHub"
+      "desc": "The full web-based members dashboard is live. Explore global hive health data, mood trends, and community apiaries directly in your browser.",
+      "btn": "Open Dashboard"
     }
   }
 }

@@ -5,7 +5,7 @@ import { useRouter } from '@/i18n/navigation';
 import { logout } from '@/lib/api';
 import { useDashboardAuth } from '@/hooks/useDashboardAuth';
 
-export default function DashboardShell({ children, adminOnly = false }: { children: React.ReactNode; adminOnly?: boolean }) {
+export default function DashboardShell({ children, adminOnly = false, memberOnly = false }: { children: React.ReactNode; adminOnly?: boolean; memberOnly?: boolean }) {
   const { user, loading } = useDashboardAuth();
   const router = useRouter();
   const t = useTranslations('dash');
@@ -28,6 +28,11 @@ export default function DashboardShell({ children, adminOnly = false }: { childr
     return null;
   }
 
+  if (memberOnly && !user.is_supporter && !user.is_admin) {
+    router.replace('/dashboard');
+    return null;
+  }
+
   return (
     <div className="dash-overlay">
       <div className="dash-shell">
@@ -40,6 +45,9 @@ export default function DashboardShell({ children, adminOnly = false }: { childr
           <nav className="dash-nav">
             <Link href="/dashboard" className="dash-nav-link">{t('nav.apiaries')}</Link>
             <Link href="/dashboard/stats" className="dash-nav-link">{t('nav.stats')}</Link>
+            {(user.is_supporter || user.is_admin) && (
+              <Link href="/dashboard/members" className="dash-nav-link">{t('nav.members')}</Link>
+            )}
             <Link href="/dashboard/qr-batches" className="dash-nav-link">{t('nav.qrBatches')}</Link>
             <Link href="/dashboard/field-definitions" className="dash-nav-link">{t('nav.customFields')}</Link>
             <Link href="/dashboard/profile" className="dash-nav-link">{t('nav.profile')}</Link>

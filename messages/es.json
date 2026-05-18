@@ -337,7 +337,8 @@
       "qrBatches": "Lotes QR",
       "customFields": "Campos perso.",
       "profile": "Perfil",
-      "logout": "Cerrar sesión"
+      "logout": "Cerrar sesión",
+      "members": "Comunidad"
     },
     "overview": {
       "title": "Mis estadísticas",
@@ -588,6 +589,22 @@
       "tokens": "Códigos QR",
       "linkedBadge": "Vinculado",
       "unlinkedBadge": "Sin vincular"
+    },
+    "community": {
+      "title": "Panel de comunidad",
+      "snapshot": "Resumen global",
+      "health": "Promedios de salud",
+      "avgVarroa": "Varroa prom. (global)",
+      "goodMood": "Colmenas: buen ánimo",
+      "avgBrood": "Marcos de cría prom.",
+      "interval": "Intervalo de inspección prom.",
+      "moodChart": "Ánimo de las colmenas",
+      "cityChart": "Colmenas por ciudad (Top 15)",
+      "sizeChart": "Tamaño de colmenares",
+      "apiaryTable": "Colmenares públicos",
+      "city": "Ciudad",
+      "other": "Otro / Desconocido",
+      "noData": "No hay datos de comunidad disponibles."
     }
   },
   "members": {
@@ -601,7 +618,7 @@
     "teaser": {
       "title": "Estadísticas globales avanzadas",
       "sub": "Solo para supporters — desbloquea en la app",
-      "subUnlocked": "Contenido para supporters — panel web próximamente",
+      "subUnlocked": "Datos comunitarios en vivo — abrir el panel",
       "subMember": "Datos comunitarios en vivo — listos para explorar"
     },
     "gate": {
@@ -613,7 +630,8 @@
       "note": "Actualiza a Supporter (2,99 € / mes) dentro de la app después de registrarte.",
       "loginTitle": "Inicia sesión para ver las estadísticas en vivo",
       "loginDesc": "Inicia sesión con tu cuenta ApiScan para ver los datos globales de la comunidad en tiempo real.",
-      "loginCta": "Iniciar sesión"
+      "loginCta": "Iniciar sesión",
+      "openDashboard": "Abrir panel de comunidad"
     },
     "benefits": {
       "title": "Qué obtienen los supporters",
@@ -650,10 +668,10 @@
       "interval": "Intervalo de inspección prom."
     },
     "coming": {
-      "tag": "Próximamente",
+      "tag": "Ya disponible",
       "title": "Panel web para miembros",
-      "desc": "Estamos construyendo un panel web completo para que puedas explorar tus datos directamente en el navegador.",
-      "btn": "Seguir en GitHub"
+      "desc": "El panel web completo para miembros está en línea. Explora datos globales de salud de colmenas, tendencias de ánimo y colmenares de la comunidad directamente en tu navegador.",
+      "btn": "Abrir panel"
     }
   }
 }
