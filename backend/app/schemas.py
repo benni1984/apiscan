@@ -1,4 +1,3 @@
-from __future__ import annotations
 from datetime import date, datetime
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, EmailStr, Field, model_validator
@@ -40,6 +39,18 @@ class LogoutRequest(BaseModel):
     refresh_token: str
 
 
+class UserOut(BaseModel):
+    id: str
+    email: str
+    name: str
+    locale: str
+    is_admin: bool
+    is_supporter: bool
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
 class TokenResponse(BaseModel):
     access_token: str
     refresh_token: str
@@ -53,17 +64,6 @@ class AccessTokenResponse(BaseModel):
 # ---------------------------------------------------------------------------
 # Users
 # ---------------------------------------------------------------------------
-
-class UserOut(BaseModel):
-    id: str
-    email: str
-    name: str
-    locale: str
-    is_admin: bool
-    is_supporter: bool
-    created_at: datetime
-
-    model_config = {"from_attributes": True}
 
 
 class UserUpdate(BaseModel):
