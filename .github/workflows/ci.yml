@@ -342,6 +342,7 @@ jobs:
           STAGING_DEMO_PASSWORD: ${{ secrets.STAGING_DEMO_PASSWORD }}
           STAGING_ADMIN_EMAIL: ${{ secrets.STAGING_ADMIN_EMAIL }}
           STAGING_ADMIN_PASSWORD: ${{ secrets.STAGING_ADMIN_PASSWORD }}
+          CI_SETUP_TOKEN: ${{ secrets.CI_SETUP_TOKEN }}
 
       - name: Upload Playwright report
         if: always()
