@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 30
     refresh_token_expire_days: int = 30
     admin_email: str = ""
+    ci_setup_token: str = ""
 
     model_config = {"env_file": ".env"}
 

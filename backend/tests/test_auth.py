@@ -52,6 +52,48 @@ def test_register_es_locale(client):
     assert r.json()["user"]["locale"] == "es"
 
 
+def test_ci_setup_creates_admin(client, monkeypatch):
+    monkeypatch.setattr("app.routers.auth.settings.ci_setup_token", "testtoken")
+    r = client.post("/api/v1/auth/ci-setup", json={
+        "email": "ci@example.com", "password": "password123", "token": "testtoken",
+    })
+    assert r.status_code == 204
+    # Should be able to log in
+    r2 = client.post("/api/v1/auth/login", json={"email": "ci@example.com", "password": "password123"})
+    assert r2.status_code == 200
+    assert r2.json()["user"]["is_admin"] is True
+
+
+def test_ci_setup_updates_existing_user(client, monkeypatch):
+    client.post("/api/v1/auth/register", json={
+        "email": "ci@example.com", "password": "oldpassword1", "name": "Old", "locale": "en"
+    })
+    monkeypatch.setattr("app.routers.auth.settings.ci_setup_token", "testtoken")
+    r = client.post("/api/v1/auth/ci-setup", json={
+        "email": "ci@example.com", "password": "newpassword1", "token": "testtoken",
+    })
+    assert r.status_code == 204
+    r2 = client.post("/api/v1/auth/login", json={"email": "ci@example.com", "password": "newpassword1"})
+    assert r2.status_code == 200
+    assert r2.json()["user"]["is_admin"] is True
+
+
+def test_ci_setup_wrong_token(client, monkeypatch):
+    monkeypatch.setattr("app.routers.auth.settings.ci_setup_token", "correcttoken")
+    r = client.post("/api/v1/auth/ci-setup", json={
+        "email": "ci@example.com", "password": "password123", "token": "wrongtoken",
+    })
+    assert r.status_code == 403
+
+
+def test_ci_setup_no_token_configured(client):
+    # When CI_SETUP_TOKEN is not set, endpoint always returns 403
+    r = client.post("/api/v1/auth/ci-setup", json={
+        "email": "ci@example.com", "password": "password123", "token": "",
+    })
+    assert r.status_code == 403
+
+
 def test_logout(client):
     r = client.post("/api/v1/auth/register", json={
         "email": "a@b.com", "password": "password1", "name": "Alice", "locale": "en"

@@ -31,6 +31,13 @@ class LoginRequest(BaseModel):
     password: str
 
 
+class CISetupRequest(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=8)
+    token: str
+    name: str = "CI Admin"
+
+
 class RefreshRequest(BaseModel):
     refresh_token: str
 

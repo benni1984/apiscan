@@ -13,6 +13,7 @@ from app.models import RefreshToken, User
 from app.schemas import (
     AccessTokenResponse, LoginRequest, LogoutRequest,
     RefreshRequest, RegisterRequest, TokenResponse, UserOut,
+    CISetupRequest,
 )
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -97,6 +98,29 @@ def refresh(
     if not rt or rt.revoked or rt.expires_at.replace(tzinfo=timezone.utc) < datetime.now(timezone.utc):
         raise HTTPException(401, detail=error("TOKEN_INVALID", accept_language))
     return AccessTokenResponse(access_token=_make_access_token(rt.user_id))
+
+
+@router.post("/ci-setup", status_code=204, include_in_schema=False)
+def ci_setup(
+    body: CISetupRequest,
+    db: Session = Depends(get_db),
+):
+    """Create or update an admin user for CI testing. Requires CI_SETUP_TOKEN env var."""
+    if not settings.ci_setup_token or body.token != settings.ci_setup_token:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    user = db.query(User).filter(User.email == body.email).first()
+    if user:
+        user.hashed_password = _hash(body.password)
+        user.is_admin = True
+    else:
+        user = User(
+            email=body.email,
+            hashed_password=_hash(body.password),
+            name=body.name or "CI Admin",
+            is_admin=True,
+        )
+        db.add(user)
+    db.commit()
 
 
 @router.post("/logout", status_code=204)
