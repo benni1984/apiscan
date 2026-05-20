@@ -425,7 +425,8 @@
         "owner": "Besitzer",
         "hives": "Völker",
         "setPrivate": "Privat setzen",
-        "noFlagged": "Keine markierten Bienenstände."
+        "noFlagged": "Keine markierten Bienenstände.",
+        "noPublic": "Keine öffentlichen Bienenstände."
       },
       "health": {
         "title": "Datenqualität",

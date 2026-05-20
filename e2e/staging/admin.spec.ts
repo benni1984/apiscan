@@ -23,10 +23,11 @@ test('admin stats page: pills, preset buttons, and sub-page nav links render', a
   await page.getByRole('button', { name: '90d' }).click();
   await expect(page.locator('.dash-stat-pill').first()).toBeVisible({ timeout: 15_000 });
 
-  // Navigation links to sub-pages
-  await expect(page.getByRole('link', { name: 'Users' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Map' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Health' })).toBeVisible();
+  // Navigation links to sub-pages (scoped to card links to avoid sidebar duplicates)
+  const adminLinks = page.locator('.dash-admin-links');
+  await expect(adminLinks.getByRole('link', { name: 'Users', exact: true })).toBeVisible();
+  await expect(adminLinks.getByRole('link', { name: 'Map', exact: true })).toBeVisible();
+  await expect(adminLinks.getByRole('link', { name: 'Health', exact: true })).toBeVisible();
 });
 
 test('non-admin is redirected from /dashboard/admin to /dashboard', async ({ browser }) => {
@@ -75,12 +76,9 @@ test('admin health page: three cards render and drill-down opens and closes', as
   const cards = page.locator('.dash-admin-health-card');
   await expect(cards).toHaveCount(3, { timeout: 10_000 });
 
-  // Click the first card (inactive users) — drill-down table or empty state appears
+  // Click the first card (inactive users) — drill-down table appears (empty state is inside table)
   await cards.first().click();
-  await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 10_000 });
-  const hasTable = await page.locator('table.dash-admin-table').isVisible().catch(() => false);
-  const hasEmpty = await page.locator('.dash-empty').isVisible().catch(() => false);
-  expect(hasTable || hasEmpty).toBeTruthy();
+  await expect(page.locator('table.dash-admin-table')).toBeVisible({ timeout: 15_000 });
 
   // Click the same card again — drill-down closes
   await cards.first().click();
@@ -98,10 +96,8 @@ test('admin map page: All tab shows data and Flagged tab renders without error',
   await expect(page.locator('button.dash-admin-tab', { hasText: 'All Public Apiaries' })).toBeVisible();
   await expect(page.locator('button.dash-admin-tab', { hasText: 'Flagged' })).toBeVisible();
 
-  // "All" tab: table or empty state
-  const hasAllTable = await page.locator('table.dash-admin-table').isVisible().catch(() => false);
-  const hasAllEmpty = await page.locator('.dash-empty').isVisible().catch(() => false);
-  expect(hasAllTable || hasAllEmpty).toBeTruthy();
+  // "All" tab: table or empty state (retrying assertion)
+  await expect(page.locator('table.dash-admin-table, .dash-empty').first()).toBeVisible({ timeout: 10_000 });
 
   // Switch to Flagged tab — empty state or table (no JS error)
   await page.locator('button.dash-admin-tab', { hasText: 'Flagged' }).click();

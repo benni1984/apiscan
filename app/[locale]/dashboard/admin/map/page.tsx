@@ -65,6 +65,10 @@ export default function AdminMapPage() {
         <p className="dash-empty">{t('admin.map.noFlagged')}</p>
       )}
 
+      {!loading && tab === 'all' && rows.length === 0 && (
+        <p className="dash-empty">{t('admin.map.noPublic')}</p>
+      )}
+
       {!loading && rows.length > 0 && (
         <div className="dash-admin-table-wrap">
           <table className="dash-admin-table">

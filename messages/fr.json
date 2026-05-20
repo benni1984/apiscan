@@ -425,7 +425,8 @@
         "owner": "Propriétaire",
         "hives": "Ruches",
         "setPrivate": "Rendre privé",
-        "noFlagged": "Aucun rucher signalé."
+        "noFlagged": "Aucun rucher signalé.",
+        "noPublic": "Aucun rucher public."
       },
       "health": {
         "title": "Qualité des données",

@@ -425,7 +425,8 @@
         "owner": "Propietario",
         "hives": "Colmenas",
         "setPrivate": "Hacer privado",
-        "noFlagged": "No hay colmenares marcados."
+        "noFlagged": "No hay colmenares marcados.",
+        "noPublic": "No hay colmenares públicos."
       },
       "health": {
         "title": "Calidad de datos",

@@ -425,7 +425,8 @@
         "owner": "Owner",
         "hives": "Hives",
         "setPrivate": "Set Private",
-        "noFlagged": "No flagged apiaries."
+        "noFlagged": "No flagged apiaries.",
+        "noPublic": "No public apiaries."
       },
       "health": {
         "title": "Data Health",

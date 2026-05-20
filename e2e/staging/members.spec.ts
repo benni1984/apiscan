@@ -35,9 +35,8 @@ test('community dashboard: public apiaries table or empty state renders', async 
   // Table or empty state — heading is always present
   await expect(page.locator('h2.dash-section-title').filter({ hasText: /Apiaries|Community/i }).first()).toBeVisible({ timeout: 10_000 });
 
-  const hasTable = await page.locator('table.dash-table').isVisible().catch(() => false);
-  const hasEmpty = await page.locator('.dash-empty').isVisible().catch(() => false);
-  expect(hasTable || hasEmpty).toBeTruthy();
+  // Table or empty state — .last() picks the apiaries section which is always last in DOM
+  await expect(page.locator('table.dash-table, p.dash-empty').last()).toBeVisible({ timeout: 10_000 });
 });
 
 test('community dashboard: non-supporter is redirected to /dashboard', async ({ browser }) => {
