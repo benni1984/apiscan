@@ -60,9 +60,7 @@ test('public apiary detail: stat boxes and hive table render for a known public 
 
 test('public apiary detail: missing id param shows error state with back link', async ({ page }) => {
   await page.goto('/apiary');
-
-  // Wait for the Suspense boundary to resolve (spinner → component)
-  await expect(page.locator('.spinner')).not.toBeVisible({ timeout: 15_000 });
-  await expect(page.locator('#content .empty')).toBeVisible({ timeout: 10_000 });
-  await expect(page.locator('a', { hasText: /map/i })).toBeVisible();
+  await page.waitForLoadState('networkidle');
+  await expect(page.getByText('No apiary ID provided.')).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByRole('link', { name: /back to map/i })).toBeVisible();
 });
