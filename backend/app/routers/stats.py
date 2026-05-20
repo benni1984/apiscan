@@ -14,6 +14,8 @@ from app.schemas import (
 
 router = APIRouter(tags=["stats"])
 
+_HEATMAP_CELL = 0.5  # grid cell size in degrees (~50 km)
+
 
 def _resolve_period(
     preset: Optional[str],
@@ -231,3 +233,78 @@ def overview_stats(
         inspections_total=total_inspections,
         per_apiary=per_apiary,
     )
+
+
+@router.get("/stats/community-heatmap")
+def community_heatmap(current_user: CurrentUser, db: DB) -> Dict[str, Any]:
+    """GeoJSON FeatureCollection with multi-metric heatmap data for the members dashboard."""
+    rows = (
+        db.query(
+            Apiary.id,
+            Apiary.city_latitude,
+            Apiary.city_longitude,
+            Inspection.varroa_count,
+            Inspection.mood,
+            Inspection.brood_frames,
+            Inspection.swarm_cells_seen,
+        )
+        .join(Hive, Hive.apiary_id == Apiary.id)
+        .join(Inspection, Inspection.hive_id == Hive.id)
+        .filter(
+            Apiary.is_public.is_(True),
+            Apiary.city_latitude.isnot(None),
+            Apiary.city_longitude.isnot(None),
+        )
+        .all()
+    )
+
+    cells: Dict[tuple, Dict] = defaultdict(lambda: {
+        "varroa": [], "mood": [], "brood": [], "swarm": 0,
+        "total": 0, "apiary_ids": set(),
+    })
+    for apiary_id, lat, lon, varroa, mood, brood, swarm in rows:
+        key = (round(lat / _HEATMAP_CELL) * _HEATMAP_CELL, round(lon / _HEATMAP_CELL) * _HEATMAP_CELL)
+        cell = cells[key]
+        cell["apiary_ids"].add(apiary_id)
+        cell["total"] += 1
+        if varroa is not None:
+            cell["varroa"].append(varroa)
+        if mood is not None:
+            cell["mood"].append(mood)
+        if brood is not None:
+            cell["brood"].append(brood)
+        if swarm:
+            cell["swarm"] += 1
+
+    features = []
+    half = _HEATMAP_CELL / 2
+    for (clat, clon), cell in cells.items():
+        total = cell["total"]
+        avg_varroa = round(sum(cell["varroa"]) / len(cell["varroa"]), 2) if cell["varroa"] else None
+        calm_count = sum(1 for m in cell["mood"] if m == "calm")
+        mood_score = round(calm_count / len(cell["mood"]) * 100) if cell["mood"] else None
+        avg_brood = round(sum(cell["brood"]) / len(cell["brood"]), 2) if cell["brood"] else None
+        swarm_pct = round(cell["swarm"] / total * 100) if total > 0 else 0
+        features.append({
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [clon - half, clat - half],
+                    [clon + half, clat - half],
+                    [clon + half, clat + half],
+                    [clon - half, clat + half],
+                    [clon - half, clat - half],
+                ]],
+            },
+            "properties": {
+                "avg_varroa": avg_varroa,
+                "mood_score": mood_score,
+                "avg_brood": avg_brood,
+                "swarm_pct": swarm_pct,
+                "apiary_count": len(cell["apiary_ids"]),
+                "inspection_count": total,
+            },
+        })
+
+    return {"type": "FeatureCollection", "features": features}

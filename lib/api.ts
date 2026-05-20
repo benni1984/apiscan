@@ -330,12 +330,35 @@ export async function getPublicStats(): Promise<PublicStats> {
   return res.json();
 }
 
+export async function getCommunityHeatmap(): Promise<CommunityHeatmap> {
+  const res = await apiFetch('/stats/community-heatmap');
+  if (!res.ok) throw new Error('Failed to fetch community heatmap');
+  return res.json();
+}
+
 // ── Types ──────────────────────────────────────────────────────────────────────
 export interface PublicApiary {
   id: string;
   name: string;
   city_name: string | null;
   hive_count: number;
+}
+export interface CommunityHeatmapProperties {
+  avg_varroa: number | null;
+  mood_score: number | null;
+  avg_brood: number | null;
+  swarm_pct: number;
+  apiary_count: number;
+  inspection_count: number;
+}
+export interface CommunityHeatmapFeature {
+  type: 'Feature';
+  geometry: { type: 'Polygon'; coordinates: number[][][] };
+  properties: CommunityHeatmapProperties;
+}
+export interface CommunityHeatmap {
+  type: 'FeatureCollection';
+  features: CommunityHeatmapFeature[];
 }
 export interface PublicStats {
   apiary_count: number;

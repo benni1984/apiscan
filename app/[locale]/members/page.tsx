@@ -32,7 +32,7 @@ export default function MembersPage() {
           <div className="members-benefits" data-aos="fade-up" data-aos-delay="60">
             {(['b1','b2','b3','b4','b5','b6'] as const).map((k, i) => {
               const icons = ['fa-globe','fa-chart-area','fa-download','fa-map','fa-microscope','fa-star'];
-              const coming = i >= 2 && i <= 3;
+              const coming = false;
               return (
                 <div key={k} className="benefit-card">
                   <i className={`fas ${icons[i]}`} />

@@ -604,7 +604,8 @@
       "apiaryTable": "Ruchers publics",
       "city": "Ville",
       "other": "Autre / Inconnu",
-      "noData": "Aucune donnée communautaire disponible."
+      "noData": "Aucune donnée communautaire disponible.",
+      "mapSection": "Carte de santé régionale"
     }
   },
   "members": {
@@ -651,7 +652,7 @@
     },
     "b4": {
       "title": "Cartes thermiques régionales",
-      "desc": "Cartes de clusters de maladies et risque varroa — prévu pour la prochaine version majeure."
+      "desc": "Cartes de clusters de maladies avec risque varroa, humeur des colonies, pression d'essaimage et santé du couvain — disponibles sur le tableau de bord communautaire."
     },
     "b5": {
       "title": "Portail de données de recherche",

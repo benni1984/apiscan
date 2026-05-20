@@ -604,7 +604,8 @@
       "apiaryTable": "Public Apiaries",
       "city": "City",
       "other": "Other / Unknown",
-      "noData": "No community data available."
+      "noData": "No community data available.",
+      "mapSection": "Regional Health Map"
     }
   },
   "members": {
@@ -651,7 +652,7 @@
     },
     "b4": {
       "title": "Regional Heatmaps",
-      "desc": "Disease cluster maps and varroa risk overlays — planned for the next major release."
+      "desc": "Disease cluster maps with varroa risk, colony mood, swarm pressure, and brood health overlays — visible on the community dashboard."
     },
     "b5": {
       "title": "Research Data Portal",

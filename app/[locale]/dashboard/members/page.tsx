@@ -3,10 +3,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import DashboardShell from '@/components/DashboardShell';
-import { getPublicStats, type PublicStats } from '@/lib/api';
+import { getPublicStats, getCommunityHeatmap, type PublicStats, type CommunityHeatmap } from '@/lib/api';
 
 const MoodChart = dynamic(() => import('@/components/MoodChart'), { ssr: false });
 const CityChart = dynamic(() => import('@/components/CityChart'), { ssr: false });
+const CommunityMap = dynamic(() => import('@/components/CommunityMap'), { ssr: false });
 
 const SIZE_BUCKETS = [
   { label: '1', test: (n: number) => n === 1 },
@@ -70,13 +71,17 @@ function SizeChart({ data }: { data: { label: string; count: number }[] }) {
 export default function MembersDashboardPage() {
   const t = useTranslations('dash');
   const [stats, setStats] = useState<PublicStats | null>(null);
+  const [heatmap, setHeatmap] = useState<CommunityHeatmap | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getPublicStats()
-      .then(setStats)
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    Promise.all([
+      getPublicStats().catch(() => null),
+      getCommunityHeatmap().catch(() => null),
+    ]).then(([s, h]) => {
+      setStats(s);
+      setHeatmap(h);
+    }).finally(() => setLoading(false));
   }, []);
 
   const calmPct = stats
@@ -165,6 +170,14 @@ export default function MembersDashboardPage() {
                 : <p className="dash-empty">{t('community.noData')}</p>}
             </div>
           </div>
+
+          {/* Regional health heatmap */}
+          <h2 className="dash-section-title" style={{ marginTop: 32 }}>{t('community.mapSection')}</h2>
+          {heatmap && heatmap.features.length > 0 ? (
+            <CommunityMap data={heatmap} />
+          ) : (
+            <p className="dash-empty">{t('community.noData')}</p>
+          )}
 
           {/* Public apiaries table */}
           <h2 className="dash-section-title" style={{ marginTop: 32 }}>{t('community.apiaryTable')}</h2>

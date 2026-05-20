@@ -4,10 +4,12 @@ import React from 'react';
 
 const mockReplace = vi.hoisted(() => vi.fn());
 const mockGetPublicStats = vi.hoisted(() => vi.fn());
+const mockGetCommunityHeatmap = vi.hoisted(() => vi.fn());
 const mockUseDashboardAuth = vi.hoisted(() => vi.fn());
 
 vi.mock('@/lib/api', () => ({
   getPublicStats: mockGetPublicStats,
+  getCommunityHeatmap: mockGetCommunityHeatmap,
   logout: vi.fn(),
 }));
 
@@ -38,6 +40,7 @@ vi.mock('next-intl', () => ({
       'community.city': 'City',
       'community.other': 'Other / Unknown',
       'community.noData': 'No community data available.',
+      'community.mapSection': 'Regional Health Map',
       'overview.apiaries': 'Apiaries',
       'overview.hives': 'Hives',
       'overview.inspections': 'Inspections',
@@ -76,6 +79,10 @@ vi.mock('@/components/CityChart', () => ({
   default: () => <canvas data-testid="city-chart" />,
 }));
 
+vi.mock('@/components/CommunityMap', () => ({
+  default: () => <div data-testid="community-map" />,
+}));
+
 import MembersDashboardPage from '@/app/[locale]/dashboard/members/page';
 
 const SUPPORTER = { id: '1', email: 'a@b.com', name: 'Supporter', locale: 'en', created_at: '2024-01-01', is_admin: false, is_supporter: true };
@@ -98,8 +105,12 @@ const STATS = {
 };
 
 describe('MembersDashboardPage', () => {
+  const HEATMAP = { type: 'FeatureCollection' as const, features: [] };
+
   beforeEach(() => {
     mockGetPublicStats.mockReset();
+    mockGetCommunityHeatmap.mockReset();
+    mockGetCommunityHeatmap.mockResolvedValue(HEATMAP);
     mockReplace.mockReset();
   });
 

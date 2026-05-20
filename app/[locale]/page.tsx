@@ -156,8 +156,8 @@ export default function HomePage() {
               <div className="pricing-price">€2.99 <span>{t('price.month')}</span></div>
               <ul className="pricing-features">
                 {(['f1','f2','f3','f4','f5','f6'] as const).map(k => <li key={k}><i className="fas fa-check" /> <span>{t(`price.sup.${k}`)}</span></li>)}
-                <li><i className="fas fa-check" /> <span>{t('price.sup.f7')}</span> <span className="coming-soon-badge">{t('price.coming')}</span></li>
-                <li><i className="fas fa-check" /> <span>{t('price.sup.f8')}</span> <span className="coming-soon-badge">{t('price.coming')}</span></li>
+                <li><i className="fas fa-check" /> <span>{t('price.sup.f7')}</span></li>
+                <li><i className="fas fa-check" /> <span>{t('price.sup.f8')}</span></li>
               </ul>
               <a href="#download" className="btn-primary" data-umami-event="pricing_supporter_cta">{t('btn.supporter')}</a>
             </div>

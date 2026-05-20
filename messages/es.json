@@ -604,7 +604,8 @@
       "apiaryTable": "Colmenares públicos",
       "city": "Ciudad",
       "other": "Otro / Desconocido",
-      "noData": "No hay datos de comunidad disponibles."
+      "noData": "No hay datos de comunidad disponibles.",
+      "mapSection": "Mapa de salud regional"
     }
   },
   "members": {
@@ -651,7 +652,7 @@
     },
     "b4": {
       "title": "Mapas de calor regionales",
-      "desc": "Mapas de clusters de enfermedades y riesgo de varroa — en planificación."
+      "desc": "Mapas de clusters de enfermedades con riesgo de varroa, ánimo de la colonia, presión de enjambre y salud de la cría — disponibles en el panel de comunidad."
     },
     "b5": {
       "title": "Portal de datos de investigación",
