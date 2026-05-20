@@ -4,9 +4,15 @@ import * as path from 'path';
 
 const AUTH_FILE = '.auth/admin.json';
 
-setup('authenticate as admin user', async ({ page }) => {
+setup('authenticate as admin user', async ({ page, request }) => {
   const email = process.env.STAGING_ADMIN_EMAIL ?? 'muellerbenjamin110@gmail.com';
   const password = process.env.STAGING_ADMIN_PASSWORD!;
+
+  // Ensure the admin account exists — no-ops if already registered.
+  await request.post('/api/v1/auth/register', {
+    data: { email, password, name: 'Admin' },
+    failOnStatusCode: false,
+  });
 
   fs.mkdirSync(path.dirname(AUTH_FILE), { recursive: true });
 

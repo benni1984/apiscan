@@ -21,6 +21,7 @@ export default defineConfig({
         storageState: '.auth/user.json',
       },
       dependencies: ['setup'],
+      testIgnore: /\/(admin|members)\.spec\.ts/,
     },
     {
       name: 'admin',
