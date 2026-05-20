@@ -61,7 +61,9 @@ test('custom fields page: edit an existing field name and save', async ({ page }
     await editRow.locator('button.dash-submit-btn').click();
     await expect(page.locator('.dash-success-banner')).toBeVisible({ timeout: 10_000 });
     await expect(page.locator('td', { hasText: renamedField })).toBeVisible();
-    await expect(page.locator('td', { hasText: fieldName })).not.toBeVisible();
+    // Use exact-text CSS selector to avoid partial-match false positive
+    // (renamedField contains fieldName as a substring)
+    await expect(page.locator(`td:text-is("${fieldName}")`)).not.toBeVisible();
   });
 
   await test.step('clean up — delete the renamed field', async () => {
