@@ -1,6 +1,7 @@
 {
   "nav": {
     "map": "Live-Karte",
+    "hornets": "Hornissentracker",
     "news": "Neuigkeiten",
     "contribute": "Mitmachen",
     "members": "Mitglieder",
@@ -674,6 +675,77 @@
       "title": "Web-Dashboard für Mitglieder",
       "desc": "Das vollständige Web-Dashboard für Mitglieder ist jetzt live. Erkunde globale Völkergesundheitsdaten, Stimmungstrends und Community-Standorte direkt im Browser.",
       "btn": "Dashboard öffnen"
+    }
+  },
+  "hornets": {
+    "tag": "Citizen Science",
+    "title": "Asiatische Hornisse — Tracker",
+    "subtitle": "Helft, Bienen zu schützen, indem ihr Vespa velutina verfolgt. Fänge und Nester melden, Sichtungen identifizieren, Live-Karte ansehen. Kein Konto nötig.",
+    "stats": {
+      "caught": "Gefangene Hornissen",
+      "nests": "Gemeldete Nester",
+      "destroyed": "Vernichtete Nester",
+      "sightings": "Bestätigte Sichtungen"
+    },
+    "info": {
+      "problem": "Die Bedrohung",
+      "problemText": "Vespa velutina (Asiatische Hornisse) ist ein invasiver Räuber, der Honigbienenvölker angreift und die Nahrungssicherheit gefährdet. Früherkennung ist entscheidend.",
+      "whyCatch": "Warum fangen?",
+      "whyCatchText": "Königinnen im Frühling zu fangen verhindert neue Kolonien. Jede gefangene Königin kann Tausende von Arbeiterinnen verhindern. Gemeinsames Fangen macht einen Unterschied.",
+      "reportNest": "Nest melden",
+      "reportNestText": "Wenn Sie ein Nest entdecken, nicht stören. Melden Sie den Standort hier, damit Behörden eine sichere Entfernung veranlassen können."
+    },
+    "map": {
+      "title": "Nestenkarte",
+      "subtitle": "Alle gemeldeten Nester — farbcodiert nach aktuellem Status.",
+      "hint": "Alle gemeldeten Nester auf der Live-Karte ansehen",
+      "legend": "Neststatus",
+      "noNests": "Noch keine Nester gemeldet. Sei der Erste!",
+      "status": {
+        "found": "Gefunden — aktiv",
+        "ordered": "Vernichtung beauftragt",
+        "destroyed": "Vernichtet"
+      }
+    },
+    "report": {
+      "title": "Melden",
+      "catchTab": "Fang melden",
+      "nestTab": "Nest melden",
+      "catchHint": "Anzahl gefangener Hornissen eintragen",
+      "count": "Anzahl gefangen",
+      "countError": "Anzahl muss zwischen 1 und 1000 liegen",
+      "latitude": "Breitengrad",
+      "longitude": "Längengrad",
+      "name": "Ihr Name (optional)",
+      "namePlaceholder": "Anonym",
+      "notes": "Notizen (optional)",
+      "photo": "Foto (optional)",
+      "uploading": "Wird hochgeladen…",
+      "photoReady": "Foto hochgeladen",
+      "uploadError": "Foto-Upload fehlgeschlagen. Bitte erneut versuchen.",
+      "locationRequired": "Breiten- und Längengrad sind für Nestmeldungen erforderlich.",
+      "submitError": "Übermittlung fehlgeschlagen. Bitte erneut versuchen.",
+      "submit": "Absenden",
+      "success": "Danke! Ihre Meldung wurde übermittelt."
+    },
+    "community": {
+      "title": "Community-ID",
+      "subtitle": "Helfen Sie, Asiatische Hornissen auf Fotos zu identifizieren. Ja wenn Sie Vespa velutina erkennen, nein wenn nicht.",
+      "hint": "Community-Foto-Sichtungen bewerten",
+      "addPhoto": "Foto hinzufügen",
+      "photo": "Foto",
+      "photoRequired": "Bitte zuerst ein Foto hochladen.",
+      "description": "Beschreibung (optional)",
+      "submitPhoto": "Foto einreichen",
+      "submitSuccess": "Foto eingereicht!",
+      "vote": {
+        "yes": "Vespa velutina",
+        "no": "Keine Hornisse"
+      },
+      "confirmed": "Bestätigt",
+      "rejected": "Abgelehnt",
+      "pending": "Ausstehend",
+      "noSightings": "Noch keine Foto-Sichtungen. Sei der Erste!"
     }
   }
 }

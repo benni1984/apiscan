@@ -7,5 +7,41 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/index.py" }
-  ]
+  ],
+  "firewall": {
+    "rules": [
+      {
+        "name": "Rate-limit hornet POST endpoints",
+        "description": "Allow max 10 POST requests per minute per IP to public hornet endpoints",
+        "action": "rate_limit",
+        "rateLimitGroup": "hornet-public-post",
+        "rateLimit": {
+          "requests": 10,
+          "window": "60s"
+        },
+        "condition": {
+          "and": [
+            { "op": "eq", "key": "http.method", "value": "POST" },
+            { "op": "matches", "key": "http.url", "value": "/api/v1/hornets/" }
+          ]
+        }
+      },
+      {
+        "name": "Rate-limit hornet photo upload",
+        "description": "Allow max 5 photo uploads per minute per IP",
+        "action": "rate_limit",
+        "rateLimitGroup": "hornet-upload",
+        "rateLimit": {
+          "requests": 5,
+          "window": "60s"
+        },
+        "condition": {
+          "and": [
+            { "op": "eq", "key": "http.method", "value": "POST" },
+            { "op": "eq", "key": "http.url", "value": "/api/hornets/upload" }
+          ]
+        }
+      }
+    ]
+  }
 }

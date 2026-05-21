@@ -1,6 +1,7 @@
 {
   "nav": {
     "map": "Mapa en vivo",
+    "hornets": "Rastreador avispas",
     "news": "Noticias",
     "contribute": "Contribuir",
     "members": "Miembros",
@@ -674,6 +675,77 @@
       "title": "Panel web para miembros",
       "desc": "El panel web completo para miembros está en línea. Explora datos globales de salud de colmenas, tendencias de ánimo y colmenares de la comunidad directamente en tu navegador.",
       "btn": "Abrir panel"
+    }
+  },
+  "hornets": {
+    "tag": "Ciencia ciudadana",
+    "title": "Rastreador de avispas asiáticas",
+    "subtitle": "Ayuda a proteger las abejas rastreando Vespa velutina. Reporta capturas y nidos, identifica avistamientos, consulta el mapa en vivo. Sin cuenta necesaria.",
+    "stats": {
+      "caught": "Avispas capturadas",
+      "nests": "Nidos reportados",
+      "destroyed": "Nidos destruidos",
+      "sightings": "Avistamientos confirmados"
+    },
+    "info": {
+      "problem": "La amenaza",
+      "problemText": "Vespa velutina (avispa asiática) es un depredador invasivo que ataca colonias de abejas melíferas, amenazando la seguridad alimentaria. La detección temprana es clave.",
+      "whyCatch": "¿Por qué capturar?",
+      "whyCatchText": "Atrapar reinas en primavera evita la formación de nuevas colonias. Cada reina capturada puede prevenir miles de obreras. La captura comunitaria marca la diferencia.",
+      "reportNest": "Reportar un nido",
+      "reportNestText": "Si ves un nido, no lo molestes. Reporta la ubicación aquí para que las autoridades puedan organizar su eliminación segura."
+    },
+    "map": {
+      "title": "Mapa de nidos",
+      "subtitle": "Todos los nidos reportados — código de colores por estado actual.",
+      "hint": "Ver todos los nidos en el mapa en vivo",
+      "legend": "Estado del nido",
+      "noNests": "Aún no hay nidos reportados. ¡Sé el primero!",
+      "status": {
+        "found": "Encontrado — activo",
+        "ordered": "Destrucción ordenada",
+        "destroyed": "Destruido"
+      }
+    },
+    "report": {
+      "title": "Reportar",
+      "catchTab": "Reportar captura",
+      "nestTab": "Reportar nido",
+      "catchHint": "Registra cuántas avispas capturaste",
+      "count": "Número capturado",
+      "countError": "El número debe estar entre 1 y 1000",
+      "latitude": "Latitud",
+      "longitude": "Longitud",
+      "name": "Tu nombre (opcional)",
+      "namePlaceholder": "Anónimo",
+      "notes": "Notas (opcional)",
+      "photo": "Foto (opcional)",
+      "uploading": "Subiendo…",
+      "photoReady": "Foto subida",
+      "uploadError": "Error al subir la foto. Inténtalo de nuevo.",
+      "locationRequired": "La latitud y longitud son obligatorias para reportar nidos.",
+      "submitError": "Error al enviar. Inténtalo de nuevo.",
+      "submit": "Enviar",
+      "success": "¡Gracias! Tu reporte ha sido enviado."
+    },
+    "community": {
+      "title": "ID comunitario",
+      "subtitle": "Ayuda a identificar avispas asiáticas en fotos. Vota sí si reconoces Vespa velutina, no si no.",
+      "hint": "Votar en avistamientos fotográficos de la comunidad",
+      "addPhoto": "Añadir foto",
+      "photo": "Foto",
+      "photoRequired": "Por favor, sube una foto primero.",
+      "description": "Descripción (opcional)",
+      "submitPhoto": "Enviar foto",
+      "submitSuccess": "¡Foto enviada!",
+      "vote": {
+        "yes": "Vespa velutina",
+        "no": "No es una avispa"
+      },
+      "confirmed": "Confirmado",
+      "rejected": "Rechazado",
+      "pending": "Pendiente",
+      "noSightings": "Aún no hay avistamientos fotográficos. ¡Sé el primero!"
     }
   }
 }

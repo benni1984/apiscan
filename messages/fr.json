@@ -1,6 +1,7 @@
 {
   "nav": {
     "map": "Carte en direct",
+    "hornets": "Suivi frelons",
     "news": "Actualités",
     "contribute": "Contribuer",
     "members": "Membres",
@@ -674,6 +675,77 @@
       "title": "Tableau de bord web pour les membres",
       "desc": "Le tableau de bord web complet pour les membres est en ligne. Explorez les données mondiales de santé des ruches, les tendances d'humeur et les ruchers de la communauté directement dans votre navigateur.",
       "btn": "Ouvrir le tableau de bord"
+    }
+  },
+  "hornets": {
+    "tag": "Science citoyenne",
+    "title": "Suivi du frelon asiatique",
+    "subtitle": "Aidez à protéger les abeilles en suivant Vespa velutina. Signalez des captures et des nids, identifiez des observations, consultez la carte en direct. Sans compte.",
+    "stats": {
+      "caught": "Frelons capturés",
+      "nests": "Nids signalés",
+      "destroyed": "Nids détruits",
+      "sightings": "Observations confirmées"
+    },
+    "info": {
+      "problem": "La menace",
+      "problemText": "Vespa velutina (frelon asiatique) est un prédateur invasif qui attaque les colonies d'abeilles mellifères, menaçant la sécurité alimentaire. La détection précoce est essentielle.",
+      "whyCatch": "Pourquoi piéger ?",
+      "whyCatchText": "Piéger les reines au printemps empêche la formation de nouvelles colonies. Chaque reine capturée peut prévenir des milliers d'ouvrières. Le piégeage collectif fait une vraie différence.",
+      "reportNest": "Signaler un nid",
+      "reportNestText": "Si vous repérez un nid, ne le dérangez pas. Signalez sa localisation ici pour que les autorités organisent une destruction sécurisée."
+    },
+    "map": {
+      "title": "Carte des nids",
+      "subtitle": "Tous les nids signalés — code couleur selon le statut actuel.",
+      "hint": "Voir tous les nids sur la carte en direct",
+      "legend": "Statut du nid",
+      "noNests": "Aucun nid signalé. Soyez le premier !",
+      "status": {
+        "found": "Trouvé — actif",
+        "ordered": "Destruction ordonnée",
+        "destroyed": "Détruit"
+      }
+    },
+    "report": {
+      "title": "Signaler",
+      "catchTab": "Signaler une capture",
+      "nestTab": "Signaler un nid",
+      "catchHint": "Enregistrez le nombre de frelons capturés",
+      "count": "Nombre capturé",
+      "countError": "Le nombre doit être compris entre 1 et 1000",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "name": "Votre nom (optionnel)",
+      "namePlaceholder": "Anonyme",
+      "notes": "Notes (optionnel)",
+      "photo": "Photo (optionnel)",
+      "uploading": "Téléversement…",
+      "photoReady": "Photo téléversée",
+      "uploadError": "Échec du téléversement. Veuillez réessayer.",
+      "locationRequired": "La latitude et la longitude sont requises pour les signalements de nids.",
+      "submitError": "Échec de l'envoi. Veuillez réessayer.",
+      "submit": "Envoyer",
+      "success": "Merci ! Votre signalement a été transmis."
+    },
+    "community": {
+      "title": "ID communautaire",
+      "subtitle": "Aidez à identifier les frelons asiatiques sur photos. Votez oui si vous reconnaissez Vespa velutina, non sinon.",
+      "hint": "Voter sur les photos communautaires",
+      "addPhoto": "Ajouter une photo",
+      "photo": "Photo",
+      "photoRequired": "Veuillez d'abord téléverser une photo.",
+      "description": "Description (optionnel)",
+      "submitPhoto": "Soumettre la photo",
+      "submitSuccess": "Photo soumise !",
+      "vote": {
+        "yes": "Vespa velutina",
+        "no": "Pas un frelon"
+      },
+      "confirmed": "Confirmé",
+      "rejected": "Rejeté",
+      "pending": "En attente",
+      "noSightings": "Aucune observation photo encore. Soyez le premier !"
     }
   }
 }
