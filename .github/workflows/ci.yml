@@ -227,6 +227,40 @@ jobs:
           name: ios-test-results
           path: TestResults.xcresult
 
+  # ── Android Hornet Tracker (standalone app) ──────────────────────────────────
+  android-hornets:
+    name: Android Hornet Tracker unit tests
+    needs: changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip notice
+        if: needs.changes.outputs.android_hornets != 'true'
+        run: echo "android-hornets unchanged — reporting success without running tests."
+
+      - uses: actions/setup-java@v4
+        if: needs.changes.outputs.android_hornets == 'true'
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        if: needs.changes.outputs.android_hornets == 'true'
+        run: chmod +x android-hornets/gradlew
+
+      - name: Run unit tests
+        if: needs.changes.outputs.android_hornets == 'true'
+        run: cd android-hornets && ./gradlew test --no-daemon
+
+      - name: Upload test results
+        if: always() && needs.changes.outputs.android_hornets == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-hornets-test-results
+          path: android-hornets/app/build/reports/tests/
+
   # ── iOS Hornet Tracker (standalone app) ──────────────────────────────────────
   ios-hornets:
     name: iOS Hornet Tracker build & test
@@ -332,7 +366,7 @@ jobs:
   # ── Deploy preview (PRs only, after all quality gates pass) ──────────────────
   deploy-preview:
     name: Deploy preview to Vercel
-    needs: [backend, android-unit, android-ui, ios, ios-hornets, web]
+    needs: [backend, android-unit, android-ui, android-hornets, ios, ios-hornets, web]
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     env:
@@ -448,7 +482,7 @@ jobs:
 
   deploy-staging:
     name: Deploy staging to Vercel
-    needs: [backend, android-unit, android-ui, ios, ios-hornets, web]
+    needs: [backend, android-unit, android-ui, android-hornets, ios, ios-hornets, web]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
