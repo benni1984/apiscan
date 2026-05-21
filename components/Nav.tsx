@@ -68,6 +68,7 @@ export default function Nav({ locale, isHome = false }: { locale: string; isHome
 
         <ul className={`nav-links${menuOpen ? ' open' : ''}`} id="nav-links">
           <li><Link href="/map"       onClick={() => setMenuOpen(false)}>{t('map')}</Link></li>
+          <li><Link href="/hornets"   onClick={() => setMenuOpen(false)}>{t('hornets')}</Link></li>
           <li><Link href="/news"      onClick={() => setMenuOpen(false)}>{t('news')}</Link></li>
           <li><Link href="/contribute"onClick={() => setMenuOpen(false)}>{t('contribute')}</Link></li>
           <li><Link href="/members"   onClick={() => setMenuOpen(false)}>{t('members')}</Link></li>

@@ -16,10 +16,12 @@ jobs:
     name: Detect changed paths
     runs-on: ubuntu-latest
     outputs:
-      backend: ${{ steps.filter.outputs.backend }}
-      android: ${{ steps.filter.outputs.android }}
-      ios:     ${{ steps.filter.outputs.ios }}
-      web:     ${{ steps.filter.outputs.web }}
+      backend:     ${{ steps.filter.outputs.backend }}
+      android:     ${{ steps.filter.outputs.android }}
+      ios:         ${{ steps.filter.outputs.ios }}
+      web:         ${{ steps.filter.outputs.web }}
+      ios_hornets: ${{ steps.filter.outputs.ios_hornets }}
+      android_hornets: ${{ steps.filter.outputs.android_hornets }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -35,6 +37,12 @@ jobs:
               - '.github/workflows/ci.yml'
             ios:
               - 'ios/**'
+              - '.github/workflows/ci.yml'
+            ios_hornets:
+              - 'ios-hornets/**'
+              - '.github/workflows/ci.yml'
+            android_hornets:
+              - 'android-hornets/**'
               - '.github/workflows/ci.yml'
             web:
               - 'app/**'
@@ -219,6 +227,93 @@ jobs:
           name: ios-test-results
           path: TestResults.xcresult
 
+  # ── Android Hornet Tracker (standalone app) ──────────────────────────────────
+  android-hornets:
+    name: Android Hornet Tracker unit tests
+    needs: changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip notice
+        if: needs.changes.outputs.android_hornets != 'true'
+        run: echo "android-hornets unchanged — reporting success without running tests."
+
+      - uses: actions/setup-java@v4
+        if: needs.changes.outputs.android_hornets == 'true'
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        if: needs.changes.outputs.android_hornets == 'true'
+        run: chmod +x android-hornets/gradlew
+
+      - name: Run unit tests
+        if: needs.changes.outputs.android_hornets == 'true'
+        run: cd android-hornets && ./gradlew test --no-daemon
+
+      - name: Upload test results
+        if: always() && needs.changes.outputs.android_hornets == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-hornets-test-results
+          path: android-hornets/app/build/reports/tests/
+
+  # ── iOS Hornet Tracker (standalone app) ──────────────────────────────────────
+  ios-hornets:
+    name: iOS Hornet Tracker build & test
+    needs: changes
+    runs-on: ${{ needs.changes.outputs.ios_hornets == 'true' && 'macos-latest' || 'ubuntu-latest' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip notice
+        if: needs.changes.outputs.ios_hornets != 'true'
+        run: echo "ios-hornets unchanged — reporting success without running tests."
+
+      - name: Select Xcode
+        if: needs.changes.outputs.ios_hornets == 'true'
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Install XcodeGen
+        if: needs.changes.outputs.ios_hornets == 'true'
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        if: needs.changes.outputs.ios_hornets == 'true'
+        run: cd ios-hornets && xcodegen generate --spec project.yml
+
+      - name: Resolve simulator
+        if: needs.changes.outputs.ios_hornets == 'true'
+        run: |
+          UDID=$(xcrun simctl list devices available \
+            | grep 'iPhone 16 (' | head -1 | awk -F'[()]' '{print $2}')
+          if [ -z "$UDID" ]; then
+            echo "No iPhone 16 simulator found:"
+            xcrun simctl list devices available
+            exit 1
+          fi
+          echo "Found simulator: $UDID"
+          echo "SIMULATOR_UDID=$UDID" >> "$GITHUB_ENV"
+
+      - name: Build & test
+        if: needs.changes.outputs.ios_hornets == 'true'
+        run: |
+          xcodebuild test \
+            -project ios-hornets/HornetTracker.xcodeproj \
+            -scheme HornetTracker \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+            -resultBundlePath HornetTrackerTestResults
+
+      - name: Upload test results
+        if: always() && needs.changes.outputs.ios_hornets == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-hornets-test-results
+          path: HornetTrackerTestResults.xcresult
+
   # ── Web build & test ──────────────────────────────────────────────────────────
   web:
     name: Web build & test
@@ -271,7 +366,7 @@ jobs:
   # ── Deploy preview (PRs only, after all quality gates pass) ──────────────────
   deploy-preview:
     name: Deploy preview to Vercel
-    needs: [backend, android-unit, android-ui, ios, web]
+    needs: [backend, android-unit, android-ui, android-hornets, ios, ios-hornets, web]
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     env:
@@ -387,7 +482,7 @@ jobs:
 
   deploy-staging:
     name: Deploy staging to Vercel
-    needs: [backend, android-unit, android-ui, ios, web]
+    needs: [backend, android-unit, android-ui, android-hornets, ios, ios-hornets, web]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:

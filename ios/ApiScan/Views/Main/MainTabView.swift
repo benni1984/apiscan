@@ -36,6 +36,11 @@ struct MainTabView: View {
             .tabItem {
                 Label(NSLocalizedString("tab.settings", comment: ""), systemImage: "gear")
             }
+
+            HornetView()
+            .tabItem {
+                Label(NSLocalizedString("tab.hornets", comment: ""), systemImage: "ant")
+            }
         }
         .tint(.orange)
         .task { await apiaryVM.load() }

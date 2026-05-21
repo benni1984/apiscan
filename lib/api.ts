@@ -534,3 +534,121 @@ export async function adminGetTokenStats(): Promise<TokenStats> {
   if (!res.ok) throw new Error('Failed to get token stats');
   return res.json();
 }
+
+// ── Hornet Tracker (public, no auth) ───────────────────────────────────────────
+
+export interface HornetStats {
+  total_caught: number;
+  total_nests: number;
+  destroyed_nests: number;
+  pending_sightings: number;
+  confirmed_sightings: number;
+}
+
+export interface HornetCatchCreate {
+  latitude?: number | null;
+  longitude?: number | null;
+  count?: number;
+  reporter_name?: string | null;
+}
+
+export interface HornetNestCreate {
+  latitude: number;
+  longitude: number;
+  reporter_name?: string | null;
+  notes?: string | null;
+  photo_url?: string | null;
+}
+
+export interface HornetSightingCreate {
+  photo_url: string;
+  description?: string | null;
+  reporter_name?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+}
+
+export interface HornetSighting {
+  id: string;
+  photo_url: string;
+  description: string | null;
+  reporter_name: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  status: 'pending' | 'confirmed' | 'rejected';
+  yes_votes: number;
+  no_votes: number;
+  created_at: string;
+}
+
+export interface HornetNestFeature {
+  type: 'Feature';
+  geometry: { type: 'Point'; coordinates: [number, number] };
+  properties: {
+    id: string;
+    status: 'found' | 'destruction_ordered' | 'destroyed';
+    reporter_name: string | null;
+    notes: string | null;
+    photo_url: string | null;
+    created_at: string;
+  };
+}
+
+export interface HornetNestGeoJSON {
+  type: 'FeatureCollection';
+  features: HornetNestFeature[];
+}
+
+export async function getHornetStats(): Promise<HornetStats> {
+  const res = await fetch(`${BASE}/hornets/stats`);
+  if (!res.ok) throw new Error('Failed to get hornet stats');
+  return res.json();
+}
+
+export async function submitHornetCatch(data: HornetCatchCreate): Promise<void> {
+  const res = await fetch(`${BASE}/hornets/catches`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error('Failed to submit catch');
+}
+
+export async function getHornetNests(): Promise<HornetNestGeoJSON> {
+  const res = await fetch(`${BASE}/hornets/nests`);
+  if (!res.ok) throw new Error('Failed to get nests');
+  return res.json();
+}
+
+export async function submitHornetNest(data: HornetNestCreate): Promise<void> {
+  const res = await fetch(`${BASE}/hornets/nests`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error('Failed to submit nest');
+}
+
+export async function getHornetSightings(page = 1): Promise<Paginated<HornetSighting>> {
+  const res = await fetch(`${BASE}/hornets/sightings?page=${page}&per_page=12`);
+  if (!res.ok) throw new Error('Failed to get sightings');
+  return res.json();
+}
+
+export async function submitHornetSighting(data: HornetSightingCreate): Promise<void> {
+  const res = await fetch(`${BASE}/hornets/sightings`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error('Failed to submit sighting');
+}
+
+export async function voteOnSighting(id: string, vote: 'yes' | 'no'): Promise<void> {
+  const res = await fetch(`${BASE}/hornets/sightings/${id}/vote`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ vote }),
+  });
+  if (!res.ok) throw new Error('Failed to vote');
+}

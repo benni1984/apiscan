@@ -1,6 +1,7 @@
 {
   "nav": {
     "map": "Live Map",
+    "hornets": "Hornet Tracker",
     "news": "News",
     "contribute": "Contribute",
     "members": "Members",
@@ -674,6 +675,77 @@
       "title": "Web Dashboard for Members",
       "desc": "The full web-based members dashboard is live. Explore global hive health data, mood trends, and community apiaries directly in your browser.",
       "btn": "Open Dashboard"
+    }
+  },
+  "hornets": {
+    "tag": "Citizen Science",
+    "title": "Asian Hornet Tracker",
+    "subtitle": "Help protect bees by tracking Vespa velutina — the Asian hornet. Report catches and nests, identify sightings, and view the live map. No account needed.",
+    "stats": {
+      "caught": "Hornets Caught",
+      "nests": "Nests Reported",
+      "destroyed": "Nests Destroyed",
+      "sightings": "Confirmed Sightings"
+    },
+    "info": {
+      "problem": "The Threat",
+      "problemText": "Vespa velutina (Asian hornet) is an invasive predator that attacks honey bee colonies, weakening hives and threatening food security. Early detection is critical.",
+      "whyCatch": "Why Catch?",
+      "whyCatchText": "Trapping queens in spring prevents new colonies from forming. Each caught queen can prevent thousands of workers. Community trapping makes a real difference.",
+      "reportNest": "Report a Nest",
+      "reportNestText": "If you spot a nest, do not disturb it. Report the location here so authorities can arrange safe removal. Your report saves bees."
+    },
+    "map": {
+      "title": "Nest Map",
+      "subtitle": "All reported nests — colour-coded by current status.",
+      "hint": "View all reported nests on the live map",
+      "legend": "Nest Status",
+      "noNests": "No nests reported yet. Be the first!",
+      "status": {
+        "found": "Found — active",
+        "ordered": "Destruction ordered",
+        "destroyed": "Destroyed"
+      }
+    },
+    "report": {
+      "title": "Report",
+      "catchTab": "Report a Catch",
+      "nestTab": "Report a Nest",
+      "catchHint": "Log how many hornets you caught",
+      "count": "Number caught",
+      "countError": "Count must be between 1 and 1000",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "name": "Your name (optional)",
+      "namePlaceholder": "Anonymous",
+      "notes": "Notes (optional)",
+      "photo": "Photo (optional)",
+      "uploading": "Uploading…",
+      "photoReady": "Photo uploaded",
+      "uploadError": "Photo upload failed. Please try again.",
+      "locationRequired": "Latitude and longitude are required for nest reports.",
+      "submitError": "Submission failed. Please try again.",
+      "submit": "Submit",
+      "success": "Thank you! Your report has been submitted."
+    },
+    "community": {
+      "title": "Community ID",
+      "subtitle": "Help identify Asian hornets from photos. Vote yes if you recognise Vespa velutina, no if not.",
+      "hint": "Vote on community photo sightings",
+      "addPhoto": "Add a Photo",
+      "photo": "Photo",
+      "photoRequired": "Please upload a photo first.",
+      "description": "Description (optional)",
+      "submitPhoto": "Submit Photo",
+      "submitSuccess": "Photo submitted! It will appear after upload.",
+      "vote": {
+        "yes": "Vespa velutina",
+        "no": "Not a hornet"
+      },
+      "confirmed": "Confirmed",
+      "rejected": "Rejected",
+      "pending": "Pending",
+      "noSightings": "No photo sightings yet. Be the first to submit one!"
     }
   }
 }

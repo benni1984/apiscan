@@ -38,15 +38,27 @@ struct ApiScanApp: App {
 
     var body: some Scene {
         WindowGroup {
-            Group {
-                if authVM.isAuthenticated {
-                    MainTabView()
-                        .environmentObject(authVM)
-                        .task { await authVM.loadProfile() }
-                } else {
-                    LoginView()
-                        .environmentObject(authVM)
+            if authVM.isAuthenticated {
+                MainTabView()
+                    .environmentObject(authVM)
+                    .task { await authVM.loadProfile() }
+            } else {
+                // Unauthenticated: ApiScan login + public Hornets tab always visible
+                TabView {
+                    NavigationStack {
+                        LoginView()
+                            .environmentObject(authVM)
+                    }
+                    .tabItem {
+                        Label("ApiScan", systemImage: "hexagon.fill")
+                    }
+
+                    HornetView()
+                    .tabItem {
+                        Label(NSLocalizedString("tab.hornets", comment: ""), systemImage: "ant")
+                    }
                 }
+                .tint(.orange)
             }
         }
     }

@@ -164,3 +164,55 @@ class Inspection(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     hive = relationship("Hive", back_populates="inspections")
+
+
+# ---------------------------------------------------------------------------
+# Hornet Tracker (public, no auth)
+# ---------------------------------------------------------------------------
+
+class HornetCatch(Base):
+    __tablename__ = "hornet_catches"
+
+    id = Column(String, primary_key=True, default=_uuid)
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
+    count = Column(Integer, default=1, nullable=False)
+    reporter_name = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class HornetNest(Base):
+    __tablename__ = "hornet_nests"
+
+    id = Column(String, primary_key=True, default=_uuid)
+    latitude = Column(Float, nullable=False)
+    longitude = Column(Float, nullable=False)
+    status = Column(
+        SAEnum("found", "destruction_ordered", "destroyed", name="nest_status_enum"),
+        default="found",
+        nullable=False,
+    )
+    reporter_name = Column(String, nullable=True)
+    notes = Column(Text, nullable=True)
+    photo_url = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class HornetSighting(Base):
+    __tablename__ = "hornet_sightings"
+
+    id = Column(String, primary_key=True, default=_uuid)
+    photo_url = Column(String, nullable=False)
+    description = Column(Text, nullable=True)
+    reporter_name = Column(String, nullable=True)
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
+    status = Column(
+        SAEnum("pending", "confirmed", "rejected", name="sighting_status_enum"),
+        default="pending",
+        nullable=False,
+    )
+    yes_votes = Column(Integer, default=0, nullable=False)
+    no_votes = Column(Integer, default=0, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)

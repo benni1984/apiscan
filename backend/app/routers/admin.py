@@ -6,11 +6,12 @@ from fastapi import APIRouter, HTTPException, Query, status
 from sqlalchemy import func, or_, and_
 
 from app.deps import CurrentAdmin, DB
-from app.models import Apiary, Hive, Inspection, RefreshToken, User
+from app.models import Apiary, Hive, Inspection, RefreshToken, User, HornetSighting
 from app.schemas import (
     AdminApiaryOut, AdminPlatformStats, AdminUserDetail, AdminTokenOut,
-    AdminTokenStats, HealthSummary, InactiveUserOut, NoVarroaApiaryOut,
-    PaginatedResponse, SignupDay, SupporterUpdate, UserOut, ZeroInspectionHiveOut,
+    AdminTokenStats, HealthSummary, HornetSightingStatusUpdate, InactiveUserOut,
+    NoVarroaApiaryOut, PaginatedResponse, SignupDay, SupporterUpdate, UserOut,
+    ZeroInspectionHiveOut,
 )
 
 router = APIRouter(prefix="/admin", tags=["admin"])
@@ -444,4 +445,22 @@ def revoke_user_tokens(user_id: str, admin: CurrentAdmin, db: DB):
     db.query(RefreshToken).filter(RefreshToken.user_id == user_id).update(
         {"revoked": True}, synchronize_session=False
     )
+    db.commit()
+
+
+# ---------------------------------------------------------------------------
+# Hornet Tracker — admin overrides
+# ---------------------------------------------------------------------------
+
+@router.put("/hornets/sightings/{sighting_id}/status", status_code=204)
+def set_sighting_status(
+    sighting_id: str, body: HornetSightingStatusUpdate, admin: CurrentAdmin, db: DB
+):
+    sighting = db.get(HornetSighting, sighting_id)
+    if sighting is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"code": "HORNET_SIGHTING_NOT_FOUND", "message": "Sighting not found."},
+        )
+    sighting.status = body.status
     db.commit()

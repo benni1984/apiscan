@@ -138,6 +138,46 @@
 "action.next" = "Weiter";
 "action.loadMore" = "Mehr laden";
 
+/* Hornissen */
+"tab.hornets" = "Hornissen";
+"hornets.title" = "Hornissen-Tracker";
+"hornets.tab.info" = "Info";
+"hornets.tab.map" = "Karte";
+"hornets.tab.report" = "Melden";
+"hornets.tab.community" = "Community";
+"hornets.stats.title" = "Live-Statistiken";
+"hornets.stats.caught" = "Gefangen";
+"hornets.stats.nests" = "Nester";
+"hornets.stats.destroyed" = "Vernichtet";
+"hornets.stats.sightings" = "Bestätigt";
+"hornets.info.problem" = "Die Asiatische Hornisse";
+"hornets.info.problemText" = "Vespa velutina (Asiatische Hornisse) ist ein invasiver Räuber, der Bienenvölker bedroht. Frühe Nestentdeckung und Fang im Frühjahr sind entscheidend.";
+"hornets.info.whyCatch" = "Warum fangen?";
+"hornets.info.whyCatchText" = "Königinnen im Frühjahr vor dem Nestbau zu fangen begrenzt das Wachstum der Kolonien und schützt Bestäuber. Melden Sie Ihre Fänge, um den lokalen Druck zu verfolgen.";
+"hornets.info.reportNest" = "Nest gefunden?";
+"hornets.info.reportNestText" = "Markieren Sie den genauen Standort, damit Behörden eine professionelle Entfernung beauftragen können. Anonyme Meldungen sind willkommen.";
+"hornets.map.noNests" = "Keine Nester gemeldet";
+"hornets.map.hint" = "Seien Sie der Erste, der ein Nest in Ihrer Gegend markiert.";
+"hornets.map.status.found" = "Gefunden";
+"hornets.map.status.ordered" = "Vernichtung beauftragt";
+"hornets.map.status.destroyed" = "Vernichtet";
+"hornets.report.catchTab" = "Fang melden";
+"hornets.report.nestTab" = "Nest melden";
+"hornets.report.count" = "Gefangene Hornissen";
+"hornets.report.location" = "Standort (optional)";
+"hornets.report.locationRequired" = "GPS-Standort erforderlich";
+"hornets.report.notes" = "Notizen";
+"hornets.report.notesPlaceholder" = "Beschreiben Sie, was Sie gefunden haben…";
+"hornets.report.reporterName" = "Ihr Name (optional)";
+"hornets.report.submit" = "Meldung absenden";
+"hornets.report.success" = "Danke! Ihre Meldung wurde eingereicht.";
+"hornets.community.empty" = "Noch keine Sichtungen";
+"hornets.community.vote.yes" = "Hornisse ✓";
+"hornets.community.vote.no" = "Keine Hornisse";
+"hornets.community.confirmed" = "Bestätigt";
+"hornets.community.pending" = "Ausstehend";
+"hornets.community.rejected" = "Abgelehnt";
+
 /* Admin */
 "admin.title" = "Admin";
 "admin.stats" = "Statistiken";

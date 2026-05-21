@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hornet Tracker</string>
+
+    <!-- Navigation / tabs -->
+    <string name="hornet_title">Hornet Tracker</string>
+    <string name="hornet_tab_info">Info</string>
+    <string name="hornet_tab_map">Map</string>
+    <string name="hornet_tab_report">Report</string>
+    <string name="hornet_tab_community">Community</string>
+
+    <!-- Stats -->
+    <string name="hornet_stats_title">Live Statistics</string>
+    <string name="hornet_stats_caught">Caught</string>
+    <string name="hornet_stats_nests">Nests</string>
+    <string name="hornet_stats_destroyed">Destroyed</string>
+    <string name="hornet_stats_sightings">Confirmed</string>
+
+    <!-- Info -->
+    <string name="hornet_info_problem">The Asian Hornet</string>
+    <string name="hornet_info_problem_text">Vespa velutina is an invasive predator devastating honey bee colonies. Detecting nests and trapping early in spring is crucial.</string>
+    <string name="hornet_info_why_catch">Why Trap?</string>
+    <string name="hornet_info_why_catch_text">Trapping queens in spring before nest-building limits colony growth and protects pollinators. Record your catches to track local pressure.</string>
+    <string name="hornet_info_report_nest">Found a Nest?</string>
+    <string name="hornet_info_report_nest_text">Mark the exact location so local authorities can order professional removal. Anonymous reports are welcome.</string>
+
+    <!-- Map -->
+    <string name="hornet_map_no_nests">No Nests Reported</string>
+    <string name="hornet_map_hint">Be the first to mark a nest in your area.</string>
+    <string name="hornet_map_status_found">Found</string>
+    <string name="hornet_map_status_ordered">Destruction ordered</string>
+    <string name="hornet_map_status_destroyed">Destroyed</string>
+
+    <!-- Report -->
+    <string name="hornet_report_catch_tab">Catch</string>
+    <string name="hornet_report_nest_tab">Nest</string>
+    <string name="hornet_report_count">Hornets caught</string>
+    <string name="hornet_report_location_required">GPS location required</string>
+    <string name="hornet_report_reporter_name">Your name (optional)</string>
+    <string name="hornet_report_submit">Submit Report</string>
+    <string name="hornet_report_success">Thank you! Your report has been submitted.</string>
+
+    <!-- Community -->
+    <string name="hornet_community_empty">No Sightings Yet</string>
+    <string name="hornet_community_vote_yes">Hornet ✓</string>
+    <string name="hornet_community_vote_no">Not a hornet</string>
+    <string name="hornet_community_confirmed">Confirmed</string>
+    <string name="hornet_community_pending">Pending</string>
+    <string name="hornet_community_rejected">Rejected</string>
+
+    <!-- Shared actions -->
+    <string name="action_use_my_location">Use my location</string>
+    <string name="action_load_more">Load more</string>
+    <string name="field_notes">Notes</string>
+</resources>

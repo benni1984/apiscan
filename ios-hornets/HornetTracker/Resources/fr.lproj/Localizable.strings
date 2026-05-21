@@ -1,0 +1,44 @@
+/* Commun */
+"alert.error" = "Erreur";
+"action.useMyLocation" = "Utiliser ma position";
+"action.loadMore" = "Charger plus";
+"field.notes" = "Notes";
+
+/* Frelons */
+"hornets.title" = "Suivi Frelon";
+"hornets.tab.info" = "Info";
+"hornets.tab.map" = "Carte";
+"hornets.tab.report" = "Signaler";
+"hornets.tab.community" = "Communauté";
+"hornets.stats.title" = "Statistiques en direct";
+"hornets.stats.caught" = "Capturés";
+"hornets.stats.nests" = "Nids";
+"hornets.stats.destroyed" = "Détruits";
+"hornets.stats.sightings" = "Confirmés";
+"hornets.info.problem" = "Le Frelon Asiatique";
+"hornets.info.problemText" = "Vespa velutina (le frelon asiatique) est un prédateur invasif qui décime les colonies d'abeilles. Détecter les nids et piéger tôt au printemps est crucial.";
+"hornets.info.whyCatch" = "Pourquoi piéger ?";
+"hornets.info.whyCatchText" = "Capturer les reines au printemps avant la construction du nid limite la croissance des colonies et protège les pollinisateurs. Enregistrez vos captures pour suivre la pression locale.";
+"hornets.info.reportNest" = "Nid trouvé ?";
+"hornets.info.reportNestText" = "Marquez l'emplacement exact pour que les autorités locales puissent ordonner une suppression professionnelle. Les signalements anonymes sont les bienvenus.";
+"hornets.map.noNests" = "Aucun nid signalé";
+"hornets.map.hint" = "Soyez le premier à signaler un nid dans votre région.";
+"hornets.map.status.found" = "Trouvé";
+"hornets.map.status.ordered" = "Destruction ordonnée";
+"hornets.map.status.destroyed" = "Détruit";
+"hornets.report.catchTab" = "Capture";
+"hornets.report.nestTab" = "Nid";
+"hornets.report.count" = "Frelons capturés";
+"hornets.report.location" = "Localisation (optionnelle)";
+"hornets.report.locationRequired" = "Localisation GPS requise";
+"hornets.report.notes" = "Notes";
+"hornets.report.notesPlaceholder" = "Décrivez ce que vous avez trouvé…";
+"hornets.report.reporterName" = "Votre nom (optionnel)";
+"hornets.report.submit" = "Envoyer le signalement";
+"hornets.report.success" = "Merci ! Votre signalement a été envoyé.";
+"hornets.community.empty" = "Aucune observation pour l'instant";
+"hornets.community.vote.yes" = "Frelon ✓";
+"hornets.community.vote.no" = "Pas un frelon";
+"hornets.community.confirmed" = "Confirmé";
+"hornets.community.pending" = "En attente";
+"hornets.community.rejected" = "Rejeté";

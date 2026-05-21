@@ -11,6 +11,7 @@ import com.apiscan.app.ui.hives.*
 import com.apiscan.app.ui.inspections.*
 import com.apiscan.app.ui.qr.*
 import com.apiscan.app.ui.admin.*
+import com.apiscan.app.ui.hornet.HornetHomeScreen
 import com.apiscan.app.ui.settings.SettingsScreen
 import com.apiscan.app.ui.stats.HiveStatsScreen
 import javax.inject.Inject
@@ -35,19 +36,22 @@ object Routes {
     const val ADMIN_USERS        = "admin_users"
     const val ADMIN_MAP          = "admin_map"
     const val ADMIN_HEALTH       = "admin_health"
+    const val HORNET_HOME        = "hornet_home"
 }
 
 @Composable
-fun ApiScanNavGraph(tokenStore: TokenStore = dagger.hilt.android.EntryPointAccessors
-    .fromApplication(
-        androidx.compose.ui.platform.LocalContext.current.applicationContext,
-        TokenStoreEntryPoint::class.java
-    ).tokenStore()
+fun ApiScanNavGraph(
+    navController: NavHostController = rememberNavController(),
+    modifier: androidx.compose.ui.Modifier = androidx.compose.ui.Modifier,
+    tokenStore: TokenStore = dagger.hilt.android.EntryPointAccessors
+        .fromApplication(
+            androidx.compose.ui.platform.LocalContext.current.applicationContext,
+            TokenStoreEntryPoint::class.java
+        ).tokenStore()
 ) {
-    val navController = rememberNavController()
     val start = if (tokenStore.isLoggedIn) Routes.APIARY_LIST else Routes.LOGIN
 
-    NavHost(navController, startDestination = start) {
+    NavHost(navController, startDestination = start, modifier = modifier) {
         composable(Routes.LOGIN) {
             LoginScreen(
                 onLoginSuccess  = { navController.navigate(Routes.APIARY_LIST) { popUpTo(Routes.LOGIN) { inclusive = true } } },
@@ -174,6 +178,9 @@ fun ApiScanNavGraph(tokenStore: TokenStore = dagger.hilt.android.EntryPointAcces
         }
         composable(Routes.ADMIN_HEALTH) {
             AdminHealthScreen(onBack = { navController.popBackStack() })
+        }
+        composable(Routes.HORNET_HOME) {
+            HornetHomeScreen()
         }
     }
 }

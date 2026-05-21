@@ -489,5 +489,87 @@ class OverviewStats(BaseModel):
     per_apiary: List[ApiaryStatsSummary]
 
 
+# ---------------------------------------------------------------------------
+# Hornet Tracker
+# ---------------------------------------------------------------------------
+
+class HornetCatchCreate(BaseModel):
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    count: int = Field(default=1, ge=1, le=1000)
+    reporter_name: Optional[str] = Field(default=None, max_length=100)
+
+
+class HornetCatchOut(BaseModel):
+    id: str
+    count: int
+    latitude: Optional[float]
+    longitude: Optional[float]
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class HornetNestCreate(BaseModel):
+    latitude: float = Field(ge=-90, le=90)
+    longitude: float = Field(ge=-180, le=180)
+    reporter_name: Optional[str] = Field(default=None, max_length=100)
+    notes: Optional[str] = Field(default=None, max_length=2000)
+    photo_url: Optional[str] = None
+
+
+class HornetNestOut(BaseModel):
+    id: str
+    latitude: float
+    longitude: float
+    status: str
+    reporter_name: Optional[str]
+    notes: Optional[str]
+    photo_url: Optional[str]
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class HornetSightingCreate(BaseModel):
+    photo_url: str
+    description: Optional[str] = Field(default=None, max_length=2000)
+    reporter_name: Optional[str] = Field(default=None, max_length=100)
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+
+
+class HornetSightingOut(BaseModel):
+    id: str
+    photo_url: str
+    description: Optional[str]
+    reporter_name: Optional[str]
+    latitude: Optional[float]
+    longitude: Optional[float]
+    status: str
+    yes_votes: int
+    no_votes: int
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class HornetVote(BaseModel):
+    vote: str = Field(pattern="^(yes|no)$")
+
+
+class HornetSightingStatusUpdate(BaseModel):
+    status: str = Field(pattern="^(confirmed|rejected)$")
+
+
+class HornetStatsOut(BaseModel):
+    total_caught: int
+    total_nests: int
+    destroyed_nests: int
+    pending_sightings: int
+    confirmed_sightings: int
+
+
 # Resolve forward references
 TokenResponse.model_rebuild()

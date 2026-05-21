@@ -192,6 +192,34 @@ interface ApiService {
         @Query("per_page") perPage: Int = 20
     ): PaginatedResponse<ZeroInspectionHive>
 
+    // Hornets (public — no auth required, but auth header is forwarded if present)
+    @GET("hornets/stats")
+    suspend fun hornetStats(): HornetStats
+
+    @POST("hornets/catches")
+    suspend fun submitHornetCatch(@Body body: HornetCatchCreate): HornetCatchOut
+
+    @GET("hornets/nests")
+    suspend fun hornetNests(): HornetNestGeoJSON
+
+    @POST("hornets/nests")
+    suspend fun submitHornetNest(@Body body: HornetNestCreate): HornetNestOut
+
+    @GET("hornets/sightings")
+    suspend fun hornetSightings(
+        @Query("page") page: Int = 1,
+        @Query("per_page") perPage: Int = 12
+    ): PaginatedResponse<HornetSightingOut>
+
+    @POST("hornets/sightings")
+    suspend fun submitHornetSighting(@Body body: HornetSightingCreate): HornetSightingOut
+
+    @POST("hornets/sightings/{id}/vote")
+    suspend fun voteOnSighting(
+        @Path("id") id: String,
+        @Body body: HornetVoteRequest
+    ): Response<Unit>
+
     // Stats
     @GET("hives/{id}/stats")
     suspend fun hiveStats(

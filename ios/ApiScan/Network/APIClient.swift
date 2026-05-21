@@ -73,6 +73,10 @@ final class APIClient {
         try await performVoid(method: "POST", path: path, bodyData: try encoder.encode(body), requiresAuth: false)
     }
 
+    func getNoAuth<T: Decodable>(_ path: String) async throws -> T {
+        try await perform(method: "GET", path: path, requiresAuth: false)
+    }
+
     func getRawData(_ path: String) async throws -> Data {
         let req = try buildRequest(method: "GET", path: path, bodyData: nil, requiresAuth: true)
         let (data, resp) = try await execute(req)

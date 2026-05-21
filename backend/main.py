@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database import Base, SessionLocal, engine
 from app.routers import auth, users, field_definitions, apiaries, qr_batches, hives, inspections, stats, public, export
-from app.routers import admin
+from app.routers import admin, hornets
 
 
 @asynccontextmanager
@@ -52,4 +52,5 @@ app.include_router(inspections.router, prefix=PREFIX)
 app.include_router(stats.router, prefix=PREFIX)
 app.include_router(public.router, prefix=PREFIX)
 app.include_router(export.router, prefix=PREFIX)
+app.include_router(hornets.router, prefix=PREFIX)
 app.include_router(admin.router, prefix=PREFIX)

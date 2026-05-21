@@ -18,8 +18,9 @@ All endpoints require `Authorization: Bearer <access_token>` unless marked **pub
 8. [Inspections](#inspections)
 9. [Stats](#stats)
 10. [Public Dashboard](#public-dashboard)
-11. [Object Reference](#object-reference)
-12. [Error Codes](#error-codes)
+11. [Hornet Tracker](#hornet-tracker)
+12. [Object Reference](#object-reference)
+13. [Error Codes](#error-codes)
 
 ---
 
@@ -734,6 +735,260 @@ Returns a public summary of one apiary: location, hives, and aggregated inspecti
 
 ---
 
+## Hornet Tracker
+
+All endpoints in this section are **public** — no `Authorization` header required.
+They allow any citizen (no account needed) to report Asian hornet (*Vespa velutina*) catches and nests, submit photo sightings for community identification, and view aggregated data.
+
+| Method | Path | Access | Description |
+|--------|------|--------|-------------|
+| GET | `/hornets/stats` | Public | Global aggregate statistics |
+| POST | `/hornets/catches` | Public | Report a catch (count + optional GPS) |
+| GET | `/hornets/nests` | Public | All nests as a GeoJSON FeatureCollection |
+| POST | `/hornets/nests` | Public | Report a new nest sighting |
+| GET | `/hornets/sightings` | Public | Paginated photo sightings |
+| POST | `/hornets/sightings` | Public | Submit a photo sighting |
+| POST | `/hornets/sightings/{id}/vote` | Public | Vote yes/no on a sighting |
+| PUT | `/admin/hornets/sightings/{id}/status` | Admin | Override sighting status |
+
+---
+
+### GET `/hornets/stats`
+
+Returns platform-wide aggregate numbers for the hornet tracker.
+
+**Response 200**
+
+```json
+{
+  "total_caught": 1284,
+  "total_nests": 47,
+  "destroyed_nests": 12,
+  "pending_sightings": 8,
+  "confirmed_sightings": 31
+}
+```
+
+---
+
+### POST `/hornets/catches`
+
+Report one or more caught Asian hornets. Location is optional (allows anonymous reporting without GPS).
+
+**Request**
+
+```json
+{
+  "latitude": 48.8566,
+  "longitude": 2.3522,
+  "count": 3,
+  "reporter_name": "string | null"
+}
+```
+
+| Field | Required | Constraints |
+|-------|----------|-------------|
+| `latitude` | No | -90 to 90 |
+| `longitude` | No | -180 to 180 |
+| `count` | No (default 1) | 1–1000 |
+| `reporter_name` | No | max 100 chars |
+
+**Response 201**
+
+```json
+{
+  "id": "uuid",
+  "count": 3,
+  "latitude": 48.8566,
+  "longitude": 2.3522,
+  "created_at": "datetime"
+}
+```
+
+---
+
+### GET `/hornets/nests`
+
+Returns all reported nests as a GeoJSON FeatureCollection, suitable for map rendering. Each feature is colour-coded by `status`.
+
+**Response 200**
+
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3522, 48.8566]
+      },
+      "properties": {
+        "id": "uuid",
+        "status": "found",
+        "reporter_name": "string | null",
+        "notes": "string | null",
+        "photo_url": "string | null",
+        "created_at": "datetime"
+      }
+    }
+  ]
+}
+```
+
+`status` values: `found` (active nest) · `destruction_ordered` (removal ordered) · `destroyed` (removed)
+
+---
+
+### POST `/hornets/nests`
+
+Report a new nest. GPS coordinates are required; a photo may be attached (upload via `/api/hornets/upload` first).
+
+**Request**
+
+```json
+{
+  "latitude": 48.8566,
+  "longitude": 2.3522,
+  "reporter_name": "string | null",
+  "notes": "string | null",
+  "photo_url": "string | null"
+}
+```
+
+| Field | Required | Constraints |
+|-------|----------|-------------|
+| `latitude` | Yes | -90 to 90 |
+| `longitude` | Yes | -180 to 180 |
+| `reporter_name` | No | max 100 chars |
+| `notes` | No | max 2000 chars |
+| `photo_url` | No | Vercel Blob URL |
+
+**Response 201** — HornetNest object (see below).
+
+---
+
+### GET `/hornets/sightings`
+
+Returns paginated community photo sightings for identification, newest first.
+
+Accepts standard pagination params (`page`, `per_page`).
+
+**Response 200** — wrapped in the standard pagination envelope:
+
+```json
+{
+  "items": [ /* array of HornetSighting objects */ ],
+  "total": 42,
+  "page": 1,
+  "per_page": 20,
+  "pages": 3
+}
+```
+
+---
+
+### POST `/hornets/sightings`
+
+Submit a photo for community identification. The photo must be uploaded first via the Next.js upload proxy route (`POST /api/hornets/upload`), which returns a Vercel Blob URL.
+
+**Request**
+
+```json
+{
+  "photo_url": "https://...",
+  "description": "string | null",
+  "reporter_name": "string | null",
+  "latitude": 48.8566,
+  "longitude": 2.3522
+}
+```
+
+| Field | Required | Constraints |
+|-------|----------|-------------|
+| `photo_url` | Yes | Vercel Blob URL |
+| `description` | No | max 2000 chars |
+| `reporter_name` | No | max 100 chars |
+| `latitude` | No | -90 to 90 |
+| `longitude` | No | -180 to 180 |
+
+**Response 201** — HornetSighting object (see below).
+
+---
+
+### POST `/hornets/sightings/{id}/vote`
+
+Cast a yes/no vote on whether the photo shows an Asian hornet. Each call counts as one vote (no deduplication — rate limiting is handled by Vercel Firewall).
+
+**Auto-confirm rule:** if `yes_votes > no_votes × 2` and `yes_votes + no_votes ≥ 5`, the sighting status is automatically set to `confirmed`.
+
+**Request**
+
+```json
+{ "vote": "yes" }
+```
+
+`vote` must be `"yes"` or `"no"`.
+
+**Response 204** — no body.
+
+**Response 404** — `HORNET_SIGHTING_NOT_FOUND`
+
+---
+
+### PUT `/admin/hornets/sightings/{id}/status`
+
+Admin-only override to set the status of a sighting to `confirmed` or `rejected`.
+
+**Request**
+
+```json
+{ "status": "confirmed" }
+```
+
+`status` must be `"confirmed"` or `"rejected"`.
+
+**Response 204** — no body.
+
+**Response 404** — `HORNET_SIGHTING_NOT_FOUND`
+
+---
+
+### HornetNest object
+
+```json
+{
+  "id": "uuid",
+  "latitude": 48.8566,
+  "longitude": 2.3522,
+  "status": "found | destruction_ordered | destroyed",
+  "reporter_name": "string | null",
+  "notes": "string | null",
+  "photo_url": "string | null",
+  "created_at": "datetime",
+  "updated_at": "datetime"
+}
+```
+
+### HornetSighting object
+
+```json
+{
+  "id": "uuid",
+  "photo_url": "string",
+  "description": "string | null",
+  "reporter_name": "string | null",
+  "latitude": "float | null",
+  "longitude": "float | null",
+  "status": "pending | confirmed | rejected",
+  "yes_votes": 4,
+  "no_votes": 1,
+  "created_at": "datetime"
+}
+```
+
+---
+
 ## Object Reference
 
 ### Enums
@@ -748,6 +1003,8 @@ Returns a public summary of one apiary: location, hives, and aggregated inspecti
 | `field_scope` | `user`, `apiary` |
 | `field_target` | `hive`, `inspection` |
 | `stats_preset` | `30d`, `90d`, `365d`, `all` |
+| `nest_status` | `found`, `destruction_ordered`, `destroyed` |
+| `sighting_status` | `pending`, `confirmed`, `rejected` |
 
 ---
 
@@ -771,3 +1028,7 @@ Returns a public summary of one apiary: location, hives, and aggregated inspecti
 | `EMAIL_ALREADY_REGISTERED` | 409 | — |
 | `VALIDATION_ERROR` | 422 | Request body failed validation (details in `error.fields`) |
 | `QR_BATCH_LIMIT_EXCEEDED` | 422 | Requested count > 50 |
+| `HORNET_SIGHTING_NOT_FOUND` | 404 | — |
+| `HORNET_NEST_NOT_FOUND` | 404 | — |
+| `INVALID_VOTE` | 422 | `vote` must be `yes` or `no` |
+| `INVALID_SIGHTING_STATUS` | 422 | `status` must be `confirmed` or `rejected` |

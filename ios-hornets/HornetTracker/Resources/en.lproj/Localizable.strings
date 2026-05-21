@@ -1,0 +1,44 @@
+/* Shared */
+"alert.error" = "Error";
+"action.useMyLocation" = "Use my location";
+"action.loadMore" = "Load more";
+"field.notes" = "Notes";
+
+/* Hornets */
+"hornets.title" = "Hornet Tracker";
+"hornets.tab.info" = "Info";
+"hornets.tab.map" = "Map";
+"hornets.tab.report" = "Report";
+"hornets.tab.community" = "Community";
+"hornets.stats.title" = "Live Statistics";
+"hornets.stats.caught" = "Caught";
+"hornets.stats.nests" = "Nests";
+"hornets.stats.destroyed" = "Destroyed";
+"hornets.stats.sightings" = "Confirmed";
+"hornets.info.problem" = "The Asian Hornet";
+"hornets.info.problemText" = "Vespa velutina (the Asian hornet) is an invasive predator devastating honey bee colonies. Detecting nests and trapping early in spring is crucial.";
+"hornets.info.whyCatch" = "Why Trap?";
+"hornets.info.whyCatchText" = "Trapping queens in spring before nest-building limits colony growth and protects pollinators. Record your catches to track local pressure.";
+"hornets.info.reportNest" = "Found a Nest?";
+"hornets.info.reportNestText" = "Mark the exact location so local authorities can order professional removal. Anonymous reports are welcome.";
+"hornets.map.noNests" = "No Nests Reported";
+"hornets.map.hint" = "Be the first to mark a nest in your area.";
+"hornets.map.status.found" = "Found";
+"hornets.map.status.ordered" = "Destruction ordered";
+"hornets.map.status.destroyed" = "Destroyed";
+"hornets.report.catchTab" = "Catch";
+"hornets.report.nestTab" = "Nest";
+"hornets.report.count" = "Hornets caught";
+"hornets.report.location" = "Location (optional)";
+"hornets.report.locationRequired" = "GPS location required";
+"hornets.report.notes" = "Notes";
+"hornets.report.notesPlaceholder" = "Describe what you found…";
+"hornets.report.reporterName" = "Your name (optional)";
+"hornets.report.submit" = "Submit Report";
+"hornets.report.success" = "Thank you! Your report has been submitted.";
+"hornets.community.empty" = "No Sightings Yet";
+"hornets.community.vote.yes" = "Hornet ✓";
+"hornets.community.vote.no" = "Not a hornet";
+"hornets.community.confirmed" = "Confirmed";
+"hornets.community.pending" = "Pending";
+"hornets.community.rejected" = "Rejected";
